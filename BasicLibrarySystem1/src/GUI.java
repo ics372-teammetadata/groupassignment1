@@ -10,6 +10,6 @@ public class GUI {
         Library library  = new Library();
         FileProcessor j = new FileProcessor();
         library = j.processData();
-        j.writeData(library);
+        //j.writeData(library);
     }
 }
