@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -11,6 +12,7 @@ import org.json.simple.parser.*;
 /**
  * Created by Andrew on 1/23/2017.
  */
+
 public class Library {
     private HashMap<String, InventoryItem> ItemLibrary;
     private enum itemType {CD, Book, Magazine, DVD};
@@ -74,5 +76,18 @@ public class Library {
             i = ItemLibrary.get(s);
             System.out.println(s + ": " + i);
         }
+    }
+
+    public boolean checkOut(String id){
+        InventoryItem i = ItemLibrary.get(id);
+        boolean b = i.checkOut(LocalDate.now());
+        ItemLibrary.put(id, i);
+        return b;
+    }
+
+    public void checkIn(String id){
+        InventoryItem i = ItemLibrary.get(id);
+        i.checkIn();
+        ItemLibrary.put(id, i);
     }
 }

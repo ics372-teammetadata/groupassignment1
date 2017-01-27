@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml" fx:controller="Controller">
+
+
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Open" onAction="#openFile"/>
+                        <MenuItem mnemonicParsing="false" text="Save" onAction="#save"/>
+                        <MenuItem mnemonicParsing="false" text="Close" onAction="#close" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <VBox fx:id="itemBox" >
+
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>
