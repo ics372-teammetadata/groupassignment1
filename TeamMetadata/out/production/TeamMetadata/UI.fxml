@@ -3,7 +3,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml" fx:controller="Controller">
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml" fx:controller="Controller"
+            prefWidth="500" prefHeight="300">
+    <padding> <Insets top="5" left="5" bottom="5" right="5" /> </padding>
 
 
     <top>
@@ -20,10 +23,6 @@
         </MenuBar>
     </top>
     <center>
-        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <VBox fx:id="itemBox" >
-
-            </VBox>
-        </ScrollPane>
+        <GridPane fx:id="outputGrid" hgap="5" vgap="5"/>
     </center>
 </BorderPane>

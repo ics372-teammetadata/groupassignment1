@@ -30,6 +30,6 @@ public class ItemBook extends InventoryItem {
 
     @Override
     public String toString(){
-        return super.toString() + " by " + item_author;
+        return super.toString() + item_author;
     }
 }

@@ -4,6 +4,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Iterator;
+
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.json.simple.*;
@@ -13,8 +15,33 @@ import org.json.simple.parser.*;
  * Created by Andrew on 1/23/2017.
  */
 
-public class Library {
+public class Library implements Iterator{
     private HashMap<String, InventoryItem> ItemLibrary;
+    private Iterator<String> iterator;
+
+    @Override
+    public boolean hasNext() {
+        return iterator.hasNext();
+    }
+
+    @Override
+    public Object next() {
+        return iterator.next();
+    }
+
+    @Override
+    public void remove() {
+        //not implemented
+    }
+
+    public String get(String id){
+        return ItemLibrary.get(id).toString();
+    }
+
+    public LocalDate getDueDate(String id){
+        return ItemLibrary.get(id).getDueDate();
+    }
+
     private enum itemType {CD, Book, Magazine, DVD};
 
 
@@ -68,6 +95,12 @@ public class Library {
             }
             ItemLibrary.put(m.getItem_id(), m);
         }
+
+        iterator = ItemLibrary.keySet().iterator();
+
+        for(String s: ItemLibrary.keySet()){
+            System.out.println(ItemLibrary.get(s).getClass());
+        }
     }
 
     public void printLibrary(){
@@ -89,5 +122,20 @@ public class Library {
         InventoryItem i = ItemLibrary.get(id);
         i.checkIn();
         ItemLibrary.put(id, i);
+    }
+
+    public String type(String id){
+        switch (ItemLibrary.get(id).getClass().toString()){
+            case "class ItemBook":
+                return "Book";
+            case "class ItemCD":
+                return "CD";
+            case "class ItemDVD":
+                return "DVD";
+            case "class ItemMagazine":
+                return "Magazine";
+            default:
+                return "Unknown";
+        }
     }
 }

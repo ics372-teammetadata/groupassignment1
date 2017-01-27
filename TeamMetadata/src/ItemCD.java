@@ -21,6 +21,6 @@ public class ItemCD extends InventoryItem {
 
     @Override
     public String toString(){
-        return super.toString() + " by " + item_artist;
+        return super.toString() + item_artist;
     }
 }
