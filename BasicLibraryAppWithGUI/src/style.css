@@ -1,0 +1,7 @@
+#checkedOutTextArea {
+    text-area-background: #DDDDDD ;
+}
+
+#checkedOutTextArea .content {
+    -fx-background-color: text-area-background ;
+}

@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="BasicLibraryAppWithGUI:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/BasicLibraryAppWithGUI_jar</output-path>
+    <root id="archive" name="BasicLibraryAppWithGUI.jar">
+      <element id="module-output" name="BasicLibraryAppWithGUI" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../Libraries/json-simple-1.1.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

@@ -10,9 +10,25 @@ public class InventoryItem {
 
     //constructors
     InventoryItem(){
-        id = "";
-        name = "";
-        type = "";
+        id = "test";
+        name = "itemName";
+        type = "test";
+        checkedOut = true;
+        LocalDate dDate = LocalDate.now();
+        dueDate = dDate;
+        LocalDate cDate = LocalDate.now();
+        checkoutDate = cDate;
+    }
+    //constructors
+    InventoryItem(String id){
+        id = this.id;
+        name = "itemName";
+        type = "test";
+        checkedOut = true;
+        LocalDate dDate = LocalDate.now();
+        dueDate = dDate;
+        LocalDate cDate = LocalDate.now();
+        checkoutDate = cDate;
     }
     InventoryItem(String idNumber, String itemName, String itemType){
         id = idNumber;
@@ -43,7 +59,12 @@ public class InventoryItem {
     public void checkOut(){
         checkedOut = true;
         checkoutDate = LocalDate.now();
-        dueDate = checkoutDate.plusDays(14);
+        if(this.getType().equals("Book")){
+            dueDate = checkoutDate.plusDays(21);
+        }
+        else{
+            dueDate = checkoutDate.plusDays(7);
+        }
     }
     public void checkIn(){
         checkedOut = false;
@@ -88,5 +109,16 @@ public class InventoryItem {
     }
     public String getName(){
         return name;
+    }
+    public String toString(){
+        String tempDueDate = getDueDate();
+        String tempIsCheckedOut;
+        if(tempDueDate == null){
+            tempDueDate = "";
+        }
+        else{
+            tempDueDate = "Due on " + getDueDate();
+        }
+        return this.getID() + "\t" + this.getName() + "\t" + "\t"  + "\t" + "\t" + tempDueDate;
     }
 }

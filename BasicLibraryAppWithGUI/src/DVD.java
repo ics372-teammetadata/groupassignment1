@@ -14,12 +14,13 @@ public class DVD extends InventoryItem {
     public DVD(String idNumber, String itemName, String itemType, boolean isCheckedOut, String due, String ckOut){
         super(idNumber, itemName, itemType, isCheckedOut, due, ckOut);
     }
+    /*
     public DVD(DVD d){
         super(d);
         if(d == null){
             System.out.println("Fatal error");
             System.exit(0);
         }
-    }
+    }  */
 
 }

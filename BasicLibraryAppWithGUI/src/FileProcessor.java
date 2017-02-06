@@ -13,15 +13,20 @@ public class FileProcessor {
     private Library library = new Library();
     private InventoryItem libItem;
     private JSONArray data;
-    private File jsonFile = new File("c:/temp/test.txt");
-    ;
+    private File jsonFile; // = new File("c:/temp/test.txt");
 
+    FileProcessor(File f){
+        jsonFile = f;
+    }
+
+    FileProcessor(){
+        jsonFile = new File("c:/temp/test.txt");
+    }
     public void writeData(Library l) {
         JSONObject parentOutputJObject = new JSONObject();
         JSONArray outputJArray = new JSONArray();
 
         for (InventoryItem i : l) {
-
             if (i.getType().equals("CD")) {
                 CD c = (CD) i;
                 //System.out.println(i.getClass());
@@ -71,7 +76,7 @@ public class FileProcessor {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.print(parentOutputJObject);
+        //System.out.print(parentOutputJObject);
     }
 
     public Library processData() {

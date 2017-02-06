@@ -1,18 +1,13 @@
 import com.sun.org.apache.xpath.internal.SourceTree;
+import javafx.beans.property.SimpleListProperty;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by chris on 1/23/2017.
  */
 public class Library extends ArrayList<InventoryItem>{
-
-    Library(Library l){
-
-    }
-    Library(){
-
-    }
 
     public InventoryItem getItemByID(String s){
         InventoryItem x = null;
