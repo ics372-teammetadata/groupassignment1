@@ -1,48 +1,60 @@
-import java.time.LocalDate;
-import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 
-public abstract class InventoryItem
+public class InventoryItem extends ListViewObject
 {
-	private int id = 10;
-	private Date checkedOut = null;
+	private String id;
+	private String name;
+	private String type;
 	private Date dueDate = null;
-	private String abc = "abc";
 	
-	public String getabc()
-	{
-		return abc;
-	}
-	
-	public InventoryItem(int id)
+	public InventoryItem(String id, String name, String type)
 	{
 		this.id = id;
+		this.name = name;
+		this.type = type;
 	}
 	
-	public int getID()
+	public String toString()
+	{
+		return getName();
+	}
+	
+	public void checkIn()
+	{
+		dueDate = null;
+	}
+	
+	//public abstract void checkOut();
+	
+	public String getID()
 	{
 		return id;
 	}
 	
-	public void setID(int id)
+	public void setID(String id)
 	{
 		this.id = id;
 	}
 	
-	public Date getCheckedOut()
+	public String getName()
 	{
-		return checkedOut;
+		return name;
 	}
 	
-	public void setCheckedOut(Date date)
+	public void setName(String name)
 	{
-		checkedOut = date;
+		this.name = name;
 	}
 	
-	public void CheckIn()
+	public String getType()
 	{
-		checkedOut = null;
-		dueDate = null;
+		return type;
+	}
+	
+	public void setType(String type)
+	{
+		this.type = type;
 	}
 	
 	public Date getDueDate()
@@ -54,4 +66,20 @@ public abstract class InventoryItem
 	{
 		dueDate = date;
 	}
+	
+	// http://stackoverflow.com/questions/12575833/java-compare-cannot-be-resolved-to-a-type-error
+	public static Comparator<InventoryItem> Comparator = new Comparator<InventoryItem>()
+	{	
+		public int compare(InventoryItem a1, InventoryItem a2) 
+		{
+			if (a1.getID().equals("ID") || a2.getID().equals("ID"))
+				return Integer.MAX_VALUE;
+			String InventoryItem1 = a1.getName().toUpperCase();
+			String InventoryItem2 = a2.getName().toUpperCase();
+						
+			return InventoryItem1.compareTo(InventoryItem2);
+		}
+	};
+	
+	
 }
