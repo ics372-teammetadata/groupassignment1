@@ -7,21 +7,14 @@ import java.util.Iterator;
 /**
  * Created by chris on 1/23/2017.
  */
+
+//Inventory Item List Container
+
 public class Library extends ArrayList<InventoryItem>{
 
     public InventoryItem getItemByID(String s){
         InventoryItem x = null;
-
         try {
-            /*
-            for (InventoryItem x : this) {
-                if (x.getID().equals(s)) {
-                    y = new InventoryItem(x);
-                }
-            }
-            if (y != null) {
-                return y;
-            }*/
             for (InventoryItem i : this) {
                 if (i.getID().equals(s)) {
                     x = i;

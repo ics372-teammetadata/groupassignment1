@@ -44,7 +44,6 @@ public class UIController  implements Initializable{
     @FXML
     private Button loadButton;
 
-
     @FXML
     private Button checkoutButton;
 
@@ -60,10 +59,16 @@ public class UIController  implements Initializable{
     @FXML
     private TextArea checkedOutTextArea;
 
+    @FXML
+    private Label selectedLabel;
+
+    @FXML
+    private Label checkOutLabel;
+
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        //textArea1.setText("CLick the 'Load' button to load a library file and use the dropdown menu to select an item.");
-
+        //disable buttons
+        deactivate();
     }
 
     //Actions
@@ -129,7 +134,10 @@ public class UIController  implements Initializable{
             String dueDateString;
 
             item = library.getItemByID(parsedID);
-
+            if(item.getType().equals("Book")){
+                item = (Book)item;
+                String author = ((Book) item).getAuthor();
+            }
             if(item.isCheckedOut()){
                 checkOutString = "Item is checked out\n";
             } else {
@@ -140,12 +148,30 @@ public class UIController  implements Initializable{
             } else {
                 dueDateString = "Item is due on " + item.getDueDate() + "\n";
             }
+            if(item.getType().equals("Book")){
+                textArea1.setText("ID : " + item.getID() + "\n" +
+                        "Item : " + item.getName() + "\n" +
+                        "Type : " + item.getType() + "\n" +
+                        "Author: " + ((Book) item).getAuthor() + "\n" +
+                        checkOutString +
+                        dueDateString );
+            }
+            else if(item.getType().equals("CD")){
+                textArea1.setText("ID : " + item.getID() + "\n" +
+                        "Item : " + item.getName() + "\n" +
+                        "Type : " + item.getType() + "\n" +
+                        "Artist: " + ((CD) item).getArtist() + "\n" +
+                        checkOutString +
+                        dueDateString );
+            }
+            else{
+                textArea1.setText("ID : " + item.getID() + "\n" +
+                        "Item : " + item.getName() + "\n" +
+                        "Type : " + item.getType() + "\n" +
+                        checkOutString +
+                        dueDateString );
+            }
 
-            textArea1.setText("ID : " + item.getID() + "\n" +
-                    "Item : " + item.getName() + "\n" +
-                    "Type : " + item.getType() + "\n" +
-                    checkOutString +
-                    dueDateString );
             if (item.isCheckedOut()) {
                 checkoutButton.setDisable(true);
                 checkinButton.setDisable(false);
@@ -201,6 +227,8 @@ public class UIController  implements Initializable{
         reload = true;
         textArea1.setText("");
         checkedOutTextArea.setText("");
+        deactivate();
+        comboBox1.setDisable(false);
         comboBox1.setPromptText("Reload Library");
         int sz = comboBox1.getItems().size();
         ObservableList l  = comboBox1.getItems();
@@ -213,11 +241,15 @@ public class UIController  implements Initializable{
         comboBox1.setDisable(false);
         textArea1.setDisable(false);
         checkedOutTextArea.setDisable(false);
+        selectedLabel.setStyle("-fx-text-fill: white");
+        checkOutLabel.setStyle("-fx-text-fill: white");
     }
     private void deactivate(){
         comboBox1.setDisable(true);
         textArea1.setDisable(true);
         checkedOutTextArea.setDisable(true);
+        selectedLabel.setStyle("-fx-text-fill:  SteelBlue");
+        checkOutLabel.setStyle("-fx-text-fill:  SteelBlue");
     }
 }
 
