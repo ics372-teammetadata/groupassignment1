@@ -6,6 +6,7 @@ import java.time.LocalDate;
 public class CD extends InventoryItem {
     String artist = "";
 
+    //constructors
     public CD (){
         super();
         artist = "";
@@ -28,7 +29,17 @@ public class CD extends InventoryItem {
         }
         artist = c.artist;
     }
+
+    //methods
     public String getArtist(){
         return artist;
     }
+
+    //toString method - appends string to parent toString method
+    public String toString(){
+        return super.toString() +
+        "Artist: " + this.getArtist() + "\n" +
+        checkOutString + dueDateString;
+    }
+
 }

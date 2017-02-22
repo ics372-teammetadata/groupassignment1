@@ -5,6 +5,7 @@ import java.io.File;
  */
 public class DVD extends InventoryItem {
 
+    //constructors
     public DVD (){
         super();
     }
@@ -14,13 +15,11 @@ public class DVD extends InventoryItem {
     public DVD(String idNumber, String itemName, String itemType, boolean isCheckedOut, String due, String ckOut){
         super(idNumber, itemName, itemType, isCheckedOut, due, ckOut);
     }
-    /*
-    public DVD(DVD d){
-        super(d);
-        if(d == null){
-            System.out.println("Fatal error");
-            System.exit(0);
-        }
-    }  */
+
+    //toString method - appends string to parent toString method
+    public String toString(){
+        return super.toString() +
+                checkOutString + dueDateString;
+    }
 
 }

@@ -14,17 +14,10 @@ public class Library extends ArrayList<InventoryItem>{
 
     public InventoryItem getItemByID(String s){
         InventoryItem x = null;
-        try {
-            for (InventoryItem i : this) {
-                if (i.getID().equals(s)) {
-                    x = i;
-                }
+        for (InventoryItem i : this) {
+            if (i.getID().equals(s)) {
+                x = i;
             }
-            if (x != null) {
-                return x;
-            }
-        }catch (Exception NullPointerException){
-            System.exit(0);
         }
         return x;
     }

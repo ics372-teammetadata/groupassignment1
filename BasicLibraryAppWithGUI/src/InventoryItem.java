@@ -2,11 +2,13 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class InventoryItem {
-    private String id, name, type;
-    private LocalDate checkoutDate = null;
-    private LocalDate dueDate = null;
-    private boolean checkedOut = false;
-    private int daysUntilDue = 0;
+    protected String id, name, type;
+    protected LocalDate checkoutDate = null;
+    protected LocalDate dueDate = null;
+    protected boolean checkedOut = false;
+    protected int daysUntilDue = 0;
+    protected String checkOutString;
+    protected String dueDateString;
 
     //constructors
     InventoryItem(){
@@ -59,12 +61,7 @@ public class InventoryItem {
     public void checkOut(){
         checkedOut = true;
         checkoutDate = LocalDate.now();
-        if(this.getType().equals("Book")){
-            dueDate = checkoutDate.plusDays(21);
-        }
-        else{
-            dueDate = checkoutDate.plusDays(7);
-        }
+        dueDate = checkoutDate.plusDays(7);
     }
     public void checkIn(){
         checkedOut = false;
@@ -77,7 +74,6 @@ public class InventoryItem {
 
     //getters
     public String getCheckoutDate(){
-        //System.out.println(dueDate);
         if(checkoutDate == null){
             return null;
         }
@@ -86,12 +82,11 @@ public class InventoryItem {
         }
     }
     public String getDueDate(){
-        //System.out.println(dueDate);
         if(dueDate == null){
             return null;
         }
         else{
-            return  dueDate.toString();
+            return dueDate.toString();
         }
     }
     public int getDaysUntilDue(){
@@ -110,15 +105,21 @@ public class InventoryItem {
     public String getName(){
         return name;
     }
+
     public String toString(){
-        String tempDueDate = getDueDate();
-        String tempIsCheckedOut;
-        if(tempDueDate == null){
-            tempDueDate = "";
+        if(this.isCheckedOut()){
+            checkOutString = "Item is checked out\n";
+        } else {
+            checkOutString = "Item is checked in\n";
         }
-        else{
-            tempDueDate = "Due on " + getDueDate();
+        if(this.getDueDate() == null){
+            dueDateString = "";
+        } else {
+            dueDateString = "Item is due on " + this.getDueDate() + "\n";
         }
-        return this.getID() + "\t" + this.getName() + "\t" + "\t"  + "\t" + "\t" + tempDueDate;
+        return
+        ("ID : " + this.getID() + "\n" +
+        "Item : " + this.getName() + "\n" +
+        "Type : " + this.getType() + "\n" );
     }
 }
