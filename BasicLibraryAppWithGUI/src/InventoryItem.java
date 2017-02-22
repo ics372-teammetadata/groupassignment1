@@ -21,7 +21,7 @@ public class InventoryItem {
         LocalDate cDate = LocalDate.now();
         checkoutDate = cDate;
     }
-    //constructors
+
     InventoryItem(String id){
         id = this.id;
         name = "itemName";
@@ -32,11 +32,13 @@ public class InventoryItem {
         LocalDate cDate = LocalDate.now();
         checkoutDate = cDate;
     }
+
     InventoryItem(String idNumber, String itemName, String itemType){
         id = idNumber;
         name = itemName;
         type = itemType;
     }
+
     InventoryItem(String idNumber, String itemName, String itemType, boolean isCheckedOut, String due, String checkOutDt){
         id = idNumber;
         name = itemName;
@@ -47,6 +49,7 @@ public class InventoryItem {
         LocalDate cDate = LocalDate.parse(checkOutDt);
         checkoutDate = cDate;
     }
+    
     InventoryItem(InventoryItem i){
         if(i == null){
             System.out.println("Fatal error");
@@ -57,7 +60,7 @@ public class InventoryItem {
         type = i.type;
     }
 
-    //checkin/out methods
+    //checkin-out methods
     public void checkOut(){
         checkedOut = true;
         checkoutDate = LocalDate.now();
@@ -72,7 +75,7 @@ public class InventoryItem {
         return checkedOut;
     };
 
-    //getters
+    //getter methods
     public String getCheckoutDate(){
         if(checkoutDate == null){
             return null;
@@ -106,6 +109,7 @@ public class InventoryItem {
         return name;
     }
 
+    //to String function - can be used in a UI text box
     public String toString(){
         if(this.isCheckedOut()){
             checkOutString = "Item is checked out\n";
