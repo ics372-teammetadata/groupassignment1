@@ -1,3 +1,7 @@
+#libraryUIGridPane{
+    -fx-background-color :  SteelBlue;
+}
+
 #checkedOutTextArea {
     text-area-background: #DDDDDD ;
 }

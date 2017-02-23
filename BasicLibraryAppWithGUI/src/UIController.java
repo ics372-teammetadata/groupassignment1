@@ -19,6 +19,7 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -36,6 +37,8 @@ public class UIController  implements Initializable{
     private boolean reload = false;
 
     //FXML varialbles
+    @FXML
+    private GridPane libraryUIGridPane;
     @FXML
     private TableColumn<?, ?> idColumn;
     @FXML
