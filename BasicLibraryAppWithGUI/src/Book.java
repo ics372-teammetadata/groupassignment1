@@ -42,7 +42,6 @@ public class Book extends InventoryItem {
         checkedOut = true;
         checkoutDate = LocalDate.now();
         dueDate = checkoutDate.plusDays(21);
-        System.out.println("This one");
     }
     //toString method - appends string to parent toString method
     public String toString(){
