@@ -20,7 +20,8 @@ public class Controller implements Initializable{
 
     @FXML
     public void openFile(ActionEvent e){
-
+        lib.loadFile();
+        populateGrid();
     }
 
     @FXML
@@ -73,8 +74,16 @@ public class Controller implements Initializable{
         dueDates = new HashMap<>();
 
         // Add label row to grid
-        outputGrid.addRow(0, new Label("ID"),new Label("Media Type"), new Label("Title"), new Label("Artist/Author"), new Label("Due"));
+        Label dueLabel = new Label("Due");
+        dueLabel.setPrefWidth(65);
+        outputGrid.addRow(0, new Label("ID"),new Label("Media Type"), new Label("Title"), new Label("Artist/Author"), dueLabel);
 
+        if (lib.isPopulated()){
+            populateGrid();
+        }
+    }
+
+    public void populateGrid(){
         // Iterate through library items to populate grid
         for (int row = 1; lib.hasNext(); row++){
             // retrieve item data

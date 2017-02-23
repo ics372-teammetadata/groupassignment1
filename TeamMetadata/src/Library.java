@@ -1,15 +1,13 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+import com.google.gson.stream.JsonReader;
+import javafx.scene.layout.GridPane;
+import javafx.stage.*;
 import org.json.simple.*;
 import org.json.simple.parser.*;
+import com.google.gson.*;
 
 /**
  * Created by Andrew on 1/23/2017.
@@ -17,7 +15,7 @@ import org.json.simple.parser.*;
 
 public class Library implements Iterator{
     private HashMap<String, InventoryItem> ItemLibrary;
-    private Iterator<String> iterator;
+    private Iterator<String> iterator = null;
 
     @Override
     public boolean hasNext() {
@@ -40,6 +38,10 @@ public class Library implements Iterator{
 
     public LocalDate getDueDate(String id){
         return ItemLibrary.get(id).getDueDate();
+    }
+
+    public boolean isPopulated(){
+        return iterator != null;
     }
 
     private enum itemType {CD, Book, Magazine, DVD};
@@ -72,6 +74,10 @@ public class Library implements Iterator{
     }
 
     public void init(){
+
+    }
+
+    public void loadFile(){
         ItemLibrary = new HashMap<String, InventoryItem>();
         JSONArray data = getData();
 
@@ -97,10 +103,6 @@ public class Library implements Iterator{
         }
 
         iterator = ItemLibrary.keySet().iterator();
-
-        for(String s: ItemLibrary.keySet()){
-            System.out.println(ItemLibrary.get(s).getClass());
-        }
     }
 
     public void printLibrary(){
