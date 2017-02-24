@@ -8,11 +8,6 @@ public class Book extends InventoryItem {
     String author = "";
 
     //Constructors
-    public Book(){
-        super();
-        author = "";
-    }
-
     public Book(String idNumber, String itemName, String itemType, String authorName){
         super(idNumber, itemName, itemType);
         author = authorName;
@@ -21,15 +16,6 @@ public class Book extends InventoryItem {
     public Book(String idNumber, String itemName, String itemType, String authorName, boolean isCheckedOut, String due, String ckOut){
         super(idNumber, itemName, itemType, isCheckedOut, due, ckOut);
         author = authorName;
-    }
-
-    public Book(Book b){
-        super(b);
-        if(b == null){
-            System.out.println("Fatal error");
-            System.exit(0);
-        }
-        author = b.author;
     }
 
     // methods

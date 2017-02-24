@@ -76,7 +76,6 @@ public class FileProcessor {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //System.out.print(parentOutputJObject);
     }
 
     public Library processData() {
@@ -84,10 +83,8 @@ public class FileProcessor {
         //collection info from JSON file
         if (jsonFile.exists()) {
             data = this.importFile(jsonFile);
-            //System.out.println(jsonFile.getPath());
         } else {
-            System.out.println("File does not exist");
-            System.exit(0);
+            data = null;
         }
 
         //loop through JSON array, creating 'Library Item" objects, adding them to an inventory list to be returned

@@ -11,28 +11,6 @@ public class InventoryItem {
     protected String dueDateString;
 
     //constructors
-    InventoryItem(){
-        id = "test";
-        name = "itemName";
-        type = "test";
-        checkedOut = true;
-        LocalDate dDate = LocalDate.now();
-        dueDate = dDate;
-        LocalDate cDate = LocalDate.now();
-        checkoutDate = cDate;
-    }
-
-    InventoryItem(String id){
-        id = this.id;
-        name = "itemName";
-        type = "test";
-        checkedOut = true;
-        LocalDate dDate = LocalDate.now();
-        dueDate = dDate;
-        LocalDate cDate = LocalDate.now();
-        checkoutDate = cDate;
-    }
-
     InventoryItem(String idNumber, String itemName, String itemType){
         id = idNumber;
         name = itemName;
@@ -48,16 +26,6 @@ public class InventoryItem {
         dueDate = dDate;
         LocalDate cDate = LocalDate.parse(checkOutDt);
         checkoutDate = cDate;
-    }
-    
-    InventoryItem(InventoryItem i){
-        if(i == null){
-            System.out.println("Fatal error");
-            System.exit(0);
-        }
-        id = i.id;
-        name = i.name;
-        type = i.type;
     }
 
     //checkin-out methods

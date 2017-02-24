@@ -6,9 +6,6 @@ import java.io.File;
 public class DVD extends InventoryItem {
 
     //constructors
-    public DVD (){
-        super();
-    }
     public DVD (String idNumber, String itemName, String itemType){
         super(idNumber, itemName, itemType);
     }
