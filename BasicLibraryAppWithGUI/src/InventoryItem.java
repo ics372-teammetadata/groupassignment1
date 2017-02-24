@@ -1,7 +1,7 @@
 import java.time.LocalDate;
 import java.time.Period;
 
-public class InventoryItem {
+public class InventoryItem {//test
     protected String id, name, type;
     protected LocalDate checkoutDate = null;
     protected LocalDate dueDate = null;
