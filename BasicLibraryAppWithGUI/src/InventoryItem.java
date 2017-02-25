@@ -30,10 +30,8 @@ public class InventoryItem {
         name = itemName;
         type = itemType;
         checkedOut = isCheckedOut;
-        LocalDate dDate = LocalDate.parse(due);
-        dueDate = dDate;
-        LocalDate cDate = LocalDate.parse(checkOutDt);
-        checkoutDate = cDate;
+        dueDate = LocalDate.parse(due);
+        checkoutDate = LocalDate.parse(checkOutDt);
     }
 
     //////////////

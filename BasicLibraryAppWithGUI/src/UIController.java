@@ -42,7 +42,7 @@ public class UIController  implements Initializable{
     @FXML
     private Button checkinButton;
     @FXML
-    private TextArea textArea1;
+    private TextArea mainTextAreaForInventoryItemDescription;
     @FXML
     private ComboBox<String> comboBoxForInventoryItemSelection;
     @FXML
@@ -155,7 +155,7 @@ public class UIController  implements Initializable{
     // with information about InventoryItem that has been selected in the comboBoxForInventoryItemSelection
     private void writeToTextArea() {
         if(!reload) {
-            String selectedItemText = comboBoxForInventoryItemSelection.getSelectionModel().getSelectedItem().toString();
+            String selectedItemText = comboBoxForInventoryItemSelection.getSelectionModel().getSelectedItem();
             int index = selectedItemText.indexOf(' ');
             String parsedID = selectedItemText.substring(0, index);
             String checkOutString;
@@ -164,7 +164,7 @@ public class UIController  implements Initializable{
             item = library.getItemByID(parsedID);
 
             //write to Text Area
-            textArea1.setText(item.toString());
+            mainTextAreaForInventoryItemDescription.setText(item.toString());
 
             //set button states
             if (item.isCheckedOut()) {
@@ -211,7 +211,7 @@ public class UIController  implements Initializable{
     //Clears the comboBoxForInventoryItemSelection when a new file is loaded
     private void clearComboBox(){
         reload = true;
-        textArea1.setText("");
+        mainTextAreaForInventoryItemDescription.setText("");
         checkedOutTextArea.setText("");
         deactivate();
         comboBoxForInventoryItemSelection.setDisable(false);
@@ -226,7 +226,7 @@ public class UIController  implements Initializable{
     //Activates buttons once a file is loaded
     private void activate(){
         comboBoxForInventoryItemSelection.setDisable(false);
-        textArea1.setDisable(false);
+        mainTextAreaForInventoryItemDescription.setDisable(false);
         checkedOutTextArea.setDisable(false);
         selectedLabel.setStyle("-fx-text-fill: white");
         checkOutLabel.setStyle("-fx-text-fill: white");
@@ -235,7 +235,7 @@ public class UIController  implements Initializable{
     //Deactivates buttons and hide text when no load is loaded or if a file load is cancelled
     private void deactivate(){
         comboBoxForInventoryItemSelection.setDisable(true);
-        textArea1.setDisable(true);
+        mainTextAreaForInventoryItemDescription.setDisable(true);
         checkedOutTextArea.setDisable(true);
         selectedLabel.setStyle("-fx-text-fill:  SteelBlue");
         checkOutLabel.setStyle("-fx-text-fill:  SteelBlue");

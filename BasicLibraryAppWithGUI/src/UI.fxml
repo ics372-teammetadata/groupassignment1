@@ -35,7 +35,7 @@
       <GridPane.margin>
          <Insets />
       </GridPane.margin></ComboBox>
-   <TextArea fx:id="textArea1" disable="true" editable="false" prefHeight="200.0" prefWidth="551.0" GridPane.rowIndex="7" />
+   <TextArea fx:id="mainTextAreaForInventoryItemDescription" disable="true" editable="false" prefHeight="200.0" prefWidth="551.0" GridPane.rowIndex="7" />
    <TextArea fx:id="checkedOutTextArea" disable="true" editable="false" prefHeight="150.0" prefWidth="551.0" GridPane.rowIndex="14" />
    <Label fx:id="checkOutLabel" style="-fx-text-fill: white;" text="Checked Out Items" GridPane.rowIndex="13">
       <font>
