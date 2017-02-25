@@ -1,27 +1,19 @@
 
 
-import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
-import java.util.Iterator;
 import java.util.Optional;
-import java.util.OptionalDouble;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.json.simple.parser.ParseException;
 
 /**
  * Created by Christopher on 2/2/2017.
@@ -31,7 +23,7 @@ public class UIController  implements Initializable{
     //variables
     private Library library  = new Library();
     private InventoryItem item;
-    private FileProcessor j;
+    private FileProcessor loadedJsonFile;
     private  boolean fileLoaded = false;
     private File file;
     private boolean reload = false;
@@ -52,7 +44,7 @@ public class UIController  implements Initializable{
     @FXML
     private TextArea textArea1;
     @FXML
-    private ComboBox<String> comboBox1;
+    private ComboBox<String> comboBoxForInventoryItemSelection;
     @FXML
     private TextArea checkedOutTextArea;
     @FXML
@@ -67,20 +59,6 @@ public class UIController  implements Initializable{
         deactivate();
     }
 
-    //Save method - is called each time a change of state (checkin/oyt occurs)
-    void save(){
-            if (fileLoaded) {
-                j.writeData(library);
-                writeToCheckOutTextArea();
-            } else {
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setTitle("Library not found");
-                a.setHeaderText(null);
-                a.setContentText("Please select a file by clicking the 'Load' button");
-                a.showAndWait();
-            }
-    }
-
     //Load method - called when 'Load File' buttons is clicked
     @FXML
      void load(ActionEvent e) {
@@ -91,6 +69,10 @@ public class UIController  implements Initializable{
                 loadFile();
             }
     }
+
+    //////////////////////////
+    // Action Event Methods
+    /////////////////////////
 
     //Check-out function - displays a confirmation box, runs the checkout method on the selected inventory item, saves changes to the file, and writes updated info to the text area
     @FXML
@@ -127,10 +109,53 @@ public class UIController  implements Initializable{
         writeToTextArea();
     }
 
-    //Populates the text area with information about the select inventory item
+    ////////////
+    // Methods
+    ////////////
+
+    //Load JSON files
+    //Uses FileChooser class to select a file
+    //Catches parse exceptions (incorrect filetype or poorly formatted JSON data)
+    //Instantiates a FileProcessor object and calls it's processJSONData method which processes JSON file data and generates library items from JSON object info and returns a Library list
+    //Loops through the Library (library) list and adds an entry to each InventoryItem to the comboBoxForInventoryItemSelection
+    private void loadFile(){
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open JSON File");
+            file = fileChooser.showOpenDialog(new Stage());
+            if (file == null) {
+                //deactivate buttons and hide text
+                deactivate();
+            } else {
+                fileLoaded = true;
+                activate();
+                loadedJsonFile = new FileProcessor(file);
+                library = loadedJsonFile.processJSONData();
+
+                //Loops through the Library (library) list and adds an entry to each InventoryItem to the comboBoxForInventoryItemSelectio
+                for (InventoryItem i : library) {
+                    comboBoxForInventoryItemSelection.getItems().add(i.getID() + " : " + i.getName() + " : " + i.getType());
+                }
+                comboBoxForInventoryItemSelection.setPromptText("Select an item");
+                reload = false;
+                writeToCheckOutTextArea();
+            }
+        }catch(ParseException e){
+            System.out.println("Parse Exception has been caught");
+            deactivate();
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("File load error");
+            alert.setHeaderText(null);
+            alert.setContentText("An incorrect file type was detected.  Please load a properly formatted JSON file.");
+            Optional<ButtonType> result = alert.showAndWait();
+        }
+    }
+
+    //Populates the text area, using the InventoryItem's (and/or child item's) toString method,
+    // with information about InventoryItem that has been selected in the comboBoxForInventoryItemSelection
     private void writeToTextArea() {
         if(!reload) {
-            String selectedItemText = comboBox1.getSelectionModel().getSelectedItem().toString();
+            String selectedItemText = comboBoxForInventoryItemSelection.getSelectionModel().getSelectedItem().toString();
             int index = selectedItemText.indexOf(' ');
             String parsedID = selectedItemText.substring(0, index);
             String checkOutString;
@@ -152,7 +177,7 @@ public class UIController  implements Initializable{
         }
     }
 
-    //Populate "Check out Text area" with a list of checked out items
+    //Populates "Check out Text area" with a list of checked out items
     private void writeToCheckOutTextArea(){
         String info = "";
         for(InventoryItem i : library){
@@ -163,63 +188,53 @@ public class UIController  implements Initializable{
         checkedOutTextArea.setText(info);
     }
 
-    //load JSON file
-    private void loadFile(){
-        try {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Open JSON File");
-            file = fileChooser.showOpenDialog(new Stage());
-            if (file == null) {
-            } else {
-                fileLoaded = true;
-                activate();
-                j = new FileProcessor(file);
-                library = j.processData();
-
-                for (InventoryItem i : library) {
-                    comboBox1.getItems().add(i.getID() + " : " + i.getName() + " : " + i.getType());
-                }
-                comboBox1.setPromptText("Select an item");
-                reload = false;
-                writeToCheckOutTextArea();
-            }
-        }catch(Exception e){
-            deactivate();
-            Alert a = new Alert(Alert.AlertType.WARNING);
-            a.setTitle("File load error");
-            a.setHeaderText(null);
-            a.setContentText("Please load a properly formatted JSON file.");
-            Optional<ButtonType> result = a.showAndWait();
+    //Save method - is called each time a change of state (checkin/oyt occurs)
+    //Calls the FileProcessor (loadedJsonFile) writeData method,
+    // which writes data to JSON file and loops through Library list, adding each InventoryItem to a JSON array
+    private void save(){
+        if (fileLoaded) {
+            loadedJsonFile.writeData(library);
+            writeToCheckOutTextArea();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Library not found");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a file by clicking the 'Load' button");
+            alert.showAndWait();
         }
     }
 
-    //clear combo box when a new file is loaded
+    ////////////////////
+    // UI house keeping
+    ////////////////////
+
+    //Clears the comboBoxForInventoryItemSelection when a new file is loaded
     private void clearComboBox(){
         reload = true;
         textArea1.setText("");
         checkedOutTextArea.setText("");
         deactivate();
-        comboBox1.setDisable(false);
-        comboBox1.setPromptText("Reload Library");
-        int sz = comboBox1.getItems().size();
-        ObservableList l  = comboBox1.getItems();
+        comboBoxForInventoryItemSelection.setDisable(false);
+        comboBoxForInventoryItemSelection.setPromptText("Reload Library");
+        int sz = comboBoxForInventoryItemSelection.getItems().size();
+        ObservableList l  = comboBoxForInventoryItemSelection.getItems();
         checkoutButton.setDisable(true);
         checkinButton.setDisable(true);
         l.clear();
     }
 
-    //activate buttons once a file is loaded
+    //Activates buttons once a file is loaded
     private void activate(){
-        comboBox1.setDisable(false);
+        comboBoxForInventoryItemSelection.setDisable(false);
         textArea1.setDisable(false);
         checkedOutTextArea.setDisable(false);
         selectedLabel.setStyle("-fx-text-fill: white");
         checkOutLabel.setStyle("-fx-text-fill: white");
     }
 
-    //deactivate buttons and hide text when no load is loaded or if a file load is cancelled
+    //Deactivates buttons and hide text when no load is loaded or if a file load is cancelled
     private void deactivate(){
-        comboBox1.setDisable(true);
+        comboBoxForInventoryItemSelection.setDisable(true);
         textArea1.setDisable(true);
         checkedOutTextArea.setDisable(true);
         selectedLabel.setStyle("-fx-text-fill:  SteelBlue");

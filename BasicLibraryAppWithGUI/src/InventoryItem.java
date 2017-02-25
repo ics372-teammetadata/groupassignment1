@@ -1,7 +1,12 @@
 import java.time.LocalDate;
 import java.time.Period;
 
-public class InventoryItem {//test
+public class InventoryItem {
+
+    //////////////
+    // Variables
+    //////////////
+
     protected String id, name, type;
     protected LocalDate checkoutDate = null;
     protected LocalDate dueDate = null;
@@ -10,7 +15,10 @@ public class InventoryItem {//test
     protected String checkOutString;
     protected String dueDateString;
 
-    //constructors
+    //////////////////
+    //Constructors
+    //////////////////
+
     InventoryItem(String idNumber, String itemName, String itemType){
         id = idNumber;
         name = itemName;
@@ -28,6 +36,10 @@ public class InventoryItem {//test
         checkoutDate = cDate;
     }
 
+    //////////////
+    // Methods
+    //////////////
+
     //checkin-out methods
     public void checkOut(){
         checkedOut = true;
@@ -41,12 +53,13 @@ public class InventoryItem {//test
     }
     public boolean isCheckedOut(){
         return checkedOut;
-    };
+    }
 
     //getter methods
     public String getCheckoutDate(){
         if(checkoutDate == null){
-            return null;
+            //return empty String if Date dueDate is NULL
+            return "";
         }
         else{
             return  checkoutDate.toString();
@@ -54,7 +67,8 @@ public class InventoryItem {//test
     }
     public String getDueDate(){
         if(dueDate == null){
-            return null;
+            //return empty String if Date dueDate is NULL
+            return "";
         }
         else{
             return dueDate.toString();
@@ -77,7 +91,8 @@ public class InventoryItem {//test
         return name;
     }
 
-    //to String function - can be used in a UI text box
+
+    //toString method, used by UI textArea1 to display information about an individual item to the user
     public String toString(){
         if(this.isCheckedOut()){
             checkOutString = "Item is checked out\n";
