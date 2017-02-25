@@ -58,6 +58,7 @@ public class UIController  implements Initializable{
         //disable buttons
         deactivate();
     }
+    
     //////////////////////////
     // Action Event Methods
     /////////////////////////
