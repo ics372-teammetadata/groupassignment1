@@ -3,11 +3,9 @@
  */
 
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
+
 import org.json.simple.*;
 import org.json.simple.parser.*;
-import java.time.LocalDate;
 
 
 public class FileProcessor {
@@ -15,7 +13,7 @@ public class FileProcessor {
     //variables
     private Library library = new Library();
     private InventoryItem libItem;
-    private JSONArray data;
+    private JSONArray importedJSONData;
     private File jsonFile;
 
     //Constructor
@@ -24,7 +22,7 @@ public class FileProcessor {
         jsonFile = f;
     }
 
-    //Retrieves JSON data from a file (which is received through the constructor)
+    //Retrieves JSON importedJSONData from a file (which is received through the constructor)
     //Returns a JSON array
     //This is called by the FileProcesspor (this) processJSONData method
     //throws a ParseException that can be caught within the UIController's loadFile method
@@ -33,58 +31,70 @@ public class FileProcessor {
             JSONParser parser = new JSONParser();
             FileReader file = new FileReader(f.getPath());
             JSONObject jsonObject = (JSONObject) parser.parse(file);
-            this.data = (JSONArray) jsonObject.get("library_items");
-            return data;
+            this.importedJSONData = (JSONArray) jsonObject.get("library_items");
+            return importedJSONData;
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         } catch (IOException e) {
             System.out.println("IO exception");
         }
-        return data;
+        return importedJSONData;
     }
 
-    //Processes JSON file data and generates library items from JSON object info and returns a Library list
+    //Processes JSON file importedJSONData and generates library items from JSON object info and returns a Library list
     //Calls importFile which throws a ParseException that can be caught within the UIController's loadFile method
-    public Library processJSONData() throws ParseException {
+    Library processJSONData() throws ParseException {
         //collection info from JSON file
         if (jsonFile.exists()) {
-            data = this.importFile(jsonFile);
+            importedJSONData = this.importFile(jsonFile);
         } else {
-            data = null;
+            importedJSONData = null;
         }
 
         //loop through JSON array, creating 'Library Item" objects, adding them to an inventory list to be returned
-        for (Object jArrayItem : data) {
-            JSONObject b = (JSONObject) jArrayItem;
+        for (Object jArrayItem : importedJSONData) {
+
+            JSONObject arrayItem = (JSONObject) jArrayItem;
+
+            //variables to be used when instantiating InventoryItem objects
+            String itemDueDate = "";
+            String itemCheckOutDate = "";
+            String itemName = (String) arrayItem.get("item_name");
+            String itemID = (String) arrayItem.get("item_id");
+
+
             //generate library items from JSON object info and return an InventoryItem
-            if  (b.containsKey("item_isCheckedOut")){
-                if (b.get("item_type").equals("CD")) {
-                    System.out.println("CD Try");
-                    libItem = new CD((String) b.get("item_id"), (String) b.get("item_name"), (String) b.get("item_type"), (String) b.get("item_artist"), (boolean) b.get("item_isCheckedOut"), (String)b.get("item_dueDate"),(String)b.get("item_checkoutDate"));
-                } else if (b.get("item_type").equals("Book")) {
-                    System.out.println("Book Try");
-                    libItem = new Book((String) b.get("item_id"), (String) b.get("item_name"), (String) b.get("item_type"), (String) b.get("item_author"),(boolean) b.get("item_isCheckedOut"),(String)b.get("item_dueDate"), (String)b.get("item_checkoutDate"));
-                } else if (b.get("item_type").equals("DVD")) {
-                    System.out.println("DVD Try");
-                    libItem = new DVD((String) b.get("item_id"), (String) b.get("item_name"), (String) b.get("item_type"),(boolean) b.get("item_isCheckedOut"),(String)b.get("item_dueDate"), (String)b.get("item_checkoutDate"));
-                } else if (b.get("item_type").equals("Magazine")) {
-                    System.out.println("Magazine Try");
-                    libItem = new Magazine((String) b.get("item_id"), (String) b.get("item_name"), (String) b.get("item_type"), (boolean) b.get("item_isCheckedOut"),(String)b.get("item_dueDate"), (String)b.get("item_checkoutDate"));
+
+            if  (arrayItem.containsKey("item_isCheckedOut")){
+                // IF arrayItem.containsKey("item_isCheckedOut"), then we are using a file than has been processed at least once by the application
+                // therefore difference Object constructors will be needed when instantiating InventoryItem object from the JSON data
+
+                //Set variables unique to files that have been processed at least once by the application
+                itemDueDate = (String)arrayItem.get("item_dueDate");
+                itemCheckOutDate = (String)arrayItem.get("item_checkoutDate");
+
+                if (arrayItem.get("item_type").equals("CD")) {
+                    libItem = new CD(itemID, itemName, (String) arrayItem.get("item_type"), (String) arrayItem.get("item_artist"), (boolean) arrayItem.get("item_isCheckedOut"), itemDueDate, itemCheckOutDate);
+                } else if (arrayItem.get("item_type").equals("Book")) {
+                    libItem = new Book(itemID, itemName, (String) arrayItem.get("item_type"), (String) arrayItem.get("item_author"),(boolean) arrayItem.get("item_isCheckedOut"),itemDueDate, itemCheckOutDate);
+                } else if (arrayItem.get("item_type").equals("DVD")) {
+                    libItem = new DVD(itemID, itemName, (String) arrayItem.get("item_type"),(boolean) arrayItem.get("item_isCheckedOut"),itemDueDate, itemCheckOutDate);
+                } else if (arrayItem.get("item_type").equals("Magazine")) {;
+                    libItem = new Magazine(itemID, itemName, (String) arrayItem.get("item_type"), (boolean) arrayItem.get("item_isCheckedOut"),itemDueDate, itemCheckOutDate);
                 }
             }
             else{
-                if (b.get("item_type").equals("CD")) {
-                    System.out.println("Fialed CD");
-                    libItem = new CD((String) b.get("item_id"), (String) b.get("item_name"), (String) b.get("item_type"), (String) b.get("item_artist"));
-                } else if (b.get("item_type").equals("Book")) {
-                    System.out.println("Fialed book");
-                    libItem = new Book((String) b.get("item_id"), (String) b.get("item_name"), (String) b.get("item_type"), (String) b.get("item_author"));
-                } else if (b.get("item_type").equals("DVD")) {
-                    System.out.println("Fialed dvd");
-                    libItem = new DVD((String) b.get("item_id"), (String) b.get("item_name"), (String) b.get("item_type"));
-                } else if (b.get("item_type").equals("Magazine")) {
-                    System.out.println("Fialed mag");
-                    libItem = new Magazine((String) b.get("item_id"), (String) b.get("item_name"), (String) b.get("item_type"));
+                // IF arrayItem.containsKey("item_isCheckedOut") IS FALSE, then we are using a file than has been NOT BEEN processed at least once by the application
+                // therefore difference Object constructors will be needed when instantiating InventoryItem object from the JSON data
+
+                if (arrayItem.get("item_type").equals("CD")) {
+                    libItem = new CD(itemID, itemName, (String) arrayItem.get("item_type"), (String) arrayItem.get("item_artist"));
+                } else if (arrayItem.get("item_type").equals("Book")) {
+                    libItem = new Book(itemID,itemName, (String) arrayItem.get("item_type"), (String) arrayItem.get("item_author"));
+                } else if (arrayItem.get("item_type").equals("DVD")) {
+                    libItem = new DVD(itemID, itemName, (String) arrayItem.get("item_type"));
+                } else if (arrayItem.get("item_type").equals("Magazine")) {
+                    libItem = new Magazine(itemID, itemName, (String) arrayItem.get("item_type"));
                 }
             }
 
@@ -94,9 +104,9 @@ public class FileProcessor {
         return library;
     }
 
-    //Write data to JSON file
+    //Write importedJSONData to JSON file
     //Loops through Library list, adds each item to a JSON array
-    //Uses FileWriter to write the data to the previously loaded JSON file
+    //Uses FileWriter to write the importedJSONData to the previously loaded JSON file
     public void writeData(Library l) {
         JSONObject parentOutputJObject = new JSONObject();
         JSONArray outputJArray = new JSONArray();

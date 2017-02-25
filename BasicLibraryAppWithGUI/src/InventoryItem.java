@@ -30,8 +30,12 @@ public class InventoryItem {
         name = itemName;
         type = itemType;
         checkedOut = isCheckedOut;
-        dueDate = LocalDate.parse(due);
-        checkoutDate = LocalDate.parse(checkOutDt);
+        if(dueDate != null) {
+            dueDate = LocalDate.parse(due);
+        }
+        if(checkoutDate != null){
+            checkoutDate = LocalDate.parse(checkOutDt);
+        }
     }
 
     //////////////
@@ -56,8 +60,8 @@ public class InventoryItem {
     //getter methods
     public String getCheckoutDate(){
         if(checkoutDate == null){
-            //return empty String if Date dueDate is NULL
-            return "";
+            //return null if Date dueDate is NULL
+            return null;
         }
         else{
             return  checkoutDate.toString();
@@ -65,8 +69,8 @@ public class InventoryItem {
     }
     public String getDueDate(){
         if(dueDate == null){
-            //return empty String if Date dueDate is NULL
-            return "";
+            //return null if Date dueDate is NULL
+            return null;
         }
         else{
             return dueDate.toString();
@@ -97,7 +101,7 @@ public class InventoryItem {
         } else {
             checkOutString = "Item is checked in\n";
         }
-        if(this.getDueDate() == null){
+        if(this.getDueDate() == null ){
             dueDateString = "";
         } else {
             dueDateString = "Item is due on " + this.getDueDate() + "\n";

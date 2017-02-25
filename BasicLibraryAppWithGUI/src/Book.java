@@ -14,12 +14,12 @@ public class Book extends InventoryItem {
     //Constructors
     //////////////////
 
-    Book(String idNumber, String itemName, String itemType, String authorName){
+    public Book(String idNumber, String itemName, String itemType, String authorName){
         super(idNumber, itemName, itemType);
         author = authorName;
     }
 
-    Book(String idNumber, String itemName, String itemType, String authorName, boolean isCheckedOut, String due, String ckOut){
+    public Book(String idNumber, String itemName, String itemType, String authorName, boolean isCheckedOut, String due, String ckOut){
         super(idNumber, itemName, itemType, isCheckedOut, due, ckOut);
         author = authorName;
     }
