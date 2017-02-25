@@ -58,6 +58,9 @@ public class UIController  implements Initializable{
         //disable buttons
         deactivate();
     }
+    //////////////////////////
+    // Action Event Methods
+    /////////////////////////
 
     //Load method - called when 'Load File' buttons is clicked
     @FXML
@@ -69,10 +72,6 @@ public class UIController  implements Initializable{
                 loadFile();
             }
     }
-
-    //////////////////////////
-    // Action Event Methods
-    /////////////////////////
 
     //Check-out function - displays a confirmation box, runs the checkout method on the selected inventory item, saves changes to the file, and writes updated info to the text area
     @FXML
