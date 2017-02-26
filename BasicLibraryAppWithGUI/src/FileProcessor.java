@@ -1,6 +1,7 @@
 /**
  * Created by chris on 1/20/2017.
- */
+ **/
+
 
 import java.io.*;
 
@@ -41,8 +42,10 @@ public class FileProcessor {
         return importedJSONData;
     }
 
-    //Processes JSON file importedJSONData and generates library items from JSON object info and returns a Library list
-    //Calls importFile which throws a ParseException that can be caught within the UIController's loadFile method
+    /**
+    *       Processes JSON file importedJSONData and generates library items from JSON object info and returns a Library list
+    *       Calls importFile which throws a ParseException that can be caught within the UIController's loadFile method
+     **/
     Library processJSONData() throws ParseException {
         //collection info from JSON file
         if (jsonFile.exists()) {
@@ -51,55 +54,58 @@ public class FileProcessor {
             importedJSONData = null;
         }
 
-        //loop through JSON array, creating 'Library Item" objects, adding them to an inventory list to be returned
-        for (Object jArrayItem : importedJSONData) {
+        if(importedJSONData != null) {
+            //loop through JSON array, creating 'Library Item" objects, adding them to an inventory list to be returned
+            for (Object jArrayItem : importedJSONData) {
 
-            JSONObject arrayItem = (JSONObject) jArrayItem;
+                JSONObject arrayItem = (JSONObject) jArrayItem;
 
-            //variables to be used when instantiating InventoryItem objects
-            String itemDueDate = "";
-            String itemCheckOutDate = "";
-            String itemName = (String) arrayItem.get("item_name");
-            String itemID = (String) arrayItem.get("item_id");
+                //variables to be used when instantiating InventoryItem objects
+                String itemDueDate = "";
+                String itemCheckOutDate = "";
+                boolean isCheckedOut = false;
+                String itemName = (String) arrayItem.get("item_name");
+                String itemID = (String) arrayItem.get("item_id");
+                String itemType = (String) arrayItem.get("item_type");
 
 
-            //generate library items from JSON object info and return an InventoryItem
+                //generate library items from JSON object info and return an InventoryItem
 
-            if  (arrayItem.containsKey("item_isCheckedOut")){
-                // IF arrayItem.containsKey("item_isCheckedOut"), then we are using a file than has been processed at least once by the application
-                // therefore difference Object constructors will be needed when instantiating InventoryItem object from the JSON data
+                if (arrayItem.containsKey("item_isCheckedOut")) {
+                    // IF arrayItem.containsKey("item_isCheckedOut"), then we are using a file than has been processed at least once by the application
+                    // therefore difference Object constructors will be needed when instantiating InventoryItem object from the JSON data
 
-                //Set variables unique to files that have been processed at least once by the application
-                itemDueDate = (String)arrayItem.get("item_dueDate");
-                itemCheckOutDate = (String)arrayItem.get("item_checkoutDate");
+                    //Set variables unique to files that have been processed at least once by the application
+                    itemDueDate = (String) arrayItem.get("item_dueDate");
+                    itemCheckOutDate = (String) arrayItem.get("item_checkoutDate");
+                    isCheckedOut = (boolean) arrayItem.get("item_isCheckedOut");
 
-                if (arrayItem.get("item_type").equals("CD")) {
-                    libItem = new CD(itemID, itemName, (String) arrayItem.get("item_type"), (String) arrayItem.get("item_artist"), (boolean) arrayItem.get("item_isCheckedOut"), itemDueDate, itemCheckOutDate);
-                } else if (arrayItem.get("item_type").equals("Book")) {
-                    libItem = new Book(itemID, itemName, (String) arrayItem.get("item_type"), (String) arrayItem.get("item_author"),(boolean) arrayItem.get("item_isCheckedOut"),itemDueDate, itemCheckOutDate);
-                } else if (arrayItem.get("item_type").equals("DVD")) {
-                    libItem = new DVD(itemID, itemName, (String) arrayItem.get("item_type"),(boolean) arrayItem.get("item_isCheckedOut"),itemDueDate, itemCheckOutDate);
-                } else if (arrayItem.get("item_type").equals("Magazine")) {;
-                    libItem = new Magazine(itemID, itemName, (String) arrayItem.get("item_type"), (boolean) arrayItem.get("item_isCheckedOut"),itemDueDate, itemCheckOutDate);
+                    if (arrayItem.get("item_type").equals("CD")) {
+                        libItem = new CD(itemID, itemName, itemType, (String) arrayItem.get("item_artist"),isCheckedOut, itemDueDate, itemCheckOutDate);
+                    } else if (arrayItem.get("item_type").equals("Book")) {
+                        libItem = new Book(itemID, itemName, itemType, (String) arrayItem.get("item_author"), isCheckedOut, itemDueDate, itemCheckOutDate);
+                    } else if (arrayItem.get("item_type").equals("DVD")) {
+                        libItem = new DVD(itemID, itemName, itemType, isCheckedOut, itemDueDate, itemCheckOutDate);
+                    } else if (arrayItem.get("item_type").equals("Magazine")) {
+                        libItem = new Magazine(itemID, itemName, itemType, isCheckedOut, itemDueDate, itemCheckOutDate);
+                    }
+                } else {
+                    // IF arrayItem.containsKey("item_isCheckedOut") IS FALSE, then we are using a file than has been NOT BEEN processed at least once by the application
+                    // therefore difference Object constructors will be needed when instantiating InventoryItem object from the JSON data
+
+                    if (arrayItem.get("item_type").equals("CD")) {
+                        libItem = new CD(itemID, itemName, itemType, (String) arrayItem.get("item_artist"));
+                    } else if (arrayItem.get("item_type").equals("Book")) {
+                        libItem = new Book(itemID, itemName, itemType, (String) arrayItem.get("item_author"));
+                    } else if (arrayItem.get("item_type").equals("DVD")) {
+                        libItem = new DVD(itemID, itemName, itemType);
+                    } else if (arrayItem.get("item_type").equals("Magazine")) {
+                        libItem = new Magazine(itemID, itemName, itemType);
+                    }
                 }
+                //Add inventory item to the Library list
+                library.add(libItem);
             }
-            else{
-                // IF arrayItem.containsKey("item_isCheckedOut") IS FALSE, then we are using a file than has been NOT BEEN processed at least once by the application
-                // therefore difference Object constructors will be needed when instantiating InventoryItem object from the JSON data
-
-                if (arrayItem.get("item_type").equals("CD")) {
-                    libItem = new CD(itemID, itemName, (String) arrayItem.get("item_type"), (String) arrayItem.get("item_artist"));
-                } else if (arrayItem.get("item_type").equals("Book")) {
-                    libItem = new Book(itemID,itemName, (String) arrayItem.get("item_type"), (String) arrayItem.get("item_author"));
-                } else if (arrayItem.get("item_type").equals("DVD")) {
-                    libItem = new DVD(itemID, itemName, (String) arrayItem.get("item_type"));
-                } else if (arrayItem.get("item_type").equals("Magazine")) {
-                    libItem = new Magazine(itemID, itemName, (String) arrayItem.get("item_type"));
-                }
-            }
-
-            //Add inventory item to the Library list
-            library.add(libItem);
         }
         return library;
     }

@@ -17,7 +17,7 @@ import org.json.simple.parser.ParseException;
 
 /**
  * Created by Christopher on 2/2/2017.
- */
+ **/
 public class UIController  implements Initializable{
 
     //variables
@@ -58,12 +58,12 @@ public class UIController  implements Initializable{
         //disable buttons
         deactivate();
     }
-    
+
     //////////////////////////
     // Action Event Methods
     /////////////////////////
 
-    //Load method - called when 'Load File' buttons is clicked
+    //Load method - called when 'Load Library File' button is clicked
     @FXML
      void load(ActionEvent e) {
             if (!fileLoaded) {
@@ -112,12 +112,15 @@ public class UIController  implements Initializable{
     ////////////
     // Methods
     ////////////
-
-    //Load JSON files
-    //Uses FileChooser class to select a file
-    //Catches parse exceptions (incorrect filetype or poorly formatted JSON data)
-    //Instantiates a FileProcessor object and calls it's processJSONData method which processes JSON file data and generates library items from JSON object info and returns a Library list
-    //Loops through the Library (library) list and adds an entry to each InventoryItem to the comboBoxForInventoryItemSelection
+/**
+ *      Method name:  loadFile()
+ *      This method is called when 'Load Library File' button is clicked in the UI
+ *      Loads JSON files
+ *      Uses FileChooser class to select a file
+ *      Catches parse exceptions (incorrect filetype or poorly formatted JSON data)
+ *      Instantiates a FileProcessor object and calls it's processJSONData method which processes JSON file data and generates library items from JSON object info and returns a Library list
+ *      Loops through the Library (library) list and adds an entry to each InventoryItem to the comboBoxForInventoryItemSelection
+ **/
     private void loadFile(){
         try {
             FileChooser fileChooser = new FileChooser();
@@ -132,7 +135,7 @@ public class UIController  implements Initializable{
                 loadedJsonFile = new FileProcessor(file);
                 library = loadedJsonFile.processJSONData();
 
-                //Loops through the Library (library) list and adds an entry to each InventoryItem to the comboBoxForInventoryItemSelectio
+                //Loops through the Library (library) list and adds an entry to each InventoryItem to the comboBoxForInventoryItemSelection
                 for (InventoryItem i : library) {
                     comboBoxForInventoryItemSelection.getItems().add(i.getID() + " : " + i.getName() + " : " + i.getType());
                 }
@@ -180,9 +183,9 @@ public class UIController  implements Initializable{
     //Populates "Check out Text area" with a list of checked out items
     private void writeToCheckOutTextArea(){
         String info = "";
-        for(InventoryItem i : library){
-            if(i.isCheckedOut()){
-                info += i.getName() + "(" + i.getType() + ") is checked out with the due date of " + i. getDueDate() + "\n";
+        for(InventoryItem item : library){
+            if(item.isCheckedOut()){
+                info += item.getName() + "(" + item.getType() + ") is checked out with the due date of " + item. getDueDate() + "\n";
             }
         }
         checkedOutTextArea.setText(info);
