@@ -191,11 +191,11 @@ public class UIController  implements Initializable{
     }
 
     //Save method - is called each time a change of state (checkin/oyt occurs)
-    //Calls the FileProcessor (loadedJsonFile) writeData method,
+    //Calls the FileProcessor (loadedJsonFile) writeJSONData method,
     // which writes data to JSON file and loops through Library list, adding each InventoryItem to a JSON array
     private void save(){
         if (fileLoaded) {
-            loadedJsonFile.writeData(library);
+            loadedJsonFile.writeJSONData(library);
             writeToCheckOutTextArea();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
