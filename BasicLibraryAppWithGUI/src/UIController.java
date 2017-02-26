@@ -119,7 +119,7 @@ public class UIController  implements Initializable{
  *      Uses FileChooser class to select a file
  *      Catches parse exceptions (incorrect filetype or poorly formatted JSON data)
  *      Instantiates a FileProcessor object and calls it's processJSONData method which processes JSON file data and generates library items from JSON object info and returns a Library list
- *      Loops through the Library (library) list and adds an entry to each InventoryItem to the comboBoxForInventoryItemSelection
+ *      Loops through the Library (library) list and adds an entry for each InventoryItem to the comboBoxForInventoryItemSelection
  **/
     private void loadFile(){
         try {
