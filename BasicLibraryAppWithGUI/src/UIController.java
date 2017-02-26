@@ -144,7 +144,6 @@ public class UIController  implements Initializable{
                 writeToCheckOutTextArea();
             }
         }catch(ParseException e){
-            System.out.println("Parse Exception has been caught");
             deactivate();
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("File load error");
