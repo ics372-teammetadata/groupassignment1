@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 
 import java.io.File;
 import java.net.URL;
+import java.time.format.DateTimeParseException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -149,6 +150,13 @@ public class UIController  implements Initializable{
             alert.setTitle("File load error");
             alert.setHeaderText(null);
             alert.setContentText("An incorrect file type was detected.  Please load a properly formatted JSON file.");
+            Optional<ButtonType> result = alert.showAndWait();
+        }catch(DateTimeParseException e){
+            deactivate();
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("File load error");
+            alert.setHeaderText(null);
+            alert.setContentText("An improperty formated Date was detected.  Please load a properly formatted JSON file.");
             Optional<ButtonType> result = alert.showAndWait();
         }
     }

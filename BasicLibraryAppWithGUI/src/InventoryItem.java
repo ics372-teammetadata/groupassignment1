@@ -3,9 +3,10 @@ import java.time.Period;
 
 public class InventoryItem {
 
-    //////////////
-    // Variables
-    //////////////
+    /**
+     *      Variables
+     */
+
 
     protected String id, name, type;
     protected LocalDate checkoutDate = null;
@@ -15,9 +16,14 @@ public class InventoryItem {
     protected String checkOutString;
     protected String dueDateString;
 
-    //////////////////
-    //Constructors
-    //////////////////
+
+    /**
+     *      Basic Constructor
+     *
+     *      @param idNumber
+     *      @param itemName
+     *      @param itemType
+     */
 
     InventoryItem(String idNumber, String itemName, String itemType){
         id = idNumber;
@@ -25,6 +31,16 @@ public class InventoryItem {
         type = itemType;
     }
 
+    /**
+     *      Constructor for InventoryItem created from previously loaded file
+     *
+     *      @param idNumber
+     *      @param itemName
+     *      @param itemType
+     *      @param isCheckedOut
+     *      @param due
+     *      @param checkOutDt
+     */
     InventoryItem(String idNumber, String itemName, String itemType, boolean isCheckedOut, String due, String checkOutDt){
         id = idNumber;
         name = itemName;
@@ -38,11 +54,10 @@ public class InventoryItem {
         }
     }
 
-    //////////////
-    // Methods
-    //////////////
+    /**
+     *      Check in/out related methods
+     */
 
-    //checkin-out methods
     public void checkOut(){
         checkedOut = true;
         checkoutDate = LocalDate.now();
@@ -57,7 +72,10 @@ public class InventoryItem {
         return checkedOut;
     }
 
-    //getter methods
+    /**
+     *      Getters
+     */
+
     public String getCheckoutDate(){
         if(checkoutDate == null){
             //return null if Date dueDate is NULL
@@ -94,7 +112,9 @@ public class InventoryItem {
     }
 
 
-    //toString method, used by UI textArea1 to display information about an individual item to the user
+    /**
+     *      toString method, used by UI textArea1 to display information about an individual item to the user
+     */
     public String toString(){
         if(this.isCheckedOut()){
             checkOutString = "Item is checked out\n";
