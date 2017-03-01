@@ -147,7 +147,7 @@ public class FileProcessor {
             file.write(parentOutputJObject.toJSONString());
             file.flush();
         } catch (IOException e) {
-            System.out.println("An IOexception was thrown in writeJSONData method");;
+            System.out.println("An IOexception was thrown in writeJSONData method ");;
         }
     }
 
