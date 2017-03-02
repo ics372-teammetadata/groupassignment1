@@ -41,6 +41,7 @@ public class InventoryItem {
      *      @param due
      *      @param checkOutDt
      */
+
     InventoryItem(String idNumber, String itemName, String itemType, boolean isCheckedOut, String due, String checkOutDt){
         id = idNumber;
         name = itemName;

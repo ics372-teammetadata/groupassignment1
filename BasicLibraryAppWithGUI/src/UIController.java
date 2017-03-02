@@ -57,7 +57,7 @@ public class UIController  implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb){
         //disable buttons
-        deactivate();
+        deactivateUIElements();
     }
 
     //////////////////////////
@@ -113,26 +113,42 @@ public class UIController  implements Initializable{
     ////////////
     // Methods
     ////////////
-/**
- *      Method name:  loadFile()
- *      This method is called when 'Load Library File' button is clicked in the UI
- *      Loads JSON files
- *      Uses FileChooser class to select a file
- *      Catches parse exceptions (incorrect filetype or poorly formatted JSON data)
- *      Instantiates a FileProcessor object and calls it's processJSONData method which processes JSON file data and generates library items from JSON object info and returns a Library list
- *      Loops through the Library (library) list and adds an entry for each InventoryItem to the comboBoxForInventoryItemSelection
- **/
+
+    /**
+     *      Method name:  displayWarning()
+     *      Displays a warning message to the user
+     *      @param title
+     *      @param text
+     */
+    private void displayWarning(String title, String text){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(text);
+        Optional<ButtonType> result = alert.showAndWait();
+    }
+
+
+    /**
+     *      Method name:  loadFile()
+     *      This method is called when 'Load Library File' button is clicked in the UI
+     *      Loads JSON files
+     *      Uses FileChooser class to select a file
+     *      Catches parse exceptions (incorrect filetype or poorly formatted JSON data)
+     *      Instantiates a FileProcessor object and calls it's processJSONData method which processes JSON file data and generates library items from JSON object info and returns a Library list
+     *      Loops through the Library (library) list and adds an entry for each InventoryItem to the comboBoxForInventoryItemSelection
+     **/
     private void loadFile(){
         try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open JSON File");
             file = fileChooser.showOpenDialog(new Stage());
             if (file == null) {
-                //deactivate buttons and hide text
-                deactivate();
+                //deactivateUIElements buttons and hide text
+                deactivateUIElements();
             } else {
                 fileLoaded = true;
-                activate();
+                activateUIElements();
                 loadedJsonFile = new FileProcessor(file);
                 library = loadedJsonFile.processJSONData();
 
@@ -145,19 +161,11 @@ public class UIController  implements Initializable{
                 writeToCheckOutTextArea();
             }
         }catch(ParseException e){
-            deactivate();
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("File load error");
-            alert.setHeaderText(null);
-            alert.setContentText("An incorrect file type was detected.  Please load a properly formatted JSON file.");
-            Optional<ButtonType> result = alert.showAndWait();
+            deactivateUIElements();
+            displayWarning("File load error","An incorrect file type was detected.  Please load a properly formatted JSON file.");
         }catch(DateTimeParseException e){
-            deactivate();
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("File load error");
-            alert.setHeaderText(null);
-            alert.setContentText("An improperty formated Date was detected.  Please load a properly formatted JSON file.");
-            Optional<ButtonType> result = alert.showAndWait();
+            deactivateUIElements();
+            displayWarning("File load error","An improperLy formated Date was detected.  Please load a properly formatted JSON file.");
         }
     }
 
@@ -206,11 +214,7 @@ public class UIController  implements Initializable{
             loadedJsonFile.writeJSONData(library);
             writeToCheckOutTextArea();
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Library not found");
-            alert.setHeaderText(null);
-            alert.setContentText("Please select a file by clicking the 'Load' button");
-            alert.showAndWait();
+            displayWarning("Library not found", "Please select a file by clicking the 'Load' button");
         }
     }
 
@@ -223,7 +227,7 @@ public class UIController  implements Initializable{
         reload = true;
         mainTextAreaForInventoryItemDescription.setText("");
         checkedOutTextArea.setText("");
-        deactivate();
+        deactivateUIElements();
         comboBoxForInventoryItemSelection.setDisable(false);
         comboBoxForInventoryItemSelection.setPromptText("Reload Library");
         int sz = comboBoxForInventoryItemSelection.getItems().size();
@@ -234,7 +238,7 @@ public class UIController  implements Initializable{
     }
 
     //Activates buttons once a file is loaded
-    private void activate(){
+    private void activateUIElements(){
         comboBoxForInventoryItemSelection.setDisable(false);
         mainTextAreaForInventoryItemDescription.setDisable(false);
         checkedOutTextArea.setDisable(false);
@@ -243,7 +247,7 @@ public class UIController  implements Initializable{
     }
 
     //Deactivates buttons and hide text when no load is loaded or if a file load is cancelled
-    private void deactivate(){
+    private void deactivateUIElements(){
         comboBoxForInventoryItemSelection.setDisable(true);
         mainTextAreaForInventoryItemDescription.setDisable(true);
         checkedOutTextArea.setDisable(true);
