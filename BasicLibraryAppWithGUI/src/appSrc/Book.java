@@ -28,7 +28,7 @@ public class Book extends InventoryItem {
     // Methods
     //////////////
 
-    String getAuthor(){
+    public String getAuthor(){
         return author;
     }
 

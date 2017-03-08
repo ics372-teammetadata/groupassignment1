@@ -12,16 +12,13 @@ public class UITest extends TestCase {
         try {
             Stage s = new Stage();
         }catch(ExceptionInInitializerError e){
-            System.out.println("Caught ExceptionInInitializerError");
-        }
+            System.out.println("Caught ExceptionInInitializerError");}
     }
 
     public void testMain() throws Exception {
         try{
             Application.launch("testArgs");
         }catch(RuntimeException e){
-            System.out.println("Caught Runtime Exception");
-        }
+            System.out.println("Caught Runtime Exception");}
     }
-
 }
