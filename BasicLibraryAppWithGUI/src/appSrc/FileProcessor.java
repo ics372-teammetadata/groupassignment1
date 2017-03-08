@@ -1,10 +1,9 @@
-/**
+package appSrc; /**
  * Created by chris on 1/20/2017.
  **/
 
 
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 import java.time.format.DateTimeParseException;
 
 import org.json.simple.*;
@@ -39,7 +38,7 @@ public class FileProcessor {
      *      Called by the UIController class
      */
 
-    FileProcessor(File f){
+    public FileProcessor(File f){
         jsonFile = f;
     }
     
@@ -52,7 +51,7 @@ public class FileProcessor {
      *       which displays a meaningful error message to the user
      **/
 
-    Library processJSONData() throws ParseException, DateTimeParseException {
+    public Library processJSONData() throws ParseException, DateTimeParseException {
         //collection info from JSON file
         if (jsonFile.exists()) {
             try {

@@ -1,17 +1,18 @@
+package appSrc;
+
 /**
  * Created by chris on 1/21/2017.
  */
-public class Magazine extends InventoryItem {
+public class DVD extends InventoryItem {
 
     //////////////////
     //Constructors
     //////////////////
 
-    Magazine(String idNumber, String itemName, String itemType){
+    public DVD (String idNumber, String itemName, String itemType){
         super(idNumber, itemName, itemType);
     }
-
-    Magazine(String idNumber, String itemName, String itemType, boolean isCheckedOut, String due, String ckOut){
+    public DVD(String idNumber, String itemName, String itemType, boolean isCheckedOut, String due, String ckOut){
         super(idNumber, itemName, itemType, isCheckedOut, due, ckOut);
     }
 

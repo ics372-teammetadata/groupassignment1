@@ -1,8 +1,9 @@
+package appSrc;
+
 /**
  * Created by chris on 1/20/2017.
  */
 
-import java.time.LocalDate;
 public class CD extends InventoryItem {
     private String artist = "";
 
@@ -10,11 +11,11 @@ public class CD extends InventoryItem {
     //Constructors
     //////////////////
 
-    CD (String idNumber, String itemName, String itemType, String artistName){
+    public CD (String idNumber, String itemName, String itemType, String artistName){
         super(idNumber, itemName, itemType);
         artist = artistName;
     }
-    CD (String idNumber, String itemName, String itemType, String artistName, boolean isCheckedOut, String due, String ckOut){
+    public CD (String idNumber, String itemName, String itemType, String artistName, boolean isCheckedOut, String due, String ckOut){
         super(idNumber, itemName, itemType, isCheckedOut, due, ckOut);
         artist = artistName;
     }
@@ -23,7 +24,7 @@ public class CD extends InventoryItem {
     // Methods
     //////////////
 
-    String getArtist(){
+    public String getArtist(){
         return artist;
     }
 

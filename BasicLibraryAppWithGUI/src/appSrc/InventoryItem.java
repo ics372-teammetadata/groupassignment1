@@ -1,3 +1,5 @@
+package appSrc;
+
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -25,7 +27,7 @@ public class InventoryItem {
      *      @param itemType
      */
 
-    InventoryItem(String idNumber, String itemName, String itemType){
+    public InventoryItem(String idNumber, String itemName, String itemType){
         id = idNumber;
         name = itemName;
         type = itemType;
@@ -42,7 +44,7 @@ public class InventoryItem {
      *      @param checkOutDt
      */
 
-    InventoryItem(String idNumber, String itemName, String itemType, boolean isCheckedOut, String due, String checkOutDt){
+    public InventoryItem(String idNumber, String itemName, String itemType, boolean isCheckedOut, String due, String checkOutDt){
         id = idNumber;
         name = itemName;
         type = itemType;

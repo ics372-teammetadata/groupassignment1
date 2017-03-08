@@ -1,5 +1,8 @@
+package ui;
 
-
+import appSrc.FileProcessor;
+import appSrc.InventoryItem;
+import appSrc.Library;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -66,7 +69,7 @@ public class UIController  implements Initializable{
 
     //Load method - called when 'Load Library File' button is clicked
     @FXML
-     void load(ActionEvent e) {
+     public void load(ActionEvent e) {
             if (!fileLoaded) {
                 loadFile();
             } else {
@@ -77,7 +80,7 @@ public class UIController  implements Initializable{
 
     //Check-out function - displays a confirmation box, runs the checkout method on the selected inventory item, saves changes to the file, and writes updated info to the text area
     @FXML
-    void checkOutItem(ActionEvent event){
+    public void checkOutItem(ActionEvent event){
         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
         a.setTitle("Check-out");
         a.setHeaderText(null);
@@ -91,7 +94,7 @@ public class UIController  implements Initializable{
     }
     //Check-in function - displays a confirmation box, runs the checkin method on the selected inventory item, saves changes to the file, and writes updated info to the text area
     @FXML
-    void returnItem(ActionEvent event){
+    public void returnItem(ActionEvent event){
         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
         a.setTitle("Check-in");
         a.setHeaderText(null);
@@ -106,7 +109,7 @@ public class UIController  implements Initializable{
 
     //Called when a new combo-box item is selected - Populates the text area with information about the select inventory item
     @FXML
-    void getItemInfo(ActionEvent event){
+    public void getItemInfo(ActionEvent event){
         writeToTextArea();
     }
 
