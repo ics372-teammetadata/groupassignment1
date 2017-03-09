@@ -6,6 +6,6 @@ import junit.framework.TestCase;
 public class LibraryTest extends TestCase {
     public void testGetItemByID() throws Exception {
         Library l = new Library();
-        assertNotNull(l);
+        assertNull(l.getItemByID("1234"));
     }
 }
