@@ -1,4 +1,4 @@
-package unitTests;
+
 
 import junit.framework.TestCase;
 
@@ -7,7 +7,7 @@ import junit.framework.TestCase;
  */
 public class DVDTest extends TestCase {
     public void testToString() throws Exception {
-        appSrc.DVD d = new appSrc.DVD("1234", "Die Hard", "DVD");
+        DVD d = new DVD("1234", "Die Hard", "DVD");
         assertNotNull(d.toString());
     }
 }

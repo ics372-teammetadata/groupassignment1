@@ -1,6 +1,3 @@
-package unitTests;
-import appSrc.Magazine;
-
 import junit.framework.TestCase;
 
 /**

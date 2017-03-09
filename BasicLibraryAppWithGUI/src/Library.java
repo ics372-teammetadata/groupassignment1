@@ -1,5 +1,3 @@
-package appSrc;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -9,7 +7,7 @@ import java.util.Iterator;
 
 //Inventory Item List Container
 public class Library extends ArrayList<InventoryItem>{
-    //lookup Inventory Item by ID and return an InventoryItem if a match is found, or else null is returned
+    //lookup Inventory Item by ID and return an InventoryItem if cardRepo match is found, or else null is returned
     public InventoryItem getItemByID(String s){
         for (Iterator iterator = this.iterator();iterator.hasNext();){
             InventoryItem item = (InventoryItem) iterator.next();

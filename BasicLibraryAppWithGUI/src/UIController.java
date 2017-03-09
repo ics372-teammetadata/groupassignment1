@@ -1,8 +1,3 @@
-package ui;
-
-import appSrc.FileProcessor;
-import appSrc.InventoryItem;
-import appSrc.Library;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

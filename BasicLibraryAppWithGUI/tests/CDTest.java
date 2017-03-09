@@ -1,7 +1,5 @@
-package unitTests;
-
 import junit.framework.TestCase;
-import appSrc.CD;
+
 
 /**
  * Created by Christopher on 3/7/2017.

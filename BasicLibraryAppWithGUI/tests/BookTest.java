@@ -1,6 +1,3 @@
-package unitTests;
-
-import appSrc.Book;
 import junit.framework.TestCase;
 
 import java.time.LocalDate;

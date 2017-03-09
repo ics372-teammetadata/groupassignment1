@@ -1,4 +1,4 @@
-package appSrc; /**
+/**
  * Created by chris on 1/20/2017.
  **/
 
@@ -44,11 +44,11 @@ public class FileProcessor {
     
     /**
      *      Method name : processJSONData
-     *      Retrieves JSON importedJSONData from a file (which is received through the constructor)
+     *      Retrieves JSON importedJSONData from cardRepo file (which is received through the constructor)
      *      This is called by the FileProcesspor (this) processJSONData method
-     *      Processes JSON file importedJSONData and generates library items from JSON object info and returns a Library list
-     *      throws a ParseException and DateTimeParseException that can be caught within the UIController's loadFile method,
-     *       which displays a meaningful error message to the user
+     *      Processes JSON file importedJSONData and generates library items from JSON object info and returns cardRepo Library list
+     *      throws cardRepo ParseException and DateTimeParseException that can be caught within the UIController's loadFile method,
+     *       which displays cardRepo meaningful error message to the user
      **/
 
     public Library processJSONData() throws ParseException, DateTimeParseException {
@@ -78,7 +78,7 @@ public class FileProcessor {
 
                     //generate library items from JSON object info and return an InventoryItem
                     if (arrayItem.containsKey(ITEM_ISCHECKEDOUT)) {
-                        // IF arrayItem.containsKey(ITEM_ISCHECKEDOUT), then we are using a file than has been processed at least once by the application
+                        // IF arrayItem.containsKey(ITEM_ISCHECKEDOUT), then we are using cardRepo file than has been processed at least once by the application
                         // therefore difference Object constructors will be needed when instantiating InventoryItem object from the JSON data
 
                         //Set variables unique to files that have been processed at least once by the application
@@ -96,7 +96,7 @@ public class FileProcessor {
                             libItem = new Magazine(itemID, itemName, itemType, isCheckedOut, itemDueDate, itemCheckOutDate);
                         }
                     } else {
-                        // IF arrayItem.containsKey(ITEM_ISCHECKEDOUT) IS FALSE, then we are using a file than has been NOT BEEN processed at least once by the application
+                        // IF arrayItem.containsKey(ITEM_ISCHECKEDOUT) IS FALSE, then we are using cardRepo file than has been NOT BEEN processed at least once by the application
                         // therefore difference Object constructors will be needed when instantiating InventoryItem object from the JSON data
 
                         if (arrayItem.get(ITEM_TYPE).equals(CD)) {
@@ -124,7 +124,7 @@ public class FileProcessor {
      *      @param lib
      * 
      *      Saves Inventory Items to the previously loaded JSON file
-     *      Loops through Library list, adds each item to a JSON array
+     *      Loops through Library list, adds each item to cardRepo JSON array
      *      Uses FileWriter to write the InventoryItem data to the previously loaded JSON file
      */
 
@@ -160,4 +160,14 @@ public class FileProcessor {
         }
     }
 
+    /**
+     *   processXMLData method
+     *
+     *   Reads XML data from a file
+     *
+     */
+
+    public void processXMLData(){
+
+    }
 }

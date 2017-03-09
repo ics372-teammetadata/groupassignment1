@@ -1,5 +1,3 @@
-package ui;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,10 +11,10 @@ import javafx.stage.Stage;
 public class UI extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("ui/UI.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("UI.fxml"));
         GridPane grid = loader.load();
         UIController controller = loader.getController();
-        primaryStage.getIcons().add(new Image("/appSrc/images.jpg"));
+        primaryStage.getIcons().add(new Image("/images.jpg"));
         primaryStage.setTitle("Basic Library System");
         Scene scene = new Scene(grid);
         primaryStage.setScene(scene);

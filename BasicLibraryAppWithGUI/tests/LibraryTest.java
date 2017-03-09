@@ -1,5 +1,3 @@
-package unitTests;
-
 import junit.framework.TestCase;
 
 /**
@@ -7,7 +5,7 @@ import junit.framework.TestCase;
  */
 public class LibraryTest extends TestCase {
     public void testGetItemByID() throws Exception {
-        appSrc.Library l = new appSrc.Library();
+        Library l = new Library();
         assertNotNull(l);
     }
 }
