@@ -47,6 +47,7 @@ public class InventoryItem {
         name = itemName;
         type = itemType;
         checkedOut = isCheckedOut;
+
         if(due != null) {
             dueDate = LocalDate.parse(due);
         }

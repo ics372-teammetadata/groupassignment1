@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 
 /**
@@ -6,10 +8,10 @@ import java.util.Iterator;
  */
 
 //Inventory Item List Container
-public class Library extends ArrayList<InventoryItem>{
+public class Library extends ArrayList<InventoryItem> {
     //lookup Inventory Item by ID and return an InventoryItem if cardRepo match is found, or else null is returned
-    public InventoryItem getItemByID(String s){
-        for (Iterator iterator = this.iterator();iterator.hasNext();){
+    public InventoryItem getItemByID(String s) {
+        for (Iterator iterator = this.iterator(); iterator.hasNext(); ) {
             InventoryItem item = (InventoryItem) iterator.next();
             if (item.getID().equals(s)) {
                 return item;
@@ -17,4 +19,14 @@ public class Library extends ArrayList<InventoryItem>{
         }
         return null;
     }
+
+    //sorts Library list by Name field
+    public void sort() {
+        Collections.sort(this,new Comparator<InventoryItem>()
+        {
+            public int compare (InventoryItem o1, InventoryItem o2){
+            return o1.getName().toUpperCase().compareTo(o2.getName().toUpperCase());
+        }
+    });
+   }
 }
