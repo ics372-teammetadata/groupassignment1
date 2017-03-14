@@ -15,6 +15,7 @@ public class InventoryItem {
     protected int daysUntilDue = 0;
     protected String checkOutString;
     protected String dueDateString;
+    protected String checkedOutTo = "123";
 
 
     /**
@@ -112,6 +113,7 @@ public class InventoryItem {
     public String getName(){
         return name;
     }
+    public String getCheckedOutTo(){return checkedOutTo;}
 
 
     /**

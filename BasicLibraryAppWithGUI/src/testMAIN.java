@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 public class testMAIN
 {
-    //static CardRepo cardRepo = new CardRepo();
+    //static MemberList cardRepo = new MemberList();
 //    public static void main(String[] args)
 //    {
 //        cardRepo.addCard("123");
@@ -25,7 +25,7 @@ public class testMAIN
 //
 //        appSrc.testMAIN test = new appSrc.testMAIN();
 //
-//        MemberData abc = test.validateUser("456");
+//        Member abc = test.validateUser("456");
 //
 //        if (abc == null)
 //        {
@@ -40,7 +40,7 @@ public class testMAIN
 
 
 
-//    public MemberData validateUser(String ID)
+//    public Member validateUser(String ID)
 //    {
 //        return cardRepo.getMemberData(ID);
 //    }
@@ -143,6 +143,18 @@ public class testMAIN
 //            FileProcessor fileProcessor = new FileProcessor(file);
 //            fileProcessor.processXMLData();
 
+//
+            File file = new File("c:/temp/members.xml");
+            FileProcessor fl = new FileProcessor(file);
+            Member member;
+
+            try {
+                MemberList m = fl.processXMLMemberList();
+                member = m.getMemberByCardNumber("667");
+                System.out.println(member.getName());
+            }catch(Exception e){
+                System.out.println("Something happened");
+            }
         }
 
     }

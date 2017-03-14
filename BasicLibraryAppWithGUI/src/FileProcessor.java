@@ -31,7 +31,9 @@ public class FileProcessor {
      */
 
     private Library library = new Library();
+    private MemberList memberList = new MemberList();
     private InventoryItem libItem = null;
+    private Member member = null;
     private File file;
     private JSONObject jsonObject = null;
 
@@ -74,6 +76,10 @@ public class FileProcessor {
     String itemDueDate = null;
     String itemCheckOutDate = null;
     boolean isCheckedOut = false;
+
+    String memberID;
+    String memberName;
+    String memberCardNumber;
 
     /**
      *      Constructor
@@ -342,5 +348,35 @@ public class FileProcessor {
                 StreamResult result = new StreamResult(file);
                 transformer.transform(source, result);
             }
+    }
+
+    /**
+     *  Method name: processXMLData()
+     *
+     *  Reads XML data from a file
+     *  Throws ParserConfigurationException, SAXException, IOException that is caught by the UIControlloer save() method
+     */
+
+    public MemberList processXMLMemberList() throws ParserConfigurationException, SAXException, IOException, DateTimeParseException{
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document doc = builder.parse(file);
+
+        NodeList members = doc.getElementsByTagName("Member");
+        //loop through each parent element
+        for(int i = 0; i < members.getLength(); i++) {
+            Node node = members.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element libItemElement = (Element) node;
+                memberID = libItemElement.getAttribute("id");
+                memberName = libItemElement.getAttribute("name");
+                memberCardNumber = libItemElement.getAttribute("cardNumber");
+            }
+            member = new Member(memberID, memberName, memberCardNumber);
+            memberList.add(member);
+        }
+
+
+        return memberList;
     }
 }

@@ -33,6 +33,7 @@ public class UIController implements Initializable{
     private boolean fileLoaded = false;
     private File file = null;
     private boolean reload = false;
+    private String loggedOnUser;
 
     //FXML varialbles
     @FXML
@@ -57,6 +58,8 @@ public class UIController implements Initializable{
     private Label selectedLabel;
     @FXML
     private Label checkOutLabel;
+    @FXML
+    private Button logInButton;
 
     /**
      * Method name:  initialize()
@@ -128,6 +131,7 @@ public class UIController implements Initializable{
             save();
             writeToTextArea();
         }
+
     }
 
     /**
@@ -139,11 +143,15 @@ public class UIController implements Initializable{
 
     @FXML
     public void returnItem(ActionEvent event){
-        Optional result = basicConfirmationWarning("Check-in", "Are you sure you want to return this item?  Changes will be automatically saved to the current library file.");
-        if (result.get() == ButtonType.OK){
-            item.checkIn();
-            save();
-            writeToTextArea();
+        if(loggedOnUser.equals(item.getCheckedOutTo())){
+            Optional result = basicConfirmationWarning("Check-in", "Are you sure you want to return this item?  Changes will be automatically saved to the current library file.");
+            if (result.get() == ButtonType.OK){
+                item.checkIn();
+                save();
+                writeToTextArea();
+            }
+        }else{
+            basicConfirmationWarning("Unable to return item", "This item is checked out to another user");
         }
     }
 
@@ -365,6 +373,32 @@ public class UIController implements Initializable{
         }
         else {
             displayWarning("Library not found", "Please select a file by clicking the 'Load' button");
+        }
+    }
+
+
+    @FXML
+    void logOn(ActionEvent event) {
+
+        File file = new File("c:/temp/members.xml");
+        FileProcessor fl = new FileProcessor(file);
+        Member member;
+
+        TextInputDialog dialog = new TextInputDialog("667");
+        dialog.setTitle("Enter library card #");
+        dialog.setHeaderText("Enter your library card number");
+        dialog.setContentText("Please, enter your library card number:");
+
+        // Traditional way to get the response value.
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            try {
+                MemberList m = fl.processXMLMemberList();
+                member = m.getMemberByCardNumber(result.get());
+                System.out.println(member.getName());
+            }catch(Exception e){
+                System.out.println("Something happened");
+            }
         }
     }
 
