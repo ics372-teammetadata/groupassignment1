@@ -20,7 +20,7 @@ public class Library extends ArrayList<InventoryItem> {
         return null;
     }
 
-    //sorts Library list by Name field
+    //sorts Library list by Name field.
     public void sort() {
         Collections.sort(this,new Comparator<InventoryItem>()
         {
