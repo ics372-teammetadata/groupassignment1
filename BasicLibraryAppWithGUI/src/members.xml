@@ -1,4 +1,5 @@
 <MemberData>
-<Member id="123" name="Don Trumple" cardNumber="666" ></Member>
-<Member id="456" name="Max Hedrom" cardNumber="667" ></Member>
+    <Member id="123" name="Don Trumple" cardNumber="555" ></Member>
+    <Member id="456" name="Max Hedrom" cardNumber="667" ></Member>
+    <Member id="789" name="Ricky Rubio" cardNumber="111222" ></Member>
 </MemberData>

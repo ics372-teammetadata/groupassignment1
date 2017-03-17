@@ -386,8 +386,10 @@ public class UIController implements Initializable{
 
     @FXML
     void logOn(ActionEvent event) {
-
-        File file = new File("c:/temp/members.xml");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open members.xml File");
+        file = fileChooser.showOpenDialog(new Stage());
+        //File file = new File("c:/temp/members.xml");
         FileProcessor fl = new FileProcessor(file);
 
         TextInputDialog dialog = new TextInputDialog("667");
