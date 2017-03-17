@@ -15,7 +15,7 @@ public class InventoryItem {
     protected int daysUntilDue = 0;
     protected String checkOutString;
     protected String dueDateString;
-    protected String checkedOutTo = "123";
+    protected String checkedOutTo = "668";
 
 
     /**

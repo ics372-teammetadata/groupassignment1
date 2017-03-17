@@ -33,9 +33,11 @@ public class UIController implements Initializable{
     private boolean fileLoaded = false;
     private File file = null;
     private boolean reload = false;
-    private String loggedOnUser;
+    private Member loggedOnUser;
 
     //FXML varialbles
+    @FXML
+    private TabPane libTabPane;
     @FXML
     private GridPane libraryUIGridPane;
     @FXML
@@ -60,7 +62,12 @@ public class UIController implements Initializable{
     private Label checkOutLabel;
     @FXML
     private Button logInButton;
-
+    @FXML
+    private Tab loginTab;
+    @FXML
+    private GridPane loginPane;
+    @FXML
+    private Tab libraryTab;
     /**
      * Method name:  initialize()
      *
@@ -274,16 +281,16 @@ public class UIController implements Initializable{
             }
         }catch(ParserConfigurationException e){
             deactivateUIElements();
-            displayWarning("File load error (ParserConfigurationException)","An improperLy formated file was detected.  Please load a properly formatted XML file.");
+            displayWarning("File load error (ParserConfigurationException)","An improperly formatted file was detected.  Please load a properly formatted XML file.");
         }catch(SAXException e){
             deactivateUIElements();
-            displayWarning("File load error (SAXException)","An improperLy formated file was detected.  Please load a properly formatted XML file.");
+            displayWarning("File load error (SAXException)","An improperly formatted file was detected.  Please load a properly formatted XML file.");
         }catch(IOException e){
             deactivateUIElements();
-            displayWarning("File load error (IOException)","An improperLy formated file was detected.  Please load a properly formatted XML file.");
+            displayWarning("File load error (IOException)","An improperly formatted file was detected.  Please load a properly formatted XML file.");
         }catch(DateTimeParseException e){
             deactivateUIElements();
-            displayWarning("File load error","An improperLy formated Date was detected.  Please load a properly formatted XML file.");
+            displayWarning("File load error","An improperly formatted Date was detected.  Please load a properly formatted XML file.");
         }
     }
 
@@ -382,7 +389,6 @@ public class UIController implements Initializable{
 
         File file = new File("c:/temp/members.xml");
         FileProcessor fl = new FileProcessor(file);
-        Member member;
 
         TextInputDialog dialog = new TextInputDialog("667");
         dialog.setTitle("Enter library card #");
@@ -394,10 +400,20 @@ public class UIController implements Initializable{
         if (result.isPresent()){
             try {
                 MemberList m = fl.processXMLMemberList();
-                member = m.getMemberByCardNumber(result.get());
-                System.out.println(member.getName());
-            }catch(Exception e){
-                System.out.println("Something happened");
+                if(m.getMemberByCardNumber(result.get()) != null) {
+                    loadButton.setDisable(false);
+                    libraryTab.setDisable(false);
+                    loginTab.setDisable(true);
+                    libTabPane.getSelectionModel().select(libraryTab);
+                    loggedOnUser = m.getMemberByCardNumber(result.get());
+                    System.out.println(loggedOnUser.getName());
+                }
+            }catch(ParserConfigurationException e){
+                displayWarning("File load error (ParserConfigurationException)","An improperly formatted file was detected.  Please load a properly formatted XML file.");
+            }catch(SAXException e){
+                displayWarning("File load error (SAXException)","An improperly formatted file was detected.  Please load a properly formatted XML file.");
+            }catch(IOException e){
+                displayWarning("File load error (IOException)","An improperly formatted file was detected.  Please load a properly formatted XML file.");
             }
         }
     }
