@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<TabPane fx:id="libTabPane" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UIController">
+<TabPane fx:id="libTabPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UIController">
    <tabs>
       <Tab fx:id="loginTab" closable="false" text="Log-in">
         <content>
@@ -50,7 +50,7 @@
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </padding>
             
-                      <GridPane hgap="5" vgap="5" GridPane.rowIndex="11">
+                      <GridPane hgap="5" vgap="5" GridPane.rowIndex="12">
                     <Button fx:id="checkoutButton" disable="true" onAction="#checkOutItem" prefHeight="25.0" prefWidth="311.0" text="Check Out Selected Item" GridPane.columnIndex="4" />
                     <Button fx:id="checkinButton" disable="true" onAction="#returnItem" prefHeight="31.0" prefWidth="228.0" text="Return Selected Item" GridPane.columnIndex="5" GridPane.halignment="RIGHT" />
                   <columnConstraints>
@@ -65,29 +65,35 @@
                      <RowConstraints />
                   </rowConstraints>
                 </GridPane>
-               <ComboBox fx:id="comboBoxForInventoryItemSelection" disable="true" onAction="#getItemInfo" prefHeight="31.0" prefWidth="825.0" GridPane.rowIndex="2">
+               <ComboBox fx:id="comboBoxForInventoryItemSelection" disable="true" onAction="#getItemInfo" prefHeight="31.0" prefWidth="825.0" GridPane.rowIndex="3">
                   <GridPane.margin>
                      <Insets />
                   </GridPane.margin>
                </ComboBox>
-               <TextArea fx:id="mainTextAreaForInventoryItemDescription" disable="true" editable="false" prefHeight="200.0" prefWidth="551.0" GridPane.rowIndex="8" />
-               <TextArea fx:id="checkedOutTextArea" disable="true" editable="false" prefHeight="195.0" prefWidth="814.0" GridPane.rowIndex="15" />
-               <Label fx:id="checkOutLabel" style="-fx-text-fill: white;" text="Checked Out Items" GridPane.rowIndex="14">
+               <TextArea fx:id="mainTextAreaForInventoryItemDescription" disable="true" editable="false" prefHeight="200.0" prefWidth="551.0" GridPane.rowIndex="9" />
+               <TextArea fx:id="checkedOutTextArea" disable="true" editable="false" prefHeight="195.0" prefWidth="814.0" GridPane.rowIndex="16" />
+               <Label fx:id="checkOutLabel" style="-fx-text-fill: white;" text="Checked Out Items" GridPane.rowIndex="15">
                   <font>
                      <Font name="Century" size="14.0" />
                   </font>
                </Label>
-               <Label fx:id="selectedLabel" style="-fx-text-fill: white;" text="Selected Item" GridPane.rowIndex="7">
+               <Label fx:id="selectedLabel" style="-fx-text-fill: white;" text="Selected Item" GridPane.rowIndex="8">
                   <font>
                      <Font name="Century" size="14.0" />
                   </font>
                </Label>
-                 <Button fx:id="loadButton" disable="true" onAction="#load" text="Load Library File" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                 <Button fx:id="loadButton" disable="true" onAction="#load" text="Load Library File" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+               <Label fx:id="loggedOnUserLabel" text="Logged on user :" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                  <font>
+                     <Font name="Century Schoolbook Bold" size="14.0" />
+                  </font>
+               </Label>
                <columnConstraints>
                   <ColumnConstraints />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" />
                   <RowConstraints />
                   <RowConstraints />

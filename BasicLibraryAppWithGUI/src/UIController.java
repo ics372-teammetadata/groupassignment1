@@ -35,7 +35,9 @@ public class UIController implements Initializable{
     private boolean reload = false;
     private Member loggedOnUser;
 
-    //FXML varialbles
+    //FXML variables
+    @FXML
+    private Label loggedOnUserLabel;
     @FXML
     private TabPane libTabPane;
     @FXML
@@ -383,43 +385,62 @@ public class UIController implements Initializable{
         }
     }
 
-
+    /**
+     * Method name logOn()
+     * Called when the "Load Member" (logInButton) is clicked
+     * Calls a File chooser and prompts the user to select their member list XML file
+     * Next the user is prompted to enter their Library card number.  If a match is found the member's information is loaded into memory
+     *
+     * @param event : Event triggered when "Load Member" button is clicked
+     */
     @FXML
     void logOn(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open members.xml File");
         file = fileChooser.showOpenDialog(new Stage());
         //File file = new File("c:/temp/members.xml");
-        FileProcessor fl = new FileProcessor(file);
 
-        TextInputDialog dialog = new TextInputDialog("667");
-        dialog.setTitle("Enter library card #");
-        dialog.setHeaderText("Enter your library card number");
-        dialog.setContentText("Please, enter your library card number:");
+        if(file != null){
+            FileProcessor fl = new FileProcessor(file);
 
-        // Traditional way to get the response value.
-        Optional<String> result = dialog.showAndWait();
-        if (result.isPresent()){
-            try {
-                MemberList m = fl.processXMLMemberList();
-                if(m.getMemberByCardNumber(result.get()) != null) {
-                    loadButton.setDisable(false);
-                    libraryTab.setDisable(false);
-                    loginTab.setDisable(true);
-                    libTabPane.getSelectionModel().select(libraryTab);
-                    loggedOnUser = m.getMemberByCardNumber(result.get());
-                    System.out.println(loggedOnUser.getName());
+            Optional<String> result = libraryCardPrompt("Enter your library card number", "Please, enter your library card number:");
+
+            if (result.isPresent()){
+                try {
+                    MemberList m = fl.processXMLMemberList();
+
+                    //present "Load Library Card" dialog until a null value is not received
+                    while((m.getMemberByCardNumber(result.get()) == null)){
+                        result = libraryCardPrompt("Card number not found!", "Please, enter a valid library card number:");
+                    }
+                    if(m.getMemberByCardNumber(result.get()) != null) {
+                        loadButton.setDisable(false);
+                        libraryTab.setDisable(false);
+                        loginTab.setDisable(true);
+                        libTabPane.getSelectionModel().select(libraryTab);
+                        loggedOnUser = m.getMemberByCardNumber(result.get());
+                        loggedOnUserLabel.setText(loggedOnUser.getName() + " is currently logged on");
+                    }
+                }catch(ParserConfigurationException e){
+                    displayWarning("File load error (ParserConfigurationException)","An improperly formatted file was detected.  Please load a properly formatted XML file.");
+                }catch(SAXException e){
+                    displayWarning("File load error (SAXException)","An improperly formatted file was detected.  Please load a properly formatted XML file.");
+                }catch(IOException e){
+                    displayWarning("File load error (IOException)","An improperly formatted file was detected.  Please load a properly formatted XML file.");
                 }
-            }catch(ParserConfigurationException e){
-                displayWarning("File load error (ParserConfigurationException)","An improperly formatted file was detected.  Please load a properly formatted XML file.");
-            }catch(SAXException e){
-                displayWarning("File load error (SAXException)","An improperly formatted file was detected.  Please load a properly formatted XML file.");
-            }catch(IOException e){
-                displayWarning("File load error (IOException)","An improperly formatted file was detected.  Please load a properly formatted XML file.");
             }
         }
     }
 
+    private Optional libraryCardPrompt(String headerText, String bodyText){
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Enter library card #");
+        dialog.setHeaderText(headerText);
+        dialog.setContentText(bodyText);
+        // Traditional way to get the response value.
+        Optional<String> result = dialog.showAndWait();
+        return result;
+    }
     ////////////////////
     // UI house keeping
     ////////////////////
