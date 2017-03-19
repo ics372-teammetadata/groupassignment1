@@ -88,13 +88,14 @@
                      <Font name="Century Schoolbook Bold" size="14.0" />
                   </font>
                </Label>
+               <Label text="(Close the application to log off)" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                <columnConstraints>
                   <ColumnConstraints />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                  <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="21.0" />
+                  <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="39.0" />
                   <RowConstraints />
                   <RowConstraints />
                   <RowConstraints />

@@ -19,8 +19,8 @@ public class Book extends InventoryItem {
         author = authorName;
     }
 
-    public Book(String idNumber, String itemName, String itemType, String authorName, boolean isCheckedOut, String due, String ckOut){
-        super(idNumber, itemName, itemType, isCheckedOut, due, ckOut);
+    public Book(String idNumber, String itemName, String itemType, String authorName, boolean isCheckedOut, String due, String ckOut, String checkedOutTo){
+        super(idNumber, itemName, itemType, isCheckedOut, due, ckOut, checkedOutTo);
         author = authorName;
     }
 
@@ -33,10 +33,11 @@ public class Book extends InventoryItem {
     }
 
     //Overrides parent method
-    public void checkOut(){
+    public void checkOut(String loggedOnUserCardNumber){
         checkedOut = true;
         checkoutDate = LocalDate.now();
         dueDate = checkoutDate.plusDays(21);
+        checkedOutToUser = loggedOnUserCardNumber;
     }
     //toString method, used by UI textArea1 to display information about an individual item to the user
     //toString method - appends string to parent toString method

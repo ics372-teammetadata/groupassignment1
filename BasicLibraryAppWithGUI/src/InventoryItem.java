@@ -15,7 +15,7 @@ public class InventoryItem {
     protected int daysUntilDue = 0;
     protected String checkOutString;
     protected String dueDateString;
-    protected String checkedOutTo = "668";
+    protected String checkedOutToUser;
 
 
     /**
@@ -34,20 +34,21 @@ public class InventoryItem {
 
     /**
      *      Constructor for InventoryItem created from previously loaded file
-     *
-     *      @param idNumber
+     *       @param idNumber
      *      @param itemName
-     *      @param itemType
-     *      @param isCheckedOut
-     *      @param due
-     *      @param checkOutDt
+     * @param itemType
+     * @param isCheckedOut
+     * @param due
+     * @param checkOutDt
+     * @param checkedOutTo
      */
 
-    public InventoryItem(String idNumber, String itemName, String itemType, boolean isCheckedOut, String due, String checkOutDt){
+    public InventoryItem(String idNumber, String itemName, String itemType, boolean isCheckedOut, String due, String checkOutDt, String checkedOutTo){
         id = idNumber;
         name = itemName;
         type = itemType;
         checkedOut = isCheckedOut;
+        checkedOutToUser = checkedOutTo;
 
         if(due != null) {
             dueDate = LocalDate.parse(due);
@@ -55,21 +56,24 @@ public class InventoryItem {
         if(checkOutDt != null){
             checkoutDate = LocalDate.parse(checkOutDt);
         }
+
     }
 
     /**
      *      Check in/out related methods
      */
 
-    public void checkOut(){
+    public void checkOut(String loggedOnUserCardNumber){
         checkedOut = true;
         checkoutDate = LocalDate.now();
         dueDate = checkoutDate.plusDays(7);
+        checkedOutToUser = loggedOnUserCardNumber;
     }
     public void checkIn(){
         checkedOut = false;
         checkoutDate = null;
         dueDate = null;
+        checkedOutToUser = null;
     }
     public boolean isCheckedOut(){
         return checkedOut;
@@ -113,7 +117,7 @@ public class InventoryItem {
     public String getName(){
         return name;
     }
-    public String getCheckedOutTo(){return checkedOutTo;}
+    public String getCheckedOutToUser(){return checkedOutToUser;}
 
 
     /**

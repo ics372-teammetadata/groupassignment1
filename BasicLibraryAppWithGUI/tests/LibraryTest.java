@@ -9,7 +9,7 @@ public class LibraryTest extends TestCase {
     public void testGetItemByID() throws Exception {
 
         //Test for id match
-        CD cd = new CD("id123", "OK Computer", "CD", "Radiohead", false, null, null);
+        CD cd = new CD("id123", "OK Computer", "CD", "Radiohead", false, null, null, null);
         Library l = new Library();
         l.add(cd);
         assertEquals(cd, l.getItemByID("id123"));

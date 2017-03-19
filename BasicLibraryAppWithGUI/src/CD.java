@@ -13,8 +13,8 @@ public class CD extends InventoryItem {
         super(idNumber, itemName, itemType);
         artist = artistName;
     }
-    public CD (String idNumber, String itemName, String itemType, String artistName, boolean isCheckedOut, String due, String ckOut){
-        super(idNumber, itemName, itemType, isCheckedOut, due, ckOut);
+    public CD (String idNumber, String itemName, String itemType, String artistName, boolean isCheckedOut, String due, String ckOut, String checkedOutTo){
+        super(idNumber, itemName, itemType, isCheckedOut, due, ckOut, checkedOutTo);
         artist = artistName;
     }
 

@@ -66,6 +66,7 @@ public class FileProcessor {
     private static final String ITEM_ISCHECKEDOUT = "item_isCheckedOut";
     private static final String ITEM_DUEDATE = "item_dueDate";
     private static final String ITEM_CHECKOUTDATE = "item_checkoutDate";
+    private static final String ITEM_CHECKEDOUTTO = "item_checkedOutTo";
 
     String itemName = "";
     String itemID = "";
@@ -76,6 +77,7 @@ public class FileProcessor {
     String itemDueDate = null;
     String itemCheckOutDate = null;
     boolean isCheckedOut = false;
+    String checkedOutTo = null;
 
     String memberID;
     String memberName;
@@ -131,18 +133,19 @@ public class FileProcessor {
                         itemDueDate = (String) arrayItem.get(ITEM_DUEDATE);
                         itemCheckOutDate = (String) arrayItem.get(ITEM_CHECKOUTDATE);
                         isCheckedOut = (boolean) arrayItem.get(ITEM_ISCHECKEDOUT);
+                        checkedOutTo = (String) arrayItem.get(ITEM_CHECKEDOUTTO);
                     }
 
                     if (arrayItem.get(ITEM_TYPE).equals(CD)) {
                         artist = (String) arrayItem.get(ITEM_ARTIST);
-                        libItem = new CD(itemID, itemName, itemType, artist, isCheckedOut, itemDueDate, itemCheckOutDate);
+                        libItem = new CD(itemID, itemName, itemType, artist, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
                     } else if (arrayItem.get(ITEM_TYPE).equals(BOOK)) {
                         author = (String) arrayItem.get(ITEM_AUTHOR);
-                        libItem = new Book(itemID, itemName, itemType, author, isCheckedOut, itemDueDate, itemCheckOutDate);
+                        libItem = new Book(itemID, itemName, itemType, author, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
                     } else if (arrayItem.get(ITEM_TYPE).equals(DVD)) {
-                        libItem = new DVD(itemID, itemName, itemType, isCheckedOut, itemDueDate, itemCheckOutDate);
+                        libItem = new DVD(itemID, itemName, itemType, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
                     } else if (arrayItem.get(ITEM_TYPE).equals(MAGAZINE)) {
-                        libItem = new Magazine(itemID, itemName, itemType, isCheckedOut, itemDueDate, itemCheckOutDate);
+                        libItem = new Magazine(itemID, itemName, itemType, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
                     }
 
                     //Add inventory item to the Library list
@@ -183,6 +186,7 @@ public class FileProcessor {
             outputChildObject.put(ITEM_ISCHECKEDOUT, i.isCheckedOut());
             outputChildObject.put(ITEM_DUEDATE, i.getDueDate());
             outputChildObject.put(ITEM_CHECKOUTDATE, i.getCheckoutDate());
+            outputChildObject.put(ITEM_CHECKEDOUTTO, i.getCheckedOutToUser());
             outputJArray.add(outputChildObject);
         }
 
@@ -247,21 +251,26 @@ public class FileProcessor {
                                     itemCheckOutDate = null;
                                 }
                                 break;
+                            case ITEM_CHECKEDOUTTO : checkedOutTo = metadata.getTextContent();
+                                if(metadata.getTextContent().equals("null")){
+                                    checkedOutTo = null;
+                                }
+                                break;
                         }
                     }
                 }
 
                 if(itemType.equals(XML_CD)) {
-                    libItem = new CD(itemID, itemName, itemType, artist, isCheckedOut, itemDueDate, itemCheckOutDate);
+                    libItem = new CD(itemID, itemName, itemType, artist, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
                 }
                 if(itemType.equals(XML_DVD)){
-                    libItem = new DVD(itemID, itemName, itemType, isCheckedOut, itemDueDate, itemCheckOutDate);
+                    libItem = new DVD(itemID, itemName, itemType, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
                 }
                 if(itemType.equals(XML_BOOK)) {
-                    libItem = new Book(itemID, itemName, itemType, author, isCheckedOut, itemDueDate, itemCheckOutDate);
+                    libItem = new Book(itemID, itemName, itemType, author, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
                 }
                 if(itemType.equals(XML_MAGAZINE)) {
-                    libItem = new Magazine(itemID, itemName, itemType, isCheckedOut, itemDueDate, itemCheckOutDate);
+                    libItem = new Magazine(itemID, itemName, itemType, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
                 }
 
                 if(libItem != null){
@@ -321,6 +330,10 @@ public class FileProcessor {
                 Element itemCheckOutDate = doc.createElement(ITEM_CHECKOUTDATE);
                 itemCheckOutDate.appendChild(doc.createTextNode(String.valueOf(inventoryItem.getCheckoutDate())));
                 itemElement.appendChild(itemCheckOutDate);
+
+                Element itemCheckedOutTo = doc.createElement(ITEM_CHECKEDOUTTO);
+                itemCheckedOutTo.appendChild(doc.createTextNode(String.valueOf(inventoryItem.getCheckedOutToUser())));
+                itemElement.appendChild(itemCheckedOutTo);
 
 
                 if (inventoryItem.getType().equals(XML_BOOK)) {

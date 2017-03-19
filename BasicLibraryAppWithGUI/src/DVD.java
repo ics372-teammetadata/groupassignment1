@@ -10,8 +10,8 @@ public class DVD extends InventoryItem {
     public DVD (String idNumber, String itemName, String itemType){
         super(idNumber, itemName, itemType);
     }
-    public DVD(String idNumber, String itemName, String itemType, boolean isCheckedOut, String due, String ckOut){
-        super(idNumber, itemName, itemType, isCheckedOut, due, ckOut);
+    public DVD(String idNumber, String itemName, String itemType, boolean isCheckedOut, String due, String ckOut, String checkedOutTo){
+        super(idNumber, itemName, itemType, isCheckedOut, due, ckOut, checkedOutTo);
     }
 
     //////////////

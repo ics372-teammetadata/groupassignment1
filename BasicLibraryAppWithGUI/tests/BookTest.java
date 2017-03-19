@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class BookTest extends TestCase {
 
     Book b = new Book("1234","1984", "Book", "George Orwell" );
-    Book book = new Book("1234","1984", "Book", "George Orwell", false, null, null );
+    Book book = new Book("1234","1984", "Book", "George Orwell", false, null, null, null );
 
     public void testGetAuthor() throws Exception {
         assertEquals("George Orwell",b.getAuthor());
@@ -16,8 +16,8 @@ public class BookTest extends TestCase {
     }
 
     public void testCheckOut() throws Exception {
-        b.checkOut();
-        book.checkOut();
+        b.checkOut("1234");
+        book.checkOut("1234");
         assertEquals(LocalDate.now().plusDays(21).toString(), b.getDueDate());
         assertEquals(LocalDate.now().plusDays(21).toString(), book.getDueDate());
     }

@@ -31,8 +31,8 @@ public class Magazine extends InventoryItem {
      * @param ckOut
      */
 
-    public Magazine(String idNumber, String itemName, String itemType, boolean isCheckedOut, String due, String ckOut){
-        super(idNumber, itemName, itemType, isCheckedOut, due, ckOut);
+    public Magazine(String idNumber, String itemName, String itemType, boolean isCheckedOut, String due, String ckOut, String checkedOutTo){
+        super(idNumber, itemName, itemType, isCheckedOut, due, ckOut, checkedOutTo);
     }
 
     /**

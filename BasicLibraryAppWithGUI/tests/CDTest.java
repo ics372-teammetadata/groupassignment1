@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 public class CDTest extends TestCase {
 
     CD c = new CD("id123", "OK Computer", "CD", "Radiohead");
-    CD cd = new CD("id123", "OK Computer", "CD", "Radiohead", false, null, null);
+    CD cd = new CD("id123", "OK Computer", "CD", "Radiohead", false, null, null, null);
 
     //test CD getArtist() method
     public void testGetArtist() throws Exception {

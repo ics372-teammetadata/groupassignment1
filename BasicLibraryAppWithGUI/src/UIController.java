@@ -34,6 +34,7 @@ public class UIController implements Initializable{
     private File file = null;
     private boolean reload = false;
     private Member loggedOnUser;
+    private MemberList memberList;
 
     //FXML variables
     @FXML
@@ -136,7 +137,7 @@ public class UIController implements Initializable{
     public void checkOutItem(ActionEvent event){
         Optional result = basicConfirmationWarning("Check-out", "Are you sure you want to check out this item?  Changes will be automatically saved to the current library file.");
         if (result.get() == ButtonType.OK){
-            item.checkOut();
+            item.checkOut(loggedOnUser.getCardNumber());
             save();
             writeToTextArea();
         }
@@ -152,7 +153,7 @@ public class UIController implements Initializable{
 
     @FXML
     public void returnItem(ActionEvent event){
-        if(loggedOnUser.equals(item.getCheckedOutTo())){
+        if(loggedOnUser.getCardNumber().equals(item.getCheckedOutToUser())){
             Optional result = basicConfirmationWarning("Check-in", "Are you sure you want to return this item?  Changes will be automatically saved to the current library file.");
             if (result.get() == ButtonType.OK){
                 item.checkIn();
@@ -160,7 +161,7 @@ public class UIController implements Initializable{
                 writeToTextArea();
             }
         }else{
-            basicConfirmationWarning("Unable to return item", "This item is checked out to another user");
+            basicConfirmationWarning("Unable to return item", "This item is checked out to another user : " + memberList.getMemberByCardNumber(item.checkedOutToUser).getName());
         }
     }
 
@@ -407,18 +408,18 @@ public class UIController implements Initializable{
 
             if (result.isPresent()){
                 try {
-                    MemberList m = fl.processXMLMemberList();
+                    memberList = fl.processXMLMemberList();
 
                     //present "Load Library Card" dialog until a null value is not received
-                    while((m.getMemberByCardNumber(result.get()) == null)){
+                    while((memberList.getMemberByCardNumber(result.get()) == null)){
                         result = libraryCardPrompt("Card number not found!", "Please, enter a valid library card number:");
                     }
-                    if(m.getMemberByCardNumber(result.get()) != null) {
+                    if(memberList.getMemberByCardNumber(result.get()) != null) {
                         loadButton.setDisable(false);
                         libraryTab.setDisable(false);
                         loginTab.setDisable(true);
                         libTabPane.getSelectionModel().select(libraryTab);
-                        loggedOnUser = m.getMemberByCardNumber(result.get());
+                        loggedOnUser = memberList.getMemberByCardNumber(result.get());
                         loggedOnUserLabel.setText(loggedOnUser.getName() + " is currently logged on");
                     }
                 }catch(ParserConfigurationException e){
