@@ -3,9 +3,9 @@ import javafx.stage.Stage;
 import junit.framework.TestCase;
 
 /**
- * Created by Christopher on 3/7/2017.
+ * Created by chris on 3/21/2017.
  */
-public class UITest extends TestCase {
+public class UI2Test extends TestCase {
     public void testStart() throws Exception {
         try {
             Stage s = new Stage();
@@ -19,4 +19,5 @@ public class UITest extends TestCase {
         }catch(RuntimeException e){
             System.out.println("Caught Runtime Exception");}
     }
+
 }
