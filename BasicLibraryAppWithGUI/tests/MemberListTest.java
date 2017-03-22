@@ -8,13 +8,21 @@ public class MemberListTest extends TestCase {
     //Construct new list
     MemberList memberList = new MemberList();
     public void testGetMemberByID() throws Exception {
+        //verify that the getMemberByID method returns the proper ID number
         memberList.add(member);
-        assertEquals("Geralt of Rivia", memberList.getMemberByID("u999").getName());
+        assertEquals("u999", memberList.getMemberByID("u999").getID());
+
+        memberList.remove(member);
+        assertNull(memberList.getMemberByID("u999"));
     }
 
     public void testGetMemberByCardNumber() throws Exception {
+        //verify that the getMemberCardNumber method returns the proper card number
         memberList.add(member);
-        assertEquals("Geralt of Rivia", memberList.getMemberByCardNumber("123456789").getName());
+        assertEquals("123456789", memberList.getMemberByCardNumber("123456789").getCardNumber());
+
+        memberList.remove(member);
+        assertNull(memberList.getMemberByCardNumber("123456789"));
     }
 
 }
