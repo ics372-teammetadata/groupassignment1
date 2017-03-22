@@ -186,7 +186,7 @@ public class FileProcessor {
             outputChildObject.put(ITEM_ISCHECKEDOUT, i.isCheckedOut());
             outputChildObject.put(ITEM_DUEDATE, i.getDueDate());
             outputChildObject.put(ITEM_CHECKOUTDATE, i.getCheckoutDate());
-            outputChildObject.put(ITEM_CHECKEDOUTTO, i.getCheckedOutToUser());
+            outputChildObject.put(ITEM_CHECKEDOUTTO, i.getCheckedOutToUserCardNumber());
             outputJArray.add(outputChildObject);
         }
 
@@ -332,7 +332,7 @@ public class FileProcessor {
                 itemElement.appendChild(itemCheckOutDate);
 
                 Element itemCheckedOutTo = doc.createElement(ITEM_CHECKEDOUTTO);
-                itemCheckedOutTo.appendChild(doc.createTextNode(String.valueOf(inventoryItem.getCheckedOutToUser())));
+                itemCheckedOutTo.appendChild(doc.createTextNode(String.valueOf(inventoryItem.getCheckedOutToUserCardNumber())));
                 itemElement.appendChild(itemCheckedOutTo);
 
 

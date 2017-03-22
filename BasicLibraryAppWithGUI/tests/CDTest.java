@@ -17,6 +17,7 @@ public class CDTest extends TestCase {
 
     //test CD toString() method
     public void testToString() throws Exception {
+        //test that  toString method returns a non-null value
         assertNotNull(c.toString());
         assertNotNull(cd.toString());
     }

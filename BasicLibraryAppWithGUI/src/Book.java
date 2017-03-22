@@ -37,7 +37,7 @@ public class Book extends InventoryItem {
         checkedOut = true;
         checkoutDate = LocalDate.now();
         dueDate = checkoutDate.plusDays(21);
-        checkedOutToUser = loggedOnUserCardNumber;
+        checkedOutToUserCardNumber = loggedOnUserCardNumber;
     }
     //toString method, used by UI textArea1 to display information about an individual item to the user
     //toString method - appends string to parent toString method

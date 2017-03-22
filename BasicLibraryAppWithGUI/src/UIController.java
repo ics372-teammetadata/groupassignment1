@@ -153,7 +153,7 @@ public class UIController implements Initializable{
 
     @FXML
     public void returnItem(ActionEvent event){
-        if(loggedOnUser.getCardNumber().equals(item.getCheckedOutToUser())){
+        if(loggedOnUser.getCardNumber().equals(item.getCheckedOutToUserCardNumber())){
             Optional result = basicConfirmationWarning("Check-in", "Are you sure you want to return this item?  Changes will be automatically saved to the current library file.");
             if (result.get() == ButtonType.OK){
                 item.checkIn();
@@ -161,7 +161,7 @@ public class UIController implements Initializable{
                 writeToTextArea();
             }
         }else{
-            basicConfirmationWarning("Unable to return item", "This item is checked out to another user : " + memberList.getMemberByCardNumber(item.checkedOutToUser).getName());
+            basicConfirmationWarning("Unable to return item", "This item is checked out to another user : " + memberList.getMemberByCardNumber(item.checkedOutToUserCardNumber).getName());
         }
     }
 

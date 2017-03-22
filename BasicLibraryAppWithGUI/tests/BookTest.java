@@ -23,6 +23,7 @@ public class BookTest extends TestCase {
     }
 
     public void testToString() throws Exception {
+        //test that  toString method returns a non-null value
         assertNotNull(b.toString());
         assertNotNull(book.toString());
     }

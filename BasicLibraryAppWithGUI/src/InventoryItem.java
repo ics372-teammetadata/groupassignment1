@@ -15,26 +15,26 @@ public class InventoryItem {
     protected int daysUntilDue = 0;
     protected String checkOutString;
     protected String dueDateString;
-    protected String checkedOutToUser;
+    protected String checkedOutToUserCardNumber;
 
 
     /**
      *      Basic Constructor
      *
-     *      @param idNumber
+     *      @param itemID
      *      @param itemName
      *      @param itemType
      */
 
-    public InventoryItem(String idNumber, String itemName, String itemType){
-        id = idNumber;
+    public InventoryItem(String itemID, String itemName, String itemType){
+        id = itemID;
         name = itemName;
         type = itemType;
     }
 
     /**
      *      Constructor for InventoryItem created from previously loaded file
-     *       @param idNumber
+     *       @param itemID
      *      @param itemName
      * @param itemType
      * @param isCheckedOut
@@ -43,12 +43,12 @@ public class InventoryItem {
      * @param checkedOutTo
      */
 
-    public InventoryItem(String idNumber, String itemName, String itemType, boolean isCheckedOut, String due, String checkOutDt, String checkedOutTo){
-        id = idNumber;
+    public InventoryItem(String itemID, String itemName, String itemType, boolean isCheckedOut, String due, String checkOutDt, String checkedOutTo){
+        id = itemID;
         name = itemName;
         type = itemType;
         checkedOut = isCheckedOut;
-        checkedOutToUser = checkedOutTo;
+        checkedOutToUserCardNumber = checkedOutTo;
 
         if(due != null) {
             dueDate = LocalDate.parse(due);
@@ -67,13 +67,13 @@ public class InventoryItem {
         checkedOut = true;
         checkoutDate = LocalDate.now();
         dueDate = checkoutDate.plusDays(7);
-        checkedOutToUser = loggedOnUserCardNumber;
+        checkedOutToUserCardNumber = loggedOnUserCardNumber;
     }
     public void checkIn(){
         checkedOut = false;
         checkoutDate = null;
         dueDate = null;
-        checkedOutToUser = null;
+        checkedOutToUserCardNumber = null;
     }
     public boolean isCheckedOut(){
         return checkedOut;
@@ -117,7 +117,7 @@ public class InventoryItem {
     public String getName(){
         return name;
     }
-    public String getCheckedOutToUser(){return checkedOutToUser;}
+    public String getCheckedOutToUserCardNumber(){return checkedOutToUserCardNumber;}
 
 
     /**
