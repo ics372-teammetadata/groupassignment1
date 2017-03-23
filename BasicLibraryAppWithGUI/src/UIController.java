@@ -399,7 +399,6 @@ public class UIController implements Initializable{
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open members.xml File");
         file = fileChooser.showOpenDialog(new Stage());
-        //File file = new File("c:/temp/members.xml");
 
         if(file != null){
             FileProcessor fl = new FileProcessor(file);
