@@ -68,6 +68,7 @@ public class FileProcessor {
     private static final String ITEM_CHECKOUTDATE = "item_checkoutDate";
     private static final String ITEM_CHECKEDOUTTO = "item_checkedOutTo";
 
+    //variables
     String itemName = "";
     String itemID = "";
     String itemType = "";
@@ -78,6 +79,7 @@ public class FileProcessor {
     String itemCheckOutDate = null;
     boolean isCheckedOut = false;
     String checkedOutTo = null;
+
 
     String memberID;
     String memberName;
@@ -270,7 +272,7 @@ public class FileProcessor {
                     libItem = new Book(itemID, itemName, itemType, author, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
                 }
                 if(itemType.equals(XML_MAGAZINE)) {
-                    libItem = new Magazine(itemID, itemName, itemType, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
+                    libItem = new Magazine(itemID, itemName, itemType, volume, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
                 }
 
                 if(libItem != null){
@@ -348,9 +350,9 @@ public class FileProcessor {
                     itemElement.appendChild(itemArtist);
                 } else if (inventoryItem.getType().equals(XML_MAGAZINE)) {
                     Magazine magazine = (Magazine) inventoryItem;
-                    Element itemAuthor = doc.createElement(VOLUME);
-                    //itemVolume.appendChild(doc.createTextNode(magazine.getVolume()));
-                    //itemElement.appendChild(itemVolume);
+                    Element itemVolume = doc.createElement(VOLUME);
+                    itemVolume.appendChild(doc.createTextNode(magazine.getVolume()));
+                    itemElement.appendChild(itemVolume);
                 }
 
                 // write the content into xml file

@@ -1,17 +1,1 @@
-<LibData>
-	<Item type="CD" id="15dde">
-		<Artist>Pink Floyd</Artist>
-		<Name>The Wall</Name>
-	</Item>
-	<Item type="DVD" id="52523">
-		<Name>Enter the Dragon</Name>
-	</Item>
-	<Item type="MAGAZINE" id="151e5dde">
-		<Name>Boy's Life</Name>
-		<Volume>6</Volume>
-	</Item>
-	<Item type="BOOK" id="ern222">
-		<Author>William Shakespeare</Author>
-		<Name>The Merchant of Venice</Name>
-	</Item>
-</LibData>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><LibData><Item id="id123" type="CD"><Name>OK Computer</Name><item_isCheckedOut>false</item_isCheckedOut><item_dueDate>null</item_dueDate><item_checkoutDate>null</item_checkoutDate><item_checkedOutTo>null</item_checkedOutTo><Artist>Radiohead</Artist></Item></LibData>

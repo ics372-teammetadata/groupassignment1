@@ -27,6 +27,7 @@ public class FileProcessorTest extends TestCase {
     private JSONObject jsonObject = null;
     private static final String LIBRARY_ITEMS = "library_items";
 
+    FileProcessor f = new FileProcessor(JSONFile);
 
     public void testProcessJSONData() throws Exception{
         //verify that an empty library list is created when the processJSONData method is called on a null file Object and that a null pointer exception is caught
@@ -60,21 +61,24 @@ public class FileProcessorTest extends TestCase {
         }
 
         assertTrue(!(library.isEmpty()));
-
     }
 
     public void testProcessXMLData() throws Exception {
-
+        library = null;
+        loadedXMLFile = new FileProcessor(xmlFile);
+        library = loadedXMLFile.processXMLData();
+        assertTrue(!(library.isEmpty()));
     }
 
     public void testWriteXMLData() throws Exception {
         //verify that an empty library list is created when the processXMLData method is called on a null file Object and that an illegal argument exception is caught
-
+        CD cd = new CD("id123", "OK Computer", "CD", "Radiohead", false, null, null, null);
+        library.add(cd);
         loadedXMLFile = new FileProcessor(xmlFile);
         try {
-            library = loadedXMLFile.processXMLData();
-        }catch(IllegalArgumentException e){
-            assertEquals("java.lang.IllegalArgumentException: File cannot be null", e.toString());
+            loadedXMLFile.writeXMLData(library);
+        }catch(NullPointerException e){
+            assertEquals("java.lang.NullPointerException", e.toString());
         }
         assertNotNull(library);
         assertTrue(!(library.isEmpty()));

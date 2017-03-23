@@ -6,7 +6,7 @@ public class Magazine extends InventoryItem {
     /**
      * Variables
      */
-    private String author = "";
+    private String volume = "";
 
     /**
      *  Constructor
@@ -18,6 +18,19 @@ public class Magazine extends InventoryItem {
 
     public Magazine(String idNumber, String itemName, String itemType){
         super(idNumber, itemName, itemType);
+    }
+
+    /**
+     *  Constructor
+     *
+     * @param idNumber
+     * @param itemName
+     * @param itemType
+     * @param vol
+     */
+    public Magazine(String idNumber, String itemName, String itemType, String vol){
+        super(idNumber, itemName, itemType);
+        volume = vol;
     }
 
     /**
@@ -36,14 +49,44 @@ public class Magazine extends InventoryItem {
     }
 
     /**
+     * Constructor
+     *
+     * @param idNumber
+     * @param itemName
+     * @param itemType
+     * @param vol
+     * @param isCheckedOut
+     * @param due
+     * @param ckOut
+     * @param checkedOutTo
+     */
+    public Magazine(String idNumber, String itemName, String itemType, String vol, boolean isCheckedOut, String due, String ckOut, String checkedOutTo){
+        super(idNumber, itemName, itemType, isCheckedOut, due, ckOut, checkedOutTo);
+        volume = vol;
+    }
+
+    /**
+     * Method name: getVolume
+     *
+     * @return volume
+     */
+
+    public String getVolume(){
+        return volume;
+    }
+
+
+    /**
      * toString method
      *
      * Used by UI textArea1 to display information about an individual item to the user
      * Appends string to parent toString method
-     * @return
+     *
+     * @return String
      */
     public String toString(){
         return super.toString() +
+                "Volume: " + this.getVolume() + "\n" +
                 checkOutString + dueDateString;
     }
 

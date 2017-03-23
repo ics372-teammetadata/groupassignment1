@@ -4,9 +4,9 @@
 
 import java.time.LocalDate;
 public class Book extends InventoryItem {
-    //////////////
-    // Variables
-    //////////////
+    /**
+     * Variables
+     */
 
     private String author = "";
 
