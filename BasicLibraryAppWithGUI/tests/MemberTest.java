@@ -1,3 +1,4 @@
+import com.metadata.LibraryDomain.Member;
 import junit.framework.TestCase;
 
 /**

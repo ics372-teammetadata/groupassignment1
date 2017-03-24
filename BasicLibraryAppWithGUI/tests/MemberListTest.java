@@ -1,3 +1,5 @@
+import com.metadata.LibraryDomain.Member;
+import com.metadata.LibraryDomain.MemberList;
 import junit.framework.TestCase;
 /**
  * Created by chris on 3/21/2017.

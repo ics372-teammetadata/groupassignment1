@@ -1,3 +1,4 @@
+import com.metadata.LibraryDomain.InventoryItem;
 import junit.framework.TestCase;
 
 import java.time.LocalDate;
@@ -6,9 +7,9 @@ import java.time.LocalDate;
  * Created by chris on 3/21/2017.
  */
 public class InventoryItemTest extends TestCase {
-    InventoryItem inv = new InventoryItem("1234","1984", "Book" );
-    InventoryItem i = new InventoryItem("1234","1984", "Book", false, null, null, null );
-    InventoryItem inventory = new InventoryItem("1234","1984", "Book",true, "2017-03-01", "2017-02-01", "89844" );
+    InventoryItem inv = new InventoryItem("1234","1984", "com.metadata.LibraryDomain.Book" );
+    InventoryItem i = new InventoryItem("1234","1984", "com.metadata.LibraryDomain.Book", false, null, null, null );
+    InventoryItem inventory = new InventoryItem("1234","1984", "com.metadata.LibraryDomain.Book",true, "2017-03-01", "2017-02-01", "89844" );
 
     public void testCheckOut() throws Exception {
         //verify checkOut functionality
@@ -87,15 +88,15 @@ public class InventoryItemTest extends TestCase {
     public void testGetID() throws Exception {
         //very that the getType method returns the expected type
 
-        assertEquals("Book", i.getType());
-        assertEquals("Book", i.getType());
+        assertEquals("com.metadata.LibraryDomain.Book", i.getType());
+        assertEquals("com.metadata.LibraryDomain.Book", i.getType());
     }
 
     public void testGetType() throws Exception {
         //very that the getType method returns the expected type
 
-        assertEquals("Book", i.getType());
-        assertEquals("Book", i.getType());
+        assertEquals("com.metadata.LibraryDomain.Book", i.getType());
+        assertEquals("com.metadata.LibraryDomain.Book", i.getType());
     }
 
     public void testGetName() throws Exception {

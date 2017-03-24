@@ -16,7 +16,7 @@ public class UI2 extends Application{
         TabPane grid = loader.load();
         UIController controller = loader.getController();
         primaryStage.getIcons().add(new Image("/images.jpg"));
-        primaryStage.setTitle("Library System 2.0");
+        primaryStage.setTitle("com.metadata.LibraryDomain.Library System 2.0");
         Scene scene = new Scene(grid);
         primaryStage.setScene(scene);
         primaryStage.show();

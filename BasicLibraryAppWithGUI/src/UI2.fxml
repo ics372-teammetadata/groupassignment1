@@ -42,7 +42,7 @@
             </AnchorPane>
         </content>
       </Tab>
-      <Tab fx:id="libraryTab" closable="false" disable="true" text="Library">
+      <Tab fx:id="libraryTab" closable="false" disable="true" text="com.metadata.LibraryDomain.Library">
          <content>
             <GridPane fx:id="libraryUIGridPane" hgap="20" minHeight="600.0" minWidth="600.0" prefHeight="794.0" prefWidth="834.0" stylesheets="@style.css" vgap="5">
             
@@ -82,7 +82,7 @@
                      <Font name="Century" size="14.0" />
                   </font>
                </Label>
-                 <Button fx:id="loadButton" disable="true" onAction="#load" text="Load Library File" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+                 <Button fx:id="loadButton" disable="true" onAction="#load" text="Load com.metadata.LibraryDomain.Library File" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
                <Label fx:id="loggedOnUserLabel" text="Logged on user :" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
                   <font>
                      <Font name="Century Schoolbook Bold" size="14.0" />

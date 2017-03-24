@@ -1,10 +1,10 @@
+import com.metadata.LibraryDomain.*;
 import junit.framework.TestCase;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.File;
 import java.io.FileReader;
-import java.text.ParseException;
 
 /**
  * Created by chris on 3/16/2017.
@@ -51,7 +51,7 @@ public class FileProcessorTest extends TestCase {
     }
 
     public void testWriteJSONData() throws Exception {
-        CD cd = new CD("id123", "OK Computer", "CD", "Radiohead", false, null, null, null);
+        CD cd = new CD("id123", "OK Computer", "com.metadata.LibraryDomain.CD", "Radiohead", false, null, null, null);
         library.add(cd);
 
         try {
@@ -72,7 +72,7 @@ public class FileProcessorTest extends TestCase {
 
     public void testWriteXMLData() throws Exception {
         //verify that an empty library list is created when the processXMLData method is called on a null file Object and that an illegal argument exception is caught
-        CD cd = new CD("id123", "OK Computer", "CD", "Radiohead", false, null, null, null);
+        CD cd = new CD("id123", "OK Computer", "com.metadata.LibraryDomain.CD", "Radiohead", false, null, null, null);
         library.add(cd);
         loadedXMLFile = new FileProcessor(xmlFile);
         try {

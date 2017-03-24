@@ -1,0 +1,34 @@
+package com.metadata.LibraryDomain;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+
+/**
+ * Created by chris on 1/23/2017.
+ */
+
+//Inventory Item List Container
+public class Library extends ArrayList<InventoryItem> {
+    //lookup Inventory Item by ID and return an com.metadata.LibraryDomain.InventoryItem if cardRepo match is found, or else null is returned
+    public InventoryItem getItemByID(String s) {
+        for (Iterator iterator = this.iterator(); iterator.hasNext(); ) {
+            InventoryItem item = (InventoryItem) iterator.next();
+            if (item.getID().equals(s)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    //sorts com.metadata.LibraryDomain.Library list by Name field.
+    public void sort() {
+        Collections.sort(this,new Comparator<InventoryItem>()
+        {
+            public int compare (InventoryItem o1, InventoryItem o2){
+            return o1.getName().toUpperCase().compareTo(o2.getName().toUpperCase());
+        }
+    });
+   }
+}

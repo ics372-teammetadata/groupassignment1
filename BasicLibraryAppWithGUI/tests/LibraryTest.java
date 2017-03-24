@@ -1,3 +1,5 @@
+import com.metadata.LibraryDomain.CD;
+import com.metadata.LibraryDomain.Library;
 import junit.framework.TestCase;
 
 import java.util.Iterator;
@@ -11,7 +13,7 @@ public class LibraryTest extends TestCase {
     public void testGetItemByID() throws Exception {
 
         //Test for id match
-        CD cd = new CD("id123", "OK Computer", "CD", "Radiohead", false, null, null, null);
+        CD cd = new CD("id123", "OK Computer", "com.metadata.LibraryDomain.CD", "Radiohead", false, null, null, null);
         l.add(cd);
         assertEquals(cd, l.getItemByID("id123"));
 
@@ -31,7 +33,7 @@ public class LibraryTest extends TestCase {
     }
 
     public void testSort() throws Exception{
-        CD cd2 = new CD("id124", "Black Album", "CD", "Metallica", false, null, null, null);
+        CD cd2 = new CD("id124", "Black Album", "com.metadata.LibraryDomain.CD", "Metallica", false, null, null, null);
         l.add(cd2);
         l.sort();
         assertEquals("Black Album", l.get(0).getName());

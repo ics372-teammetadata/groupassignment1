@@ -13,6 +13,6 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <Button alignment="CENTER" mnemonicParsing="false" text="Load Library File" />
+      <Button alignment="CENTER" mnemonicParsing="false" text="Load com.metadata.LibraryDomain.Library File" />
    </children>
 </GridPane>

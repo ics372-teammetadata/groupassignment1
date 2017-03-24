@@ -1,3 +1,4 @@
+import com.metadata.LibraryDomain.CD;
 import junit.framework.TestCase;
 
 
@@ -6,16 +7,16 @@ import junit.framework.TestCase;
  */
 public class CDTest extends TestCase {
 
-    CD c = new CD("id123", "OK Computer", "CD", "Radiohead");
-    CD cd = new CD("id123", "OK Computer", "CD", "Radiohead", false, null, null, null);
+    CD c = new CD("id123", "OK Computer", "com.metadata.LibraryDomain.CD", "Radiohead");
+    CD cd = new CD("id123", "OK Computer", "com.metadata.LibraryDomain.CD", "Radiohead", false, null, null, null);
 
-    //test CD getArtist() method
+    //test com.metadata.LibraryDomain.CD getArtist() method
     public void testGetArtist() throws Exception {
         assertEquals("Radiohead",c.getArtist());
         assertEquals("Radiohead",cd.getArtist());
     }
 
-    //test CD toString() method
+    //test com.metadata.LibraryDomain.CD toString() method
     public void testToString() throws Exception {
         //test that  toString method returns a non-null value
         assertNotNull(c.toString());

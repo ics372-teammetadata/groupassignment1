@@ -29,5 +29,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="Arquillian JUnit:Release" level="project" />
+    <orderEntry type="module" module-name="LibraryDomain" />
   </component>
 </module>

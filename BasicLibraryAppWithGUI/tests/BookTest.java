@@ -1,3 +1,4 @@
+import com.metadata.LibraryDomain.Book;
 import junit.framework.TestCase;
 
 import java.time.LocalDate;
@@ -7,8 +8,8 @@ import java.time.LocalDate;
  */
 public class BookTest extends TestCase {
 
-    Book b = new Book("1234","1984", "Book", "George Orwell" );
-    Book book = new Book("1234","1984", "Book", "George Orwell", false, null, null, null );
+    Book b = new Book("1234","1984", "com.metadata.LibraryDomain.Book", "George Orwell" );
+    Book book = new Book("1234","1984", "com.metadata.LibraryDomain.Book", "George Orwell", false, null, null, null );
 
     public void testGetAuthor() throws Exception {
         assertEquals("George Orwell",b.getAuthor());
