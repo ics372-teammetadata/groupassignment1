@@ -1,4 +1,3 @@
-import com.metadata.LibraryDomain.FileProcessor;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -164,7 +163,7 @@ public class UIController implements Initializable{
                 writeToTextArea();
             }
         }else{
-            basicConfirmationWarning("Unable to return item", "This item is checked out to another user : " + memberList.getMemberByCardNumber(item.checkedOutToUserCardNumber).getName());
+            basicConfirmationWarning("Unable to return item", "This item is checked out to another user : " + memberList.getMemberByCardNumber(item.getCheckedOutToUserCardNumber()).getName());
         }
     }
 

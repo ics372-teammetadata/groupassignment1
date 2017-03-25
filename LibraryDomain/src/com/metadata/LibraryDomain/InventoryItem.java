@@ -35,7 +35,7 @@ public class InventoryItem {
     }
 
     /**
-     *      Constructor for com.metadata.LibraryDomain.InventoryItem created from previously loaded file
+     *      Constructor for InventoryItem created from previously loaded file
      *       @param itemID
      *      @param itemName
      * @param itemType

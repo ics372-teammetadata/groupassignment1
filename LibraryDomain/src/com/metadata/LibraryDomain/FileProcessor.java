@@ -26,8 +26,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import team.metadata.LibraryDomain.*;
-
 public class FileProcessor {
 
     /**
@@ -48,17 +46,17 @@ public class FileProcessor {
     private static final String ITEM_NAME = "item_name";
     private static final String ITEM_ID = "item_id";
     private static final String ITEM_TYPE = "item_type";
-    private static final String CD = "com.metadata.LibraryDomain.CD";
-    private static final String DVD = "com.metadata.LibraryDomain.DVD";
-    private static final String BOOK = "com.metadata.LibraryDomain.Book";
-    private static final String MAGAZINE = "com.metadata.LibraryDomain.Magazine";
+    private static final String CD = "CD";
+    private static final String DVD = "DVD";
+    private static final String BOOK = "Book";
+    private static final String MAGAZINE = "Magazine";
 
     //static variables used by XML methods
     private static final String ITEM = "Item";
     private static final String ID = "id";
     private static final String TYPE = "type";
-    private static final String XML_CD = "com.metadata.LibraryDomain.CD";
-    private static final String XML_DVD = "com.metadata.LibraryDomain.DVD";
+    private static final String XML_CD = "CD";
+    private static final String XML_DVD = "DVD";
     private static final String XML_MAGAZINE = "MAGAZINE";
     private static final String XML_BOOK = "BOOK";
     private static final String NAME = "Name";
@@ -102,7 +100,7 @@ public class FileProcessor {
      *      Method name : processJSONData
      *      Retrieves JSON importedJSONData from cardRepo file (which is received through the constructor)
      *      This is called by the FileProcesspor (this) processJSONData method
-     *      Processes JSON file importedJSONData and generates library items from JSON object info and returns cardRepo com.metadata.LibraryDomain.Library list
+     *      Processes JSON file importedJSONData and generates library items from JSON object info and returns cardRepo Library list
      *      throws cardRepo ParseException and DateTimeParseException that can be caught within the UIController's loadFile method,
      *      which displays cardRepo meaningful error message to the user
      **/
@@ -117,13 +115,13 @@ public class FileProcessor {
         //collection info from JSON file
         if (file.exists()) {
             System.out.println(file.getPath());
-            //loop through JSON array, creating 'com.metadata.LibraryDomain.Library Item" objects, adding them to an inventory list to be returned
+            //loop through JSON array, creating 'Library Item" objects, adding them to an inventory list to be returned
             if (jsonObject.get(LIBRARY_ITEMS) != null) {
                 for (Object jArrayItem : (JSONArray) jsonObject.get(LIBRARY_ITEMS)) {
 
                     JSONObject arrayItem = (JSONObject) jArrayItem;
 
-                    //variables to be used when instantiating com.metadata.LibraryDomain.InventoryItem objects
+                    //variables to be used when instantiating InventoryItem objects
                     itemName = (String) arrayItem.get(ITEM_NAME);
                     itemID = (String) arrayItem.get(ITEM_ID);
                     itemType = (String) arrayItem.get(ITEM_TYPE);
@@ -131,14 +129,14 @@ public class FileProcessor {
                     itemCheckOutDate = null;
                     isCheckedOut = false;
 
-                    //generate library items from JSON object info and return an com.metadata.LibraryDomain.InventoryItem
+                    //generate library items from JSON object info and return an InventoryItem
                     if (arrayItem.containsKey(ITEM_ISCHECKEDOUT)) {
                         // IF arrayItem.containsKey(ITEM_ISCHECKEDOUT), then we are using JSON file file than has been processed at least once by the application
                         // Variables will be populates with values retrieved from the JSON file
 
                         itemDueDate = (String) arrayItem.get(ITEM_DUEDATE);
                         itemCheckOutDate = (String) arrayItem.get(ITEM_CHECKOUTDATE);
-                        isCheckedOut = (boolean) arrayItem.get(ITEM_ISCHECKEDOUT);
+                        isCheckedOut = Boolean.parseBoolean(arrayItem.get(ITEM_ISCHECKEDOUT).toString());
                         checkedOutTo = (String) arrayItem.get(ITEM_CHECKEDOUTTO);
                     }
 
@@ -154,7 +152,7 @@ public class FileProcessor {
                         libItem = new Magazine(itemID, itemName, itemType, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
                     }
 
-                    //Add inventory item to the com.metadata.LibraryDomain.Library list
+                    //Add inventory item to the Library list
                     library.add(libItem);
                 }
             }
@@ -168,8 +166,8 @@ public class FileProcessor {
      *      @param lib
      *
      *      Saves Inventory Items to the previously loaded JSON file
-     *      Loops through com.metadata.LibraryDomain.Library list, adds each item to the JSON array
-     *      Uses FileWriter to write the com.metadata.LibraryDomain.InventoryItem data to the previously loaded JSON file
+     *      Loops through Library list, adds each item to the JSON array
+     *      Uses FileWriter to write the InventoryItem data to the previously loaded JSON file
      *      Throws IOException that is caught by the UIController save() method
      */
 
@@ -235,7 +233,7 @@ public class FileProcessor {
                     Node childNode = libItemList.item(j);
                     if(childNode.getNodeType()==Node.ELEMENT_NODE){
                         Element metadata = (Element) childNode;
-                        switch(metadata.getTagName().toCharArray()){
+                        switch(metadata.getTagName()){
                             case ARTIST : artist = metadata.getTextContent();
                                 break;
                             case AUTHOR : author = metadata.getTextContent();
@@ -292,7 +290,7 @@ public class FileProcessor {
      * Method name : writeXMLData()
      *
      * Saves Inventory Items to the previously loaded XML library file
-     * Loops through com.metadata.LibraryDomain.Library list, adds each item to the JXML file
+     * Loops through Library list, adds each item to the JXML file
      * Throws ParserConfigurationException,TransformerException that are caught by the UIControlloer save() method
      *
      * @param lib

@@ -11,7 +11,7 @@ import java.util.Iterator;
 
 //Inventory Item List Container
 public class Library extends ArrayList<InventoryItem> {
-    //lookup Inventory Item by ID and return an com.metadata.LibraryDomain.InventoryItem if cardRepo match is found, or else null is returned
+    //lookup Inventory Item by ID and return an InventoryItem if cardRepo match is found, or else null is returned
     public InventoryItem getItemByID(String s) {
         for (Iterator iterator = this.iterator(); iterator.hasNext(); ) {
             InventoryItem item = (InventoryItem) iterator.next();
@@ -22,7 +22,7 @@ public class Library extends ArrayList<InventoryItem> {
         return null;
     }
 
-    //sorts com.metadata.LibraryDomain.Library list by Name field.
+    //sorts Library list by Name field.
     public void sort() {
         Collections.sort(this,new Comparator<InventoryItem>()
         {
