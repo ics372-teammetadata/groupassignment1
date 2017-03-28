@@ -2,6 +2,7 @@ package com.metadata.LibraryDomain;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.*;
 
 public class InventoryItem {
 
@@ -9,11 +10,9 @@ public class InventoryItem {
      *      Variables
      */
 
-
     protected String id, name, type;
     protected LocalDate checkoutDate = null;
     protected LocalDate dueDate = null;
-    protected boolean checkedOut = false;
     protected int daysUntilDue = 0;
     protected String checkOutString;
     protected String dueDateString;
@@ -36,20 +35,18 @@ public class InventoryItem {
 
     /**
      *      Constructor for InventoryItem created from previously loaded file
-     *       @param itemID
+     *      @param itemID
      *      @param itemName
-     * @param itemType
-     * @param isCheckedOut
-     * @param due
-     * @param checkOutDt
-     * @param checkedOutTo
+     *      @param itemType
+     *      @param due
+     *      @param checkOutDt
+     *      @param checkedOutTo
      */
 
-    public InventoryItem(String itemID, String itemName, String itemType, boolean isCheckedOut, String due, String checkOutDt, String checkedOutTo){
+    public InventoryItem(String itemID, String itemName, String itemType, String due, String checkOutDt, String checkedOutTo){
         id = itemID;
         name = itemName;
         type = itemType;
-        checkedOut = isCheckedOut;
         checkedOutToUserCardNumber = checkedOutTo;
 
         if(due != null) {
@@ -66,19 +63,17 @@ public class InventoryItem {
      */
 
     public void checkOut(String loggedOnUserCardNumber){
-        checkedOut = true;
         checkoutDate = LocalDate.now();
         dueDate = checkoutDate.plusDays(7);
         checkedOutToUserCardNumber = loggedOnUserCardNumber;
     }
     public void checkIn(){
-        checkedOut = false;
         checkoutDate = null;
         dueDate = null;
         checkedOutToUserCardNumber = null;
     }
     public boolean isCheckedOut(){
-        return checkedOut;
+        return (dueDate != null);
     }
 
     /**

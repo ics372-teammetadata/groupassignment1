@@ -33,13 +33,12 @@ public class CD extends InventoryItem {
      * @param itemName
      * @param itemType
      * @param artistName
-     * @param isCheckedOut
      * @param due
      * @param ckOut
      * @param checkedOutTo
      */
-    public CD (String idNumber, String itemName, String itemType, String artistName, boolean isCheckedOut, String due, String ckOut, String checkedOutTo){
-        super(idNumber, itemName, itemType, isCheckedOut, due, ckOut, checkedOutTo);
+    public CD (String idNumber, String itemName, String itemType, String artistName, String due, String ckOut, String checkedOutTo){
+        super(idNumber, itemName, itemType, due, ckOut, checkedOutTo);
         artist = artistName;
     }
 

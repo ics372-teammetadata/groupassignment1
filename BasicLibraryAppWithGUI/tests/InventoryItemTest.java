@@ -8,8 +8,8 @@ import java.time.LocalDate;
  */
 public class InventoryItemTest extends TestCase {
     InventoryItem inv = new InventoryItem("1234","1984", "com.metadata.LibraryDomain.Book" );
-    InventoryItem i = new InventoryItem("1234","1984", "com.metadata.LibraryDomain.Book", false, null, null, null );
-    InventoryItem inventory = new InventoryItem("1234","1984", "com.metadata.LibraryDomain.Book",true, "2017-03-01", "2017-02-01", "89844" );
+    InventoryItem i = new InventoryItem("1234","1984", "com.metadata.LibraryDomain.Book", null, null, null );
+    InventoryItem inventory = new InventoryItem("1234","1984", "com.metadata.LibraryDomain.Book","2017-03-01", "2017-02-01", "89844" );
 
     public void testCheckOut() throws Exception {
         //verify checkOut functionality

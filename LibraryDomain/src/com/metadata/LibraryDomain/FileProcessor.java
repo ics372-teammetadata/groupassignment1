@@ -105,12 +105,16 @@ public class FileProcessor {
      *      which displays cardRepo meaningful error message to the user
      **/
 
-    public Library processJSONData() throws ParseException, DateTimeParseException, FileNotFoundException, IOException {
+    public Library processJSONData() throws ParseException, DateTimeParseException, FileNotFoundException, IOException{
+        return processJSONData(new FileInputStream(file));
+    }
+
+    public Library processJSONData(InputStream inputStream) throws ParseException, DateTimeParseException, FileNotFoundException, IOException {
         //instantiate JSON parser - throws FileNotFOundException and IOException
 
         JSONParser parser = new JSONParser();
         FileReader fileReader = new FileReader(this.file.getPath());
-        jsonObject = (JSONObject) parser.parse(fileReader);
+        jsonObject = (JSONObject) parser.parse(new InputStreamReader(inputStream));
 
         //collection info from JSON file
         if (file.exists()) {
@@ -142,14 +146,14 @@ public class FileProcessor {
 
                     if (arrayItem.get(ITEM_TYPE).equals(CD)) {
                         artist = (String) arrayItem.get(ITEM_ARTIST);
-                        libItem = new CD(itemID, itemName, itemType, artist, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
+                        libItem = new CD(itemID, itemName, itemType, artist, itemDueDate, itemCheckOutDate, checkedOutTo);
                     } else if (arrayItem.get(ITEM_TYPE).equals(BOOK)) {
                         author = (String) arrayItem.get(ITEM_AUTHOR);
-                        libItem = new Book(itemID, itemName, itemType, author, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
+                        libItem = new Book(itemID, itemName, itemType, author, itemDueDate, itemCheckOutDate, checkedOutTo);
                     } else if (arrayItem.get(ITEM_TYPE).equals(DVD)) {
-                        libItem = new DVD(itemID, itemName, itemType, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
+                        libItem = new DVD(itemID, itemName, itemType, itemDueDate, itemCheckOutDate, checkedOutTo);
                     } else if (arrayItem.get(ITEM_TYPE).equals(MAGAZINE)) {
-                        libItem = new Magazine(itemID, itemName, itemType, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
+                        libItem = new Magazine(itemID, itemName, itemType, itemDueDate, itemCheckOutDate, checkedOutTo);
                     }
 
                     //Add inventory item to the Library list
@@ -211,9 +215,13 @@ public class FileProcessor {
      */
 
     public Library processXMLData() throws ParserConfigurationException, SAXException, IOException, DateTimeParseException{
+        return processXMLData(new FileInputStream(file));
+    }
+
+    public Library processXMLData(InputStream inputStream) throws ParserConfigurationException, SAXException, IOException, DateTimeParseException{
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
-        Document doc = builder.parse(file);
+        Document doc = builder.parse(inputStream);
 
         NodeList itemList = doc.getElementsByTagName(ITEM);
         //loop through each parent element
@@ -265,16 +273,16 @@ public class FileProcessor {
                 }
 
                 if(itemType.equals(XML_CD)) {
-                    libItem = new CD(itemID, itemName, itemType, artist, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
+                    libItem = new CD(itemID, itemName, itemType, artist, itemDueDate, itemCheckOutDate, checkedOutTo);
                 }
                 if(itemType.equals(XML_DVD)){
-                    libItem = new DVD(itemID, itemName, itemType, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
+                    libItem = new DVD(itemID, itemName, itemType, itemDueDate, itemCheckOutDate, checkedOutTo);
                 }
                 if(itemType.equals(XML_BOOK)) {
-                    libItem = new Book(itemID, itemName, itemType, author, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
+                    libItem = new Book(itemID, itemName, itemType, author, itemDueDate, itemCheckOutDate, checkedOutTo);
                 }
                 if(itemType.equals(XML_MAGAZINE)) {
-                    libItem = new Magazine(itemID, itemName, itemType, volume, isCheckedOut, itemDueDate, itemCheckOutDate, checkedOutTo);
+                    libItem = new Magazine(itemID, itemName, itemType, volume, itemDueDate, itemCheckOutDate, checkedOutTo);
                 }
 
                 if(libItem != null){
@@ -374,12 +382,16 @@ public class FileProcessor {
      *  Throws ParserConfigurationException, SAXException, IOException that is caught by the UIControlloer save() method
      */
 
-    public MemberList processXMLMemberList() throws ParserConfigurationException, SAXException, IOException, DateTimeParseException{
+    public MemberList processXMLMemberList()throws ParserConfigurationException, SAXException, IOException, DateTimeParseException{
+        return processXMLMemberList(new FileInputStream(file));
+    }
+
+    public MemberList processXMLMemberList(InputStream inputStream) throws ParserConfigurationException, SAXException, IOException, DateTimeParseException{
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
-        Document doc = builder.parse(file);
+        Document doc = builder.parse(inputStream);
 
-        NodeList members = doc.getElementsByTagName("com.metadata.LibraryDomain.Member");
+        NodeList members = doc.getElementsByTagName("Member");
         //loop through each parent element
         for(int i = 0; i < members.getLength(); i++) {
             Node node = members.item(i);

@@ -5,9 +5,9 @@ import junit.framework.TestCase;
  * Created by Christopher on 3/7/2017.
  */
 public class MagazineTest extends TestCase {
-    Magazine mag = new Magazine("1234", "The Times", "com.metadata.LibraryDomain.Magazine", false, null, null, null);
+    Magazine mag = new Magazine("1234", "The Times", "com.metadata.LibraryDomain.Magazine", null, null, null);
     Magazine m = new Magazine("id123", "The Times", "com.metadata.LibraryDomain.Magazine");
-    Magazine magWithVolume = new Magazine("1234", "The Times", "com.metadata.LibraryDomain.Magazine", "5",false, null, null, null);
+    Magazine magWithVolume = new Magazine("1234", "The Times", "com.metadata.LibraryDomain.Magazine", "5",null, null, null);
     Magazine mWithVolume = new Magazine("id123", "The Times", "com.metadata.LibraryDomain.Magazine", "6");
 
     //test toString method to ensure that is returns a non-null value

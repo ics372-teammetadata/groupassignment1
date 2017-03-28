@@ -90,7 +90,7 @@ public class UIController implements Initializable{
     /**
      * Method name:  load()
      * Calls the chooseLibrary() method
-     * @param e : Event triggered when "Load com.metadata.LibraryDomain.Library" button is clicked
+     * @param e : Event triggered when "Load Library" button is clicked
      */
 
     @FXML
@@ -105,17 +105,17 @@ public class UIController implements Initializable{
 
     /**
      * Method name:  chooseLibrary()
-     * Popup is called when the "Load com.metadata.LibraryDomain.Library" button is clicked
+     * Popup is called when the "Load Library" button is clicked
      * Allows the user to select between the JSON or XML library
      */
 
     private void chooseLibrary(){
         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-        a.setTitle("Choose com.metadata.LibraryDomain.Library");
+        a.setTitle("Choose Library");
         a.setHeaderText("Choose which library file you would like to load");
         a.setContentText("Choose your option.");
         ButtonType parentLibraryButton = new ButtonType("This library");
-        ButtonType sisterLibraryButton = new ButtonType("Sister com.metadata.LibraryDomain.Library");
+        ButtonType sisterLibraryButton = new ButtonType("Sister Library");
         ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
         a.getButtonTypes().setAll(parentLibraryButton, sisterLibraryButton, buttonTypeCancel);
 
@@ -212,12 +212,12 @@ public class UIController implements Initializable{
 
     /**
      * Method name:  loadJSONFile()
-     * This method is called when 'Load com.metadata.LibraryDomain.Library File' button is clicked in the UI
+     * This method is called when 'Load Library File' button is clicked in the UI
      * Loads JSON files
      * Uses FileChooser class to select a file
      * Catches parse exceptions (incorrect filetype or poorly formatted JSON data)
-     * Instantiates a FileProcessor object and calls it's processJSONData method which processes JSON file data and generates library items from JSON object info and returns a com.metadata.LibraryDomain.Library list
-     * Loops through the com.metadata.LibraryDomain.Library (library) list and adds an entry for each com.metadata.LibraryDomain.InventoryItem to the comboBoxForInventoryItemSelection
+     * Instantiates a FileProcessor object and calls it's processJSONData method which processes JSON file data and generates library items from JSON object info and returns a Library list
+     * Loops through the Library (library) list and adds an entry for each InventoryItem to the comboBoxForInventoryItemSelection
      */
 
     private void loadJSONFile(){
@@ -226,6 +226,7 @@ public class UIController implements Initializable{
         try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open JSON File");
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
             file = fileChooser.showOpenDialog(new Stage());
             if (file == null) {
                 //deactivateUIElements buttons and hide text
@@ -256,12 +257,12 @@ public class UIController implements Initializable{
 
     /**
      * Method name:  loadXMLFile()
-     * This method is called when 'Load com.metadata.LibraryDomain.Library File' button is clicked in the UI
+     * This method is called when 'Load Library File' button is clicked in the UI
      * Loads XML library files
      * Uses FileChooser class to select a file
      * Catches parse exceptions (incorrect filetype or poorly formatted XML data)
-     * Instantiates a FileProcessor object and calls it's processXMLata method which processes XML file data and generates library items and returns a com.metadata.LibraryDomain.Library list
-     * Loops through the com.metadata.LibraryDomain.Library (library) list and adds an entry for each com.metadata.LibraryDomain.InventoryItem to the comboBoxForInventoryItemSelection
+     * Instantiates a FileProcessor object and calls it's processXMLata method which processes XML file data and generates library items and returns a Library list
+     * Loops through the Library (library) list and adds an entry for each InventoryItem to the comboBoxForInventoryItemSelection
      */
 
     private void loadXMLFile(){
@@ -271,6 +272,7 @@ public class UIController implements Initializable{
 
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open XML File");
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
             file = fileChooser.showOpenDialog(new Stage());
             if (file == null) {
                 //deactivateUIElements buttons and hide text
@@ -305,7 +307,7 @@ public class UIController implements Initializable{
      */
 
     private void writeToItemSelectionComboBox(){
-        //Loops through the com.metadata.LibraryDomain.Library (library) list and adds an entry to each com.metadata.LibraryDomain.InventoryItem to the comboBoxForInventoryItemSelection
+        //Loops through the Library (library) list and adds an entry to each InventoryItem to the comboBoxForInventoryItemSelection
         for (InventoryItem i : library) {
             comboBoxForInventoryItemSelection.getItems().add(i.getID() + " : " + i.getName() + " : " + i.getType());
         }
@@ -315,8 +317,8 @@ public class UIController implements Initializable{
 
     /**
      * Method name: writeToTextArea()
-     * Populates the text area, using the com.metadata.LibraryDomain.InventoryItem's (and/or child item's) toString method,
-     * with information about com.metadata.LibraryDomain.InventoryItem that has been selected in the comboBoxForInventoryItemSelection
+     * Populates the text area, using the InventoryItem's (and/or child item's) toString method,
+     * with information about InventoryItem that has been selected in the comboBoxForInventoryItemSelection
     */
 
     private void writeToTextArea() {
@@ -362,7 +364,7 @@ public class UIController implements Initializable{
      * Method name save()
      * Called each time a change of state (checkin/out occurs)
      * Calls the FileProcessor writeJSONData() or writeXMLData() methods
-     * which writes data to JSON file or XML and loops through com.metadata.LibraryDomain.Library list, adding each com.metadata.LibraryDomain.InventoryItem
+     * which writes data to JSON file or XML and loops through Library list, adding each InventoryItem
      */
 
     private void save(){
@@ -384,22 +386,23 @@ public class UIController implements Initializable{
             writeToCheckOutTextArea();
         }
         else {
-            displayWarning("com.metadata.LibraryDomain.Library not found", "Please select a file by clicking the 'Load' button");
+            displayWarning("Library not found", "Please select a file by clicking the 'Load' button");
         }
     }
 
     /**
      * Method name logOn()
-     * Called when the "Load com.metadata.LibraryDomain.Member" (logInButton) is clicked
+     * Called when the "Load Member" (logInButton) is clicked
      * Calls a File chooser and prompts the user to select their member list XML file
-     * Next the user is prompted to enter their com.metadata.LibraryDomain.Library card number.  If a match is found the member's information is loaded into memory
+     * Next the user is prompted to enter their Library card number.  If a match is found the member's information is loaded into memory
      *
-     * @param event : Event triggered when "Load com.metadata.LibraryDomain.Member" button is clicked
+     * @param event : Event triggered when "Load Member" button is clicked
      */
     @FXML
     void logOn(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open members.xml File");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
         file = fileChooser.showOpenDialog(new Stage());
 
         if(file != null){
@@ -411,7 +414,7 @@ public class UIController implements Initializable{
                 try {
                     memberList = fl.processXMLMemberList();
 
-                    //present "Load com.metadata.LibraryDomain.Library Card" dialog until a null value is not received
+                    //present "Load Library Card" dialog until a null value is not received
                     while((memberList.getMemberByCardNumber(result.get()) == null)){
                         result = libraryCardPrompt("Card number not found!", "Please, enter a valid library card number:");
                     }
@@ -454,7 +457,7 @@ public class UIController implements Initializable{
         checkedOutTextArea.setText("");
         deactivateUIElements();
         comboBoxForInventoryItemSelection.setDisable(false);
-        comboBoxForInventoryItemSelection.setPromptText("Reload com.metadata.LibraryDomain.Library");
+        comboBoxForInventoryItemSelection.setPromptText("Reload Library");
         int sz = comboBoxForInventoryItemSelection.getItems().size();
         ObservableList l  = comboBoxForInventoryItemSelection.getItems();
         checkoutButton.setDisable(true);

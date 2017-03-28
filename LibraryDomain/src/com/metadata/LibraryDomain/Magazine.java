@@ -41,13 +41,12 @@ public class Magazine extends InventoryItem {
      * @param idNumber
      * @param itemName
      * @param itemType
-     * @param isCheckedOut
      * @param due
      * @param ckOut
      */
 
-    public Magazine(String idNumber, String itemName, String itemType, boolean isCheckedOut, String due, String ckOut, String checkedOutTo){
-        super(idNumber, itemName, itemType, isCheckedOut, due, ckOut, checkedOutTo);
+    public Magazine(String idNumber, String itemName, String itemType, String due, String ckOut, String checkedOutTo){
+        super(idNumber, itemName, itemType, due, ckOut, checkedOutTo);
     }
 
     /**
@@ -57,13 +56,12 @@ public class Magazine extends InventoryItem {
      * @param itemName
      * @param itemType
      * @param vol
-     * @param isCheckedOut
      * @param due
      * @param ckOut
      * @param checkedOutTo
      */
-    public Magazine(String idNumber, String itemName, String itemType, String vol, boolean isCheckedOut, String due, String ckOut, String checkedOutTo){
-        super(idNumber, itemName, itemType, isCheckedOut, due, ckOut, checkedOutTo);
+    public Magazine(String idNumber, String itemName, String itemType, String vol, String due, String ckOut, String checkedOutTo){
+        super(idNumber, itemName, itemType, due, ckOut, checkedOutTo);
         volume = vol;
     }
 

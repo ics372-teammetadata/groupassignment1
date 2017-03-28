@@ -20,8 +20,8 @@ public class Book extends InventoryItem {
         author = authorName;
     }
 
-    public Book(String idNumber, String itemName, String itemType, String authorName, boolean isCheckedOut, String due, String ckOut, String checkedOutTo){
-        super(idNumber, itemName, itemType, isCheckedOut, due, ckOut, checkedOutTo);
+    public Book(String idNumber, String itemName, String itemType, String authorName, String due, String ckOut, String checkedOutTo){
+        super(idNumber, itemName, itemType, due, ckOut, checkedOutTo);
         author = authorName;
     }
 
@@ -35,7 +35,6 @@ public class Book extends InventoryItem {
 
     //Overrides parent method
     public void checkOut(String loggedOnUserCardNumber){
-        checkedOut = true;
         checkoutDate = LocalDate.now();
         dueDate = checkoutDate.plusDays(21);
         checkedOutToUserCardNumber = loggedOnUserCardNumber;
