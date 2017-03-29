@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class InventoryItem {
+public class InventoryItem implements Comparable<InventoryItem>{
 
     /**
      *      Variables
@@ -163,5 +163,10 @@ public class InventoryItem {
         ("ID : " + this.getID() + "\n" +
         "Item : " + this.getName() + "\n" +
         "Type : " + this.getType() + "\n" );
+    }
+
+    @Override
+    public int compareTo(InventoryItem o) {
+        return getName().toUpperCase().compareTo(o.getName().toUpperCase());
     }
 }

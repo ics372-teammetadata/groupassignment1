@@ -24,11 +24,6 @@ public class Library extends ArrayList<InventoryItem> {
 
     //sorts Library list by Name field.
     public void sort() {
-        Collections.sort(this,new Comparator<InventoryItem>()
-        {
-            public int compare (InventoryItem o1, InventoryItem o2){
-            return o1.getName().toUpperCase().compareTo(o2.getName().toUpperCase());
-        }
-    });
+        Collections.sort(this);
    }
 }
