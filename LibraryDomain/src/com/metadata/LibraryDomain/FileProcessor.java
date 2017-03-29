@@ -96,6 +96,7 @@ public class FileProcessor {
     public FileProcessor(File f){
         file = f;
     }
+    public FileProcessor(){}
     
     /**
      *      Method name : processJSONData
