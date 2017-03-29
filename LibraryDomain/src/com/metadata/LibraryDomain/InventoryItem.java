@@ -1,7 +1,7 @@
 package com.metadata.LibraryDomain;
 
-import java.time.LocalDate;
-import java.time.Period;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class InventoryItem {
@@ -11,12 +11,13 @@ public class InventoryItem {
      */
 
     protected String id, name, type;
-    protected LocalDate checkoutDate = null;
-    protected LocalDate dueDate = null;
-    protected int daysUntilDue = 0;
+    protected Date checkoutDate = null;
+    protected Date dueDate = null;
     protected String checkOutString;
     protected String dueDateString;
     protected String checkedOutToUserCardNumber;
+
+    private static final String dateFormatString = "MM/dd/yyyy";
 
 
     /**
@@ -49,11 +50,23 @@ public class InventoryItem {
         type = itemType;
         checkedOutToUserCardNumber = checkedOutTo;
 
+        SimpleDateFormat formatter = new SimpleDateFormat(dateFormatString);
         if(due != null) {
-            dueDate = LocalDate.parse(due);
+            try{
+                dueDate = formatter.parse(due); //LocalDate.parse(due);
+            }
+            catch (ParseException e){
+
+            }
+
         }
         if(checkOutDt != null){
-            checkoutDate = LocalDate.parse(checkOutDt);
+            try {
+                checkoutDate = formatter.parse(checkOutDt);
+            }
+            catch (ParseException e){
+
+            }
         }
 
     }
@@ -63,10 +76,18 @@ public class InventoryItem {
      */
 
     public void checkOut(String loggedOnUserCardNumber){
-        checkoutDate = LocalDate.now();
-        dueDate = checkoutDate.plusDays(7);
+        checkoutDate = new Date();
+        setCheckoutDate(7);
         checkedOutToUserCardNumber = loggedOnUserCardNumber;
     }
+
+    protected void setCheckoutDate(int days){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(checkoutDate);
+        cal.add(Calendar.DATE, days);
+        dueDate = cal.getTime();
+    }
+
     public void checkIn(){
         checkoutDate = null;
         dueDate = null;
@@ -86,7 +107,8 @@ public class InventoryItem {
             return null;
         }
         else{
-            return  checkoutDate.toString();
+            SimpleDateFormat formatter = new SimpleDateFormat(dateFormatString);
+            return  formatter.format(checkoutDate);
         }
     }
     public String getDueDate(){
@@ -95,13 +117,19 @@ public class InventoryItem {
             return null;
         }
         else{
-            return dueDate.toString();
+            SimpleDateFormat formatter = new SimpleDateFormat(dateFormatString);
+            return formatter.format(dueDate);
         }
     }
+
+    // I would really like to get rid of this method
     public int getDaysUntilDue(){
         if(dueDate != null) {
-            daysUntilDue = Period.between(LocalDate.now(), dueDate).getDays();
-            return daysUntilDue;
+            Calendar nowCal = Calendar.getInstance();
+            Calendar dueCal = Calendar.getInstance();
+            nowCal.setTime(new Date());
+            dueCal.setTime(dueDate);
+            return dueCal.get(Calendar.DATE) - nowCal.get(Calendar.DATE);
         }
         else return 0;
     }

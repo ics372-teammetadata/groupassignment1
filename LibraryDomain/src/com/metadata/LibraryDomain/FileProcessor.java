@@ -7,7 +7,6 @@ package com.metadata.LibraryDomain;
 
 
 import java.io.*;
-import java.time.format.DateTimeParseException;
 
 import org.json.simple.*;
 import org.json.simple.parser.*;
@@ -40,6 +39,7 @@ public class FileProcessor {
     private JSONObject jsonObject = null;
 
     //static variables uses by JSON methods
+    private enum jsonStrings {item_artist, item_author, library_items, item_name, item_id, item_type, CD, DVD, Book, Magazine, item_isCheckedOut, item_dueDate, item_checkoutDate, item_checkedOutTo}
     private static final String ITEM_ARTIST = "item_artist";
     private static final String ITEM_AUTHOR = "item_author";
     private static final String LIBRARY_ITEMS = "library_items";
@@ -52,6 +52,7 @@ public class FileProcessor {
     private static final String MAGAZINE = "Magazine";
 
     //static variables used by XML methods
+    private enum xmlStrings {Item, id, type, CD, DVD, MAGAZINE, BOOK, Name, Artist, Author, Volume, item_isCheckedOut, item_dueDate, item_checkoutDate, item_checkedOutTo}
     private static final String ITEM = "Item";
     private static final String ID = "id";
     private static final String TYPE = "type";
@@ -105,11 +106,11 @@ public class FileProcessor {
      *      which displays cardRepo meaningful error message to the user
      **/
 
-    public Library processJSONData() throws ParseException, DateTimeParseException, FileNotFoundException, IOException{
+    public Library processJSONData() throws ParseException, FileNotFoundException, IOException{
         return processJSONData(new FileInputStream(file));
     }
 
-    public Library processJSONData(InputStream inputStream) throws ParseException, DateTimeParseException, FileNotFoundException, IOException {
+    public Library processJSONData(InputStream inputStream) throws ParseException, FileNotFoundException, IOException {
         //instantiate JSON parser - throws FileNotFOundException and IOException
 
         JSONParser parser = new JSONParser();
@@ -214,11 +215,11 @@ public class FileProcessor {
      *  Throws ParserConfigurationException, SAXException, IOException that is caught by the UIControlloer save() method
      */
 
-    public Library processXMLData() throws ParserConfigurationException, SAXException, IOException, DateTimeParseException{
+    public Library processXMLData() throws ParserConfigurationException, SAXException, IOException{
         return processXMLData(new FileInputStream(file));
     }
 
-    public Library processXMLData(InputStream inputStream) throws ParserConfigurationException, SAXException, IOException, DateTimeParseException{
+    public Library processXMLData(InputStream inputStream) throws ParserConfigurationException, SAXException, IOException{
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document doc = builder.parse(inputStream);
@@ -241,29 +242,28 @@ public class FileProcessor {
                     Node childNode = libItemList.item(j);
                     if(childNode.getNodeType()==Node.ELEMENT_NODE){
                         Element metadata = (Element) childNode;
-                        switch(metadata.getTagName()){
-                            case ARTIST : artist = metadata.getTextContent();
+                        switch(xmlStrings.valueOf(metadata.getTagName())){
+                            case Artist: artist = metadata.getTextContent();
                                 break;
-                            case AUTHOR : author = metadata.getTextContent();
+                            case Author: author = metadata.getTextContent();
                                 break;
-                            case VOLUME : volume = metadata.getTextContent();
+                            case Volume: volume = metadata.getTextContent();
                                 break;
-                            case NAME : itemName = metadata.getTextContent();
+                            case Name: itemName = metadata.getTextContent();
                                 break;
-                            case ITEM_ISCHECKEDOUT : isCheckedOut = Boolean.parseBoolean(metadata.getTextContent());
+                            case item_isCheckedOut: isCheckedOut = Boolean.parseBoolean(metadata.getTextContent());
                                 break;
-                            case ITEM_DUEDATE : itemDueDate = metadata.getTextContent();
-                                System.out.println(itemDueDate);
+                            case item_dueDate: itemDueDate = metadata.getTextContent();
                                 if(metadata.getTextContent().equals("null")){
                                     itemDueDate = null;
                                 }
                                 break;
-                            case ITEM_CHECKOUTDATE : itemCheckOutDate = metadata.getTextContent();
+                            case item_checkoutDate: itemCheckOutDate = metadata.getTextContent();
                                 if(metadata.getTextContent().equals("null")){
                                     itemCheckOutDate = null;
                                 }
                                 break;
-                            case ITEM_CHECKEDOUTTO : checkedOutTo = metadata.getTextContent();
+                            case item_checkedOutTo: checkedOutTo = metadata.getTextContent();
                                 if(metadata.getTextContent().equals("null")){
                                     checkedOutTo = null;
                                 }
@@ -382,11 +382,11 @@ public class FileProcessor {
      *  Throws ParserConfigurationException, SAXException, IOException that is caught by the UIControlloer save() method
      */
 
-    public MemberList processXMLMemberList()throws ParserConfigurationException, SAXException, IOException, DateTimeParseException{
+    public MemberList processXMLMemberList()throws ParserConfigurationException, SAXException, IOException{
         return processXMLMemberList(new FileInputStream(file));
     }
 
-    public MemberList processXMLMemberList(InputStream inputStream) throws ParserConfigurationException, SAXException, IOException, DateTimeParseException{
+    public MemberList processXMLMemberList(InputStream inputStream) throws ParserConfigurationException, SAXException, IOException{
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document doc = builder.parse(inputStream);
