@@ -1,0 +1,5 @@
+<StaffData>
+    <Member userName="dave" name="Dave Turin" password="Passw0rd123" ></Member>
+    <Member userName="tHoff" name="Todd Hoffman" password="Passw0rd123" ></Member>
+
+</StaffData>

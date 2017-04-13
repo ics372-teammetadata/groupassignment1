@@ -5,16 +5,20 @@ package com.metadata.LibraryDomain;
  */
 public class Staff {
 
-        protected String id, name;
+    protected String userName, name, password;
 
-        public Staff(String idNumber, String name, String cardNumber){
-            this.id = idNumber;
-            this.name = name;
-        }
-        public String getID(){
-            return id;
-        }
-        public String getName(){
-            return name;
-        }
+    public Staff(String userName, String name, String password){
+        this.userName = userName;
+        this.name = name;
+        this.password = password;
+    }
+    public String getUserName(){
+        return userName;
+    }
+    public String getName(){
+        return name;
+    }
+    public String getPassword(){
+        return password;
+    }
 }
