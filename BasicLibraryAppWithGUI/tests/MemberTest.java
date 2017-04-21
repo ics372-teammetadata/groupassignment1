@@ -12,11 +12,6 @@ public class MemberTest extends TestCase {
     public void testGetID() throws Exception {
         assertEquals("u999", member.getID());
     }
-
-    public void testGetCardNumber() throws Exception {
-        assertEquals("123456789", member.getCardNumber());
-    }
-
     public void testGetName() throws Exception {
         assertEquals("Geralt of Rivia", member.getName());
     }

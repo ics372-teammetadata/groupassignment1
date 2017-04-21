@@ -88,7 +88,7 @@ public class FileProcessorTest extends TestCase {
 
         memberFile = new FileProcessor(membersXMFile);
         memberList = memberFile.processXMLMemberList();
-        assertEquals("Ricky Rubio", memberList.getMemberByCardNumber("111").getName());
+        assertEquals("Ricky Rubio", memberList.getMemberByUsername("111").getName());
 
     }
 

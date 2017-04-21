@@ -3,9 +3,9 @@ package com.metadata.LibraryDomain;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class MemberList extends ArrayList<Member>
+public class StaffList extends ArrayList<Staff>
 {
-	public Member getMemberByID(String s) {
+	public Member getStaffByID(String s) {
 		for (Iterator iterator = this.iterator(); iterator.hasNext(); ) {
 			Member item = (Member) iterator.next();
 			if (item.getID().equals(s)) {
@@ -15,7 +15,7 @@ public class MemberList extends ArrayList<Member>
 		return null;
 	}
 
-	public Member getMemberByUsername(String s) {
+	public Member getStaffByUsername(String s) {
 		for (Iterator iterator = this.iterator(); iterator.hasNext(); ) {
 			Member item = (Member) iterator.next();
 			if (item.getName().equals(s)) {

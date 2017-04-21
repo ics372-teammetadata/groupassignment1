@@ -33,8 +33,10 @@ public class FileProcessor {
 
     private Library library = new Library();
     private MemberList memberList = new MemberList();
+    private StaffList staffList = new StaffList();
     private InventoryItem libItem = null;
     private Member member = null;
+    private Staff staff = null;
     private File file;
     private JSONObject jsonObject = null;
 
@@ -88,6 +90,9 @@ public class FileProcessor {
     String memberName;
     String memberCardNumber;
 
+    String staffPassword;
+    String staffName;
+    String staffUserName;
     /**
      *      Constructor
      *      Called by the UIController class
@@ -377,7 +382,7 @@ public class FileProcessor {
     }
 
     /**
-     *  Method name: processXMLData()
+     *  Method name: processXMLMemberList()
      *
      *  Reads XML data from a file
      *  Throws ParserConfigurationException, SAXException, IOException that is caught by the UIControlloer save() method
@@ -409,4 +414,39 @@ public class FileProcessor {
 
         return memberList;
     }
+    /**
+     *  Method name: processXMLMemberList()
+     *
+     *  Reads XML data from a file
+     *  Throws ParserConfigurationException, SAXException, IOException that is caught by the UIControlloer save() method
+     */
+
+    public StaffList processXMLStaffList()throws ParserConfigurationException, SAXException, IOException{
+        return processXMLStaffList(new FileInputStream(file));
+    }
+
+    public StaffList processXMLStaffList(InputStream inputStream) throws ParserConfigurationException, SAXException, IOException{
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document doc = builder.parse(inputStream);
+
+        NodeList members = doc.getElementsByTagName("Member");
+        //loop through each parent element
+        for(int i = 0; i < members.getLength(); i++) {
+            Node node = members.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element libItemElement = (Element) node;
+                memberID = libItemElement.getAttribute("id");
+                memberName = libItemElement.getAttribute("name");
+                memberCardNumber = libItemElement.getAttribute("cardNumber");
+            }
+            staff = new Staff(memberID, memberName, memberCardNumber);
+            staffList.add(staff);
+        }
+
+
+        return staffList;
+    }
+
+
 }

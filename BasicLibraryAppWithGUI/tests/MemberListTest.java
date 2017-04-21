@@ -21,10 +21,10 @@ public class MemberListTest extends TestCase {
     public void testGetMemberByCardNumber() throws Exception {
         //verify that the getMemberCardNumber method returns the proper card number
         memberList.add(member);
-        assertEquals("123456789", memberList.getMemberByCardNumber("123456789").getCardNumber());
+        assertEquals("123456789", memberList.getMemberByUsername("123456789").getID());
 
         memberList.remove(member);
-        assertNull(memberList.getMemberByCardNumber("123456789"));
+        assertNull(memberList.getMemberByUsername("123456789"));
     }
 
 }

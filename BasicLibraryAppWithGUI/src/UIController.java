@@ -37,6 +37,8 @@ public class UIController implements Initializable{
     private boolean reload = false;
     private Member loggedOnUser;
     private MemberList memberList;
+    private Staff loggedOnStaff;
+    private StaffList staffList;
 
     //FXML variables
     @FXML
@@ -67,6 +69,8 @@ public class UIController implements Initializable{
     private Label checkOutLabel;
     @FXML
     private Button logInButton;
+    @FXML
+    private Button staffButton;
     @FXML
     private Tab loginTab;
     @FXML
@@ -139,7 +143,7 @@ public class UIController implements Initializable{
     public void checkOutItem(ActionEvent event){
         Optional result = basicConfirmationWarning("Check-out", "Are you sure you want to check out this item?  Changes will be automatically saved to the current library file.");
         if (result.get() == ButtonType.OK){
-            item.checkOut(loggedOnUser.getCardNumber());
+            item.checkOut(loggedOnUser.getID());
             save();
             writeToTextArea();
         }
@@ -155,7 +159,7 @@ public class UIController implements Initializable{
 
     @FXML
     public void returnItem(ActionEvent event){
-        if(loggedOnUser.getCardNumber().equals(item.getCheckedOutToUserCardNumber())){
+        if(loggedOnUser.getID().equals(item.getCheckedOutToUserCardNumber())){
             Optional result = basicConfirmationWarning("Check-in", "Are you sure you want to return this item?  Changes will be automatically saved to the current library file.");
             if (result.get() == ButtonType.OK){
                 item.checkIn();
@@ -163,7 +167,7 @@ public class UIController implements Initializable{
                 writeToTextArea();
             }
         }else{
-            basicConfirmationWarning("Unable to return item", "This item is checked out to another user : " + memberList.getMemberByCardNumber(item.getCheckedOutToUserCardNumber()).getName());
+            basicConfirmationWarning("Unable to return item", "This item is checked out to another user : " + memberList.getMemberByUsername(item.getCheckedOutToUserCardNumber()).getID());
         }
     }
 
@@ -227,7 +231,7 @@ public class UIController implements Initializable{
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open JSON File");
             fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
-            file = fileChooser.showOpenDialog(new Stage());
+            //file = fileChooser.showOpenDialog(new Stage());
             if (file == null) {
                 //deactivateUIElements buttons and hide text
                 deactivateUIElements();
@@ -243,15 +247,15 @@ public class UIController implements Initializable{
         }catch(ParseException e){
             deactivateUIElements();
             displayWarning("File load error","An incorrect file type was detected.  Please load a properly formatted JSON file.");
-        }catch(DateTimeParseException e){
-            deactivateUIElements();
-            displayWarning("File load error","An improperLy formated Date was detected.  Please load a properly formatted JSON file.");
         }catch(FileNotFoundException e){
             deactivateUIElements();
             displayWarning("File load error (FileNotFoundException)","File not found  Please load a properly formatted JSON file.");
         } catch(IOException e){
             deactivateUIElements();
             displayWarning("File load error (IOException)","There was an error when loading the file. Please load a properly formatted JSON file.");
+        }catch(DateTimeParseException e){
+            deactivateUIElements();
+            displayWarning("File load error","An improperly formatted Date was detected.  Please load a properly formatted JSON file.");
         }
     }
 
@@ -391,7 +395,7 @@ public class UIController implements Initializable{
     }
 
     /**
-     * Method name logOn()
+     * Method name memberLogon()
      * Called when the "Load Member" (logInButton) is clicked
      * Calls a File chooser and prompts the user to select their member list XML file
      * Next the user is prompted to enter their Library card number.  If a match is found the member's information is loaded into memory
@@ -399,32 +403,29 @@ public class UIController implements Initializable{
      * @param event : Event triggered when "Load Member" button is clicked
      */
     @FXML
-    void logOn(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open members.xml File");
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
-        file = fileChooser.showOpenDialog(new Stage());
-
+    void memberLogon(ActionEvent event) {
+        file = new File("BasicLibraryAppWithGUI\\src\\members.xml");
+        System.out.println(file.getAbsolutePath());
         if(file != null){
             FileProcessor fl = new FileProcessor(file);
 
-            Optional<String> result = libraryCardPrompt("Enter your library card number", "Please, enter your library card number:");
+            Optional<String> result = loginPrompt("Member: Enter username", "Please, enter your username:");
 
             if (result.isPresent()){
                 try {
                     memberList = fl.processXMLMemberList();
 
                     //present "Load Library Card" dialog until a null value is not received
-                    while((memberList.getMemberByCardNumber(result.get()) == null)){
-                        result = libraryCardPrompt("Card number not found!", "Please, enter a valid library card number:");
+                    while((memberList.getMemberByUsername(result.get()) == null)){
+                        result = loginPrompt("Username number not found!", "Please, enter a username:");
                     }
-                    if(memberList.getMemberByCardNumber(result.get()) != null) {
+                    if(memberList.getMemberByUsername(result.get()) != null) {
                         loadButton.setDisable(false);
                         libraryTab.setDisable(false);
                         loginTab.setDisable(true);
                         libTabPane.getSelectionModel().select(libraryTab);
-                        loggedOnUser = memberList.getMemberByCardNumber(result.get());
-                        loggedOnUserLabel.setText(loggedOnUser.getName() + " is currently logged on");
+                        loggedOnUser = memberList.getMemberByUsername(result.get());
+                        loggedOnUserLabel.setText(loggedOnUser.getID() + " is currently logged on");
                     }
                 }catch(ParserConfigurationException e){
                     displayWarning("File load error (ParserConfigurationException)","An improperly formatted file was detected.  Please load a properly formatted XML file.");
@@ -436,10 +437,44 @@ public class UIController implements Initializable{
             }
         }
     }
+    @FXML
+    void staffLogon(ActionEvent event) {
+        file = new File("BasicLibraryAppWithGUI\\src\\staff.xml");
+        System.out.println(file.getAbsolutePath());
+        if(file != null){
+            FileProcessor fl = new FileProcessor(file);
 
-    private Optional libraryCardPrompt(String headerText, String bodyText){
+            Optional<String> result = loginPrompt("Staff: Enter username", "Please, enter your username:");
+
+            if (result.isPresent()){
+                try {
+                    staffList = fl.processXMLStaffList();
+
+                    //present "Load Library Card" dialog until a null value is not received
+                    while((staffList.getStaffByUsername(result.get()) == null)){
+                        result = loginPrompt("Username number not found!", "Please, enter a username:");
+                    }
+                    if(staffList.getStaffByUsername(result.get()) != null) {
+                        loadButton.setDisable(false);
+                        libraryTab.setDisable(false);
+                        loginTab.setDisable(true);
+                        libTabPane.getSelectionModel().select(libraryTab);
+                        loggedOnUser = staffList.getStaffByUsername(result.get());
+                        loggedOnUserLabel.setText(loggedOnUser.getID() + " is currently logged on");
+                    }
+                }catch(ParserConfigurationException e){
+                    displayWarning("File load error (ParserConfigurationException)","An improperly formatted file was detected.  Please load a properly formatted XML file.");
+                }catch(SAXException e){
+                    displayWarning("File load error (SAXException)","An improperly formatted file was detected.  Please load a properly formatted XML file.");
+                }catch(IOException e){
+                    displayWarning("File load error (IOException)","An improperly formatted file was detected.  Please load a properly formatted XML file.");
+                }
+            }
+        }
+    }
+    private Optional loginPrompt(String headerText, String bodyText){
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Enter library card #");
+        dialog.setTitle("Enter login information");
         dialog.setHeaderText(headerText);
         dialog.setContentText(bodyText);
         // Traditional way to get the response value.
