@@ -125,7 +125,6 @@ public class FileProcessor {
 
         //collection info from JSON file
         if (file.exists()) {
-            System.out.println(file.getPath());
             //loop through JSON array, creating 'Library Item" objects, adding them to an inventory list to be returned
             if (jsonObject.get(LIBRARY_ITEMS) != null) {
                 for (Object jArrayItem : (JSONArray) jsonObject.get(LIBRARY_ITEMS)) {
