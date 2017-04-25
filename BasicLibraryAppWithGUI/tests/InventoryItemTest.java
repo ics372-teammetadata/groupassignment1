@@ -107,7 +107,7 @@ public class InventoryItemTest extends TestCase {
     }
 
     public void testGetCheckedOutToUserCardNumber() throws Exception {
-        //very that the proper card number for the user who checked out a particular item
+        //very that the proper card number for the userName who checked out a particular item
 
         inv.checkOut("9999");
         i.checkOut("9999");

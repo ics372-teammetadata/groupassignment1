@@ -404,9 +404,9 @@ public class FileProcessor {
                 Element libItemElement = (Element) node;
                 memberID = libItemElement.getAttribute("id");
                 memberName = libItemElement.getAttribute("name");
-                memberCardNumber = libItemElement.getAttribute("cardNumber");
+                memberCardNumber = libItemElement.getAttribute("password");
             }
-            member = new Member(memberID, memberName, memberCardNumber);
+            member = new Member(memberName, memberID, memberCardNumber);
             memberList.add(member);
         }
 
@@ -435,9 +435,9 @@ public class FileProcessor {
             Node node = members.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 Element libItemElement = (Element) node;
-                memberID = libItemElement.getAttribute("id");
+                memberID = libItemElement.getAttribute("userName");
                 memberName = libItemElement.getAttribute("name");
-                memberCardNumber = libItemElement.getAttribute("cardNumber");
+                memberCardNumber = libItemElement.getAttribute("password");
             }
             staff = new Staff(memberID, memberName, memberCardNumber);
             staffList.add(staff);

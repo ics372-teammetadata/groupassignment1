@@ -1,28 +1,29 @@
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * Created by Andrew on 4/23/2017.
  */
 public class DetailsController {
 
-    public DetailsController(String user){
-        this.user = user;
+    public DetailsController(String userName, String userID, PrivilegeType privilege){
+        this.userName = userName;
+        this.userID = userID;
+        this.privilege = privilege;
     }
 
     void initialize(){
-        testLabel.setText(user);
+        userDisplay.setText(String.format("Logged in as %s", userName));
     }
 
     @FXML
-    Label testLabel;
+    Label userDisplay;
 
-    String user;
+    String userName;
+    String userID;
+    PrivilegeType privilege;
 
     @FXML
     private void Logout() throws IOException {

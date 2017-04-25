@@ -75,11 +75,11 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            FileProcessor processor = new FileProcessor(new File(System.getProperty("user.dir") + "/BasicLibraryAppWithGUI/src/members.xml"));
+            FileProcessor processor = new FileProcessor(new File(System.getProperty("userName.dir") + "/BasicLibraryAppWithGUI/src/members.xml"));
             memberList = processor.processXMLMemberList();
-            staffList = processor.processXMLStaffList(new FileInputStream(new File(System.getProperty("user.dir") + "/BasicLibraryAppWithGUI/src/staff.xml")));
-            localLib = processor.processJSONData(new FileInputStream(new File(System.getProperty("user.dir") + "/BasicLibraryAppWithGUI/src/JSONLib.json")));
-            offsiteLib = processor.processXMLData(new FileInputStream(new File(System.getProperty("user.dir") + "/BasicLibraryAppWithGUI/src/testLib.xml")));
+            staffList = processor.processXMLStaffList(new FileInputStream(new File(System.getProperty("userName.dir") + "/BasicLibraryAppWithGUI/src/staff.xml")));
+            localLib = processor.processJSONData(new FileInputStream(new File(System.getProperty("userName.dir") + "/BasicLibraryAppWithGUI/src/JSONLib.json")));
+            offsiteLib = processor.processXMLData(new FileInputStream(new File(System.getProperty("userName.dir") + "/BasicLibraryAppWithGUI/src/testLib.xml")));
         } catch (Exception e) {
             showErrorDialog(e);
             Platform.exit();

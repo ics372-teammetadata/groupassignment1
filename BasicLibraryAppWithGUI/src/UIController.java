@@ -110,7 +110,7 @@ public class UIController implements Initializable{
     /**
      * Method name:  chooseLibrary()
      * Popup is called when the "Load Library" button is clicked
-     * Allows the user to select between the JSON or XML library
+     * Allows the userName to select between the JSON or XML library
      */
 
     private void chooseLibrary(){
@@ -129,7 +129,7 @@ public class UIController implements Initializable{
         } else if (result.get() == sisterLibraryButton) {
             loadXMLFile();
         } else {
-            //user clicked the "Cancel" button
+            //userName clicked the "Cancel" button
         }
     }
      /**
@@ -167,7 +167,7 @@ public class UIController implements Initializable{
                 writeToTextArea();
             }
         }else{
-            basicConfirmationWarning("Unable to return item", "This item is checked out to another user : " + memberList.getMemberByUsername(item.getCheckedOutToUserCardNumber()).getID());
+            basicConfirmationWarning("Unable to return item", "This item is checked out to another userName : " + memberList.getMemberByUsername(item.getCheckedOutToUserCardNumber()).getID());
         }
     }
 
@@ -185,7 +185,7 @@ public class UIController implements Initializable{
 
     /**
      * Method name:  displayWarning()
-     * Displays a warning message to the user
+     * Displays a warning message to the userName
      *
      * @param title :  Alert title
      * @param text : Alert text
@@ -230,7 +230,7 @@ public class UIController implements Initializable{
         try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open JSON File");
-            fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+            fileChooser.setInitialDirectory(new File(System.getProperty("userName.dir")));
             //file = fileChooser.showOpenDialog(new Stage());
             if (file == null) {
                 //deactivateUIElements buttons and hide text
@@ -276,7 +276,7 @@ public class UIController implements Initializable{
 
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open XML File");
-            fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+            fileChooser.setInitialDirectory(new File(System.getProperty("userName.dir")));
             file = fileChooser.showOpenDialog(new Stage());
             if (file == null) {
                 //deactivateUIElements buttons and hide text
@@ -397,8 +397,8 @@ public class UIController implements Initializable{
     /**
      * Method name memberLogon()
      * Called when the "Load Member" (logInButton) is clicked
-     * Calls a File chooser and prompts the user to select their member list XML file
-     * Next the user is prompted to enter their Library card number.  If a match is found the member's information is loaded into memory
+     * Calls a File chooser and prompts the userName to select their member list XML file
+     * Next the userName is prompted to enter their Library card number.  If a match is found the member's information is loaded into memory
      *
      * @param event : Event triggered when "Load Member" button is clicked
      */
@@ -459,7 +459,7 @@ public class UIController implements Initializable{
                         libraryTab.setDisable(false);
                         loginTab.setDisable(true);
                         libTabPane.getSelectionModel().select(libraryTab);
-                        loggedOnUser = staffList.getStaffByUsername(result.get());
+                        //loggedOnUser = staffList.getStaffByUsername(result.get());
                         loggedOnUserLabel.setText(loggedOnUser.getID() + " is currently logged on");
                     }
                 }catch(ParserConfigurationException e){
