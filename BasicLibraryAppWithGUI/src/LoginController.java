@@ -7,9 +7,14 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 
 /**
+ * Controls the Login.fxml
+ * Authenticates user's id and password before telling UI to change screen over to Details.fxml
+ *
  * Created by Andrew on 4/23/2017.
  */
 public class LoginController {
+    private final String MEMBER_PRIVILEGE_CODE = "100";
+
     @FXML
     TextField userText;
     @FXML
@@ -20,19 +25,19 @@ public class LoginController {
         String id = userText.getText();
         String password = passwordText.getText();
         Member m = UI.memberList.getMemberByID(id);
-        Staff s = UI.staffList.getStaffByUsername(id);
-        if (m == null && s == null){
+        //Staff s = UI.staffList.getStaffByUsername(id);
+        if (m == null /*&& s == null*/){
             showLoginError();
             return;
         }
         else if (m != null && password.equals(m.getPassword())){
-            UI.showDetailsPage(m.getName(), m.getID(), PrivilegeType.Member);
+            UI.showDetailsPage(m.getName(), m.getID(), m.getPrivelege().equals(MEMBER_PRIVILEGE_CODE)? PrivilegeType.Member : PrivilegeType.Staff);
             return;
         }
-        else if (s != null && password.equals(s.getPassword())){
+        /*else if (s != null && password.equals(s.getPassword())){
             UI.showDetailsPage(s.getName(), s.getUserName(), PrivilegeType.Staff);
             return;
-        }
+        }*/
 
         showLoginError();
     }

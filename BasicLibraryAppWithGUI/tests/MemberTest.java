@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 public class MemberTest extends TestCase {
 
     //Construct new member to use for testing
-    Member member = new Member("u999", "Geralt of Rivia", "123456789");
+    Member member = new Member("u999", "Geralt of Rivia", "123456789", "100");
 
     public void testGetID() throws Exception {
         assertEquals("u999", member.getID());

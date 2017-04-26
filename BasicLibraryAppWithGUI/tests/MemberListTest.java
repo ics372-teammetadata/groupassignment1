@@ -6,7 +6,7 @@ import junit.framework.TestCase;
  */
 public class MemberListTest extends TestCase {
     //Construct new member to use for testing
-    Member member = new Member("u999", "Geralt of Rivia", "123456789");
+    Member member = new Member("u999", "Geralt of Rivia", "123456789" , "100");
     //Construct new list
     MemberList memberList = new MemberList();
     public void testGetMemberByID() throws Exception {

@@ -31,7 +31,7 @@ public class UI extends Application {
     static FileProcessor offsiteProcessor;
     static final String localLibPath = "Data/JSONLib.json";
     static final String offsitLibPath = "Data/testLib.xml";
-    static final String membersFilePath = "Data/members.xml";
+    static final String membersFilePath = "Data/member.xml";
     static final String staffFilePath = "Data/staff.xml";
 
     private Stage primaryStage;

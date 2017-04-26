@@ -13,7 +13,7 @@ public class LibraryTest extends TestCase {
     public void testGetItemByID() throws Exception {
 
         //Test for id match
-        CD cd = new CD("id123", "OK Computer", "com.metadata.LibraryDomain.CD", "Radiohead", null, null, null);
+        CD cd = new CD("id123", "OK Computer", "com.metadata.LibraryDomain.CD", "Radiohead", null, null, null, "N/A");
         l.add(cd);
         assertEquals(cd, l.getItemByID("id123"));
 
@@ -33,7 +33,7 @@ public class LibraryTest extends TestCase {
     }
 
     public void testSort() throws Exception{
-        CD cd2 = new CD("id124", "Black Album", "com.metadata.LibraryDomain.CD", "Metallica", null, null, null);
+        CD cd2 = new CD("id124", "Black Album", "com.metadata.LibraryDomain.CD", "Metallica", null, null, null, "N/A");
         l.add(cd2);
         l.sort();
         assertEquals("Black Album", l.get(0).getName());

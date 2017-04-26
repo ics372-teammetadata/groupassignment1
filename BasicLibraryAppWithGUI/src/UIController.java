@@ -404,7 +404,7 @@ public class UIController implements Initializable{
      */
     @FXML
     void memberLogon(ActionEvent event) {
-        file = new File("BasicLibraryAppWithGUI\\src\\members.xml");
+        file = new File("Data/members.xml");
         System.out.println(file.getAbsolutePath());
         if(file != null){
             FileProcessor fl = new FileProcessor(file);
@@ -439,7 +439,7 @@ public class UIController implements Initializable{
     }
     @FXML
     void staffLogon(ActionEvent event) {
-        file = new File("BasicLibraryAppWithGUI\\src\\staff.xml");
+        file = new File("Data/staff.xml");
         System.out.println(file.getAbsolutePath());
         if(file != null){
             FileProcessor fl = new FileProcessor(file);

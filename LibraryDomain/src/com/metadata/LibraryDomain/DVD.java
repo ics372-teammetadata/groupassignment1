@@ -26,8 +26,8 @@ public class DVD extends InventoryItem {
      * @param ckOut
      * @param checkedOutTo
      */
-    public DVD(String idNumber, String itemName, String itemType, String due, String ckOut, String checkedOutTo){
-        super(idNumber, itemName, itemType, due, ckOut, checkedOutTo);
+    public DVD(String idNumber, String itemName, String itemType, String due, String ckOut, String checkedOutTo, String status){
+        super(idNumber, itemName, itemType, "", due, ckOut, checkedOutTo, status);
     }
 
     /**

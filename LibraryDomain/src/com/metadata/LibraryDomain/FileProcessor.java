@@ -54,7 +54,7 @@ public class FileProcessor {
     private static final String MAGAZINE = "Magazine";
 
     //static variables used by XML methods
-    private enum xmlStrings {Item, id, type, CD, DVD, MAGAZINE, BOOK, Name, Artist, Author, Volume, item_isCheckedOut, item_dueDate, item_checkoutDate, item_checkedOutTo}
+    private enum xmlStrings {Item, id, type, CD, DVD, MAGAZINE, BOOK, Name, Artist, Author, Volume, item_isCheckedOut, item_dueDate, item_checkoutDate, item_checkedOutTo, item_status}
     private static final String ITEM = "Item";
     private static final String ID = "id";
     private static final String TYPE = "type";
@@ -72,6 +72,7 @@ public class FileProcessor {
     private static final String ITEM_DUEDATE = "item_dueDate";
     private static final String ITEM_CHECKOUTDATE = "item_checkoutDate";
     private static final String ITEM_CHECKEDOUTTO = "item_checkedOutTo";
+    private static final String ITEM_STATUS = "item_status";
 
     //variables
     String itemName = "";
@@ -84,11 +85,13 @@ public class FileProcessor {
     String itemCheckOutDate = null;
     boolean isCheckedOut = false;
     String checkedOutTo = null;
+    String itemStatus = null;
 
 
     String memberID;
     String memberName;
-    String memberCardNumber;
+    String memberPassword;
+    String memberPrivilege;
 
     String staffPassword;
     String staffName;
@@ -135,9 +138,14 @@ public class FileProcessor {
                     itemName = (String) arrayItem.get(ITEM_NAME);
                     itemID = (String) arrayItem.get(ITEM_ID);
                     itemType = (String) arrayItem.get(ITEM_TYPE);
+                    if (arrayItem.containsKey(ITEM_ARTIST)) artist = (String) arrayItem.get(ITEM_ARTIST);
+                    else if (arrayItem.containsKey(ITEM_AUTHOR)) artist = (String) arrayItem.get(ITEM_AUTHOR);
+                    else artist = "";
                     itemDueDate = null;
                     itemCheckOutDate = null;
                     isCheckedOut = false;
+                    if (arrayItem.containsKey(ITEM_STATUS))itemStatus = (String) arrayItem.get(ITEM_STATUS);
+                    else itemStatus = "";
 
                     //generate library items from JSON object info and return an InventoryItem
                     if (arrayItem.containsKey(ITEM_ISCHECKEDOUT)) {
@@ -150,17 +158,22 @@ public class FileProcessor {
                         checkedOutTo = (String) arrayItem.get(ITEM_CHECKEDOUTTO);
                     }
 
+                    if (itemStatus == null || itemStatus.equals(""))itemStatus = "Available";
+                    libItem = new InventoryItem(itemID,itemName,itemType,artist,itemDueDate,itemCheckOutDate,checkedOutTo,itemStatus);
+
+                    /*
                     if (arrayItem.get(ITEM_TYPE).equals(CD)) {
                         artist = (String) arrayItem.get(ITEM_ARTIST);
-                        libItem = new CD(itemID, itemName, itemType, artist, itemDueDate, itemCheckOutDate, checkedOutTo);
+                        libItem = new CD(itemID, itemName, itemType, artist, itemDueDate, itemCheckOutDate, checkedOutTo, "N/A");
                     } else if (arrayItem.get(ITEM_TYPE).equals(BOOK)) {
                         author = (String) arrayItem.get(ITEM_AUTHOR);
-                        libItem = new Book(itemID, itemName, itemType, author, itemDueDate, itemCheckOutDate, checkedOutTo);
+                        libItem = new Book(itemID, itemName, itemType, author, itemDueDate, itemCheckOutDate, checkedOutTo,"N/A");
                     } else if (arrayItem.get(ITEM_TYPE).equals(DVD)) {
-                        libItem = new DVD(itemID, itemName, itemType, itemDueDate, itemCheckOutDate, checkedOutTo);
+                        libItem = new DVD(itemID, itemName, itemType, itemDueDate, itemCheckOutDate, checkedOutTo, "N/A");
                     } else if (arrayItem.get(ITEM_TYPE).equals(MAGAZINE)) {
-                        libItem = new Magazine(itemID, itemName, itemType, itemDueDate, itemCheckOutDate, checkedOutTo);
+                        libItem = new Magazine(itemID, itemName, itemType, itemDueDate, itemCheckOutDate, checkedOutTo, "N/A");
                     }
+                    */
 
                     //Add inventory item to the Library list
                     library.add(libItem);
@@ -188,11 +201,17 @@ public class FileProcessor {
         for (InventoryItem i : lib) {
             JSONObject outputChildObject = new JSONObject();
             if (i.getType().equals(CD)) {
+                outputChildObject.put(ITEM_ARTIST, i.getAuthor());
+                /*
                 CD cd = (CD) i;
                 outputChildObject.put(ITEM_ARTIST, cd.getArtist());
+                */
             } else if (i.getType().equals(BOOK)) {
+                outputChildObject.put(ITEM_AUTHOR,i.getAuthor());
+                /*
                 Book b = (Book) i;
                 outputChildObject.put(ITEM_AUTHOR, b.getAuthor());
+                */
             }
             outputChildObject.put(ITEM_NAME, i.getName());
             outputChildObject.put(ITEM_TYPE, i.getType());
@@ -201,6 +220,7 @@ public class FileProcessor {
             outputChildObject.put(ITEM_DUEDATE, i.getDueDate());
             outputChildObject.put(ITEM_CHECKOUTDATE, i.getCheckoutDate());
             outputChildObject.put(ITEM_CHECKEDOUTTO, i.getCheckedOutToUserCardNumber());
+            outputChildObject.put(ITEM_STATUS, i.getStatus());
             outputJArray.add(outputChildObject);
         }
 
@@ -250,7 +270,7 @@ public class FileProcessor {
                         switch(xmlStrings.valueOf(metadata.getTagName())){
                             case Artist: artist = metadata.getTextContent();
                                 break;
-                            case Author: author = metadata.getTextContent();
+                            case Author: artist = metadata.getTextContent();
                                 break;
                             case Volume: volume = metadata.getTextContent();
                                 break;
@@ -273,22 +293,30 @@ public class FileProcessor {
                                     checkedOutTo = null;
                                 }
                                 break;
+                            case item_status: itemStatus = metadata.getTextContent();
+                                break;
                         }
                     }
                 }
 
+
+                if (itemStatus == null|| itemList.equals(""))itemStatus = "Available";
+                libItem = new InventoryItem(itemID, itemName,itemType,artist,itemDueDate,itemCheckOutDate,checkedOutTo,itemStatus);
+                libItem.setVolume(volume);
+                /*
                 if(itemType.equals(XML_CD)) {
-                    libItem = new CD(itemID, itemName, itemType, artist, itemDueDate, itemCheckOutDate, checkedOutTo);
+                    libItem = new CD(itemID, itemName, itemType, artist, itemDueDate, itemCheckOutDate, checkedOutTo, itemStatus);
                 }
                 if(itemType.equals(XML_DVD)){
-                    libItem = new DVD(itemID, itemName, itemType, itemDueDate, itemCheckOutDate, checkedOutTo);
+                    libItem = new DVD(itemID, itemName, itemType, itemDueDate, itemCheckOutDate, checkedOutTo, "N/A");
                 }
                 if(itemType.equals(XML_BOOK)) {
-                    libItem = new Book(itemID, itemName, itemType, author, itemDueDate, itemCheckOutDate, checkedOutTo);
+                    libItem = new Book(itemID, itemName, itemType, author, itemDueDate, itemCheckOutDate, checkedOutTo, "N/A");
                 }
                 if(itemType.equals(XML_MAGAZINE)) {
-                    libItem = new Magazine(itemID, itemName, itemType, volume, itemDueDate, itemCheckOutDate, checkedOutTo);
+                    libItem = new Magazine(itemID, itemName, itemType, volume, itemDueDate, itemCheckOutDate, checkedOutTo, "N/A");
                 }
+                */
 
                 if(libItem != null){
                     library.add(libItem);
@@ -354,14 +382,15 @@ public class FileProcessor {
 
 
                 if (inventoryItem.getType().equals(XML_BOOK)) {
-                    Book book = (Book) inventoryItem;
+
+                    //Book book = (Book) inventoryItem;
                     Element itemAuthor = doc.createElement(AUTHOR);
-                    itemAuthor.appendChild(doc.createTextNode(book.getAuthor()));
+                    itemAuthor.appendChild(doc.createTextNode(inventoryItem.getAuthor()));
                     itemElement.appendChild(itemAuthor);
                 } else if (inventoryItem.getType().equals(XML_CD)) {
-                    CD cd = (CD) inventoryItem;
+                    //CD cd = (CD) inventoryItem;
                     Element itemArtist = doc.createElement(ARTIST);
-                    itemArtist.appendChild(doc.createTextNode(cd.getArtist()));
+                    itemArtist.appendChild(doc.createTextNode(inventoryItem.getAuthor()));
                     itemElement.appendChild(itemArtist);
                 } else if (inventoryItem.getType().equals(XML_MAGAZINE)) {
                     Magazine magazine = (Magazine) inventoryItem;
@@ -404,9 +433,10 @@ public class FileProcessor {
                 Element libItemElement = (Element) node;
                 memberID = libItemElement.getAttribute("id");
                 memberName = libItemElement.getAttribute("name");
-                memberCardNumber = libItemElement.getAttribute("password");
+                memberPassword = libItemElement.getAttribute("password");
+                memberPrivilege = libItemElement.getAttribute("privilege");
             }
-            member = new Member(memberName, memberID, memberCardNumber);
+            member = new Member(memberName, memberID, memberPassword, memberPrivilege);
             memberList.add(member);
         }
 
@@ -437,9 +467,9 @@ public class FileProcessor {
                 Element libItemElement = (Element) node;
                 memberID = libItemElement.getAttribute("userName");
                 memberName = libItemElement.getAttribute("name");
-                memberCardNumber = libItemElement.getAttribute("password");
+                memberPassword = libItemElement.getAttribute("password");
             }
-            staff = new Staff(memberID, memberName, memberCardNumber);
+            staff = new Staff(memberID, memberName, memberPassword);
             staffList.add(staff);
         }
 

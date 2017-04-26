@@ -19,8 +19,8 @@ public class Book extends InventoryItem {
         author = authorName;
     }
 
-    public Book(String idNumber, String itemName, String itemType, String authorName, String due, String ckOut, String checkedOutTo){
-        super(idNumber, itemName, itemType, due, ckOut, checkedOutTo);
+    public Book(String idNumber, String itemName, String itemType, String authorName, String due, String ckOut, String checkedOutTo, String status){
+        super(idNumber, itemName, itemType, authorName, due, ckOut, checkedOutTo, status);
         author = authorName;
     }
 

@@ -10,12 +10,14 @@ public class InventoryItem implements Comparable<InventoryItem>{
      *      Variables
      */
 
-    protected String id, name, type;
+    protected String id, name, type, author;
     protected Date checkoutDate = null;
     protected Date dueDate = null;
     protected String checkOutString;
     protected String dueDateString;
     protected String checkedOutToUserCardNumber;
+    protected String status;
+    protected String volume;
 
     private static final String dateFormatString = "MM/dd/yyyy";
 
@@ -29,9 +31,7 @@ public class InventoryItem implements Comparable<InventoryItem>{
      */
 
     public InventoryItem(String itemID, String itemName, String itemType){
-        id = itemID;
-        name = itemName;
-        type = itemType;
+        this(itemID,itemName,itemType,null,null,null,null,null);
     }
 
     /**
@@ -44,11 +44,13 @@ public class InventoryItem implements Comparable<InventoryItem>{
      *      @param checkedOutTo
      */
 
-    public InventoryItem(String itemID, String itemName, String itemType, String due, String checkOutDt, String checkedOutTo){
+    public InventoryItem(String itemID, String itemName, String itemType, String author, String due, String checkOutDt, String checkedOutTo, String status){
         id = itemID;
         name = itemName;
         type = itemType;
+        this.author = (author == null)?"":author;
         checkedOutToUserCardNumber = checkedOutTo;
+        this.status = status;
 
         SimpleDateFormat formatter = new SimpleDateFormat(dateFormatString);
         if(due != null) {
@@ -77,8 +79,9 @@ public class InventoryItem implements Comparable<InventoryItem>{
 
     public void checkOut(String loggedOnUserCardNumber){
         checkoutDate = new Date();
-        setCheckoutDate(7);
+        setCheckoutDate(type.equals("Book")?21:7);
         checkedOutToUserCardNumber = loggedOnUserCardNumber;
+        status = "Checked Out";
     }
 
     protected void setCheckoutDate(int days){
@@ -92,6 +95,7 @@ public class InventoryItem implements Comparable<InventoryItem>{
         checkoutDate = null;
         dueDate = null;
         checkedOutToUserCardNumber = null;
+        status = "Available";
     }
     public boolean isCheckedOut(){
         return (dueDate != null);
@@ -142,7 +146,12 @@ public class InventoryItem implements Comparable<InventoryItem>{
     public String getName(){
         return name;
     }
+    public String getAuthor(){ return author; }
     public String getCheckedOutToUserCardNumber(){return checkedOutToUserCardNumber;}
+    public String getStatus(){ return status; }
+    public void setStatus(String status){ this.status = status; }
+    public void setVolume(String s){ volume = s; }
+    public String getVolume(){return volume;}
 
 
     /**

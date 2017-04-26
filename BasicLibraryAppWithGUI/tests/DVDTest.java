@@ -11,7 +11,7 @@ public class DVDTest extends TestCase {
         //test that  toString method returns a non-null value
 
         DVD d = new DVD("1234", "Die Hard", "com.metadata.LibraryDomain.DVD");
-        DVD dvd = new DVD("1234", "Die Hard", "com.metadata.LibraryDomain.DVD", null, null, null);
+        DVD dvd = new DVD("1234", "Die Hard", "com.metadata.LibraryDomain.DVD", null, null, null, "N/A");
         assertNotNull(d.toString());
         assertNotNull(dvd.toString());
     }
