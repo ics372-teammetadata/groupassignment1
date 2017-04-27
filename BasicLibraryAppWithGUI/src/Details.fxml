@@ -52,11 +52,20 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label text="Name" GridPane.rowIndex="1" />
+                  <Label text="Name" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </GridPane.margin></Label>
                   <Label fx:id="nameLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Type" GridPane.rowIndex="2" />
+                  <Label text="Type" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </GridPane.margin></Label>
                   <Label fx:id="typeLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="Author" GridPane.rowIndex="3" />
+                  <Label text="Author/Artist" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </GridPane.margin></Label>
                   <Label fx:id="authorLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <VBox GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                      <children>
@@ -72,7 +81,10 @@
                         </Button>
                      </children>
                   </VBox>
-                  <Label fx:id="miscLabel" text="misc" GridPane.rowIndex="4" />
+                  <Label fx:id="miscLabel" text="misc" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </GridPane.margin></Label>
                   <Label fx:id="miscStatusLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
             </GridPane>
@@ -93,6 +105,9 @@
                <font>
                   <Font size="14.0" />
                </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
             </Label>
             <Button mnemonicParsing="false" onAction="#Logout" text="Log off" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                <GridPane.margin>

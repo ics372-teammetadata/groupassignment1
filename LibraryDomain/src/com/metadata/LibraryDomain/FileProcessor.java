@@ -161,20 +161,6 @@ public class FileProcessor {
                     if (itemStatus == null || itemStatus.equals(""))itemStatus = "Available";
                     libItem = new InventoryItem(itemID,itemName,itemType,artist,itemDueDate,itemCheckOutDate,checkedOutTo,itemStatus);
 
-                    /*
-                    if (arrayItem.get(ITEM_TYPE).equals(CD)) {
-                        artist = (String) arrayItem.get(ITEM_ARTIST);
-                        libItem = new CD(itemID, itemName, itemType, artist, itemDueDate, itemCheckOutDate, checkedOutTo, "N/A");
-                    } else if (arrayItem.get(ITEM_TYPE).equals(BOOK)) {
-                        author = (String) arrayItem.get(ITEM_AUTHOR);
-                        libItem = new Book(itemID, itemName, itemType, author, itemDueDate, itemCheckOutDate, checkedOutTo,"N/A");
-                    } else if (arrayItem.get(ITEM_TYPE).equals(DVD)) {
-                        libItem = new DVD(itemID, itemName, itemType, itemDueDate, itemCheckOutDate, checkedOutTo, "N/A");
-                    } else if (arrayItem.get(ITEM_TYPE).equals(MAGAZINE)) {
-                        libItem = new Magazine(itemID, itemName, itemType, itemDueDate, itemCheckOutDate, checkedOutTo, "N/A");
-                    }
-                    */
-
                     //Add inventory item to the Library list
                     library.add(libItem);
                 }
@@ -303,20 +289,6 @@ public class FileProcessor {
                 if (itemStatus == null|| itemList.equals(""))itemStatus = "Available";
                 libItem = new InventoryItem(itemID, itemName,itemType,artist,itemDueDate,itemCheckOutDate,checkedOutTo,itemStatus);
                 libItem.setVolume(volume);
-                /*
-                if(itemType.equals(XML_CD)) {
-                    libItem = new CD(itemID, itemName, itemType, artist, itemDueDate, itemCheckOutDate, checkedOutTo, itemStatus);
-                }
-                if(itemType.equals(XML_DVD)){
-                    libItem = new DVD(itemID, itemName, itemType, itemDueDate, itemCheckOutDate, checkedOutTo, "N/A");
-                }
-                if(itemType.equals(XML_BOOK)) {
-                    libItem = new Book(itemID, itemName, itemType, author, itemDueDate, itemCheckOutDate, checkedOutTo, "N/A");
-                }
-                if(itemType.equals(XML_MAGAZINE)) {
-                    libItem = new Magazine(itemID, itemName, itemType, volume, itemDueDate, itemCheckOutDate, checkedOutTo, "N/A");
-                }
-                */
 
                 if(libItem != null){
                     library.add(libItem);
@@ -383,12 +355,10 @@ public class FileProcessor {
 
                 if (inventoryItem.getType().equals(XML_BOOK)) {
 
-                    //Book book = (Book) inventoryItem;
                     Element itemAuthor = doc.createElement(AUTHOR);
                     itemAuthor.appendChild(doc.createTextNode(inventoryItem.getAuthor()));
                     itemElement.appendChild(itemAuthor);
                 } else if (inventoryItem.getType().equals(XML_CD)) {
-                    //CD cd = (CD) inventoryItem;
                     Element itemArtist = doc.createElement(ARTIST);
                     itemArtist.appendChild(doc.createTextNode(inventoryItem.getAuthor()));
                     itemElement.appendChild(itemArtist);

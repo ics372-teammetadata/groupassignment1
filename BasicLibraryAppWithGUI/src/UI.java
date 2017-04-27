@@ -39,7 +39,7 @@ public class UI extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        initialize();
+        initialize(); // set up item lists and member list
 
         this.primaryStage = primaryStage;
         FXMLLoader loader = new FXMLLoader();
@@ -69,6 +69,7 @@ public class UI extends Application {
         }
     }
 
+    // Displays error dialog and stack trace if problems are encountered loading files
     public static void showErrorDialog(Exception e){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(e.getClass().toString());
@@ -101,6 +102,7 @@ public class UI extends Application {
         alert.showAndWait();
     }
 
+    // Loads login page into screen
     static void showLoginPage() {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(UI.class.getResource("Login.fxml"));
@@ -111,9 +113,11 @@ public class UI extends Application {
 
     }
 
+    // loads details page into screen
     static void showDetailsPage(String userName, String userID, PrivilegeType privilege) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(UI.class.getResource("Details.fxml"));
+        // set up controller with necessary data and add to loader
         DetailsController c = new DetailsController(userName, userID, privilege);
         loader.setController(c);
         try {

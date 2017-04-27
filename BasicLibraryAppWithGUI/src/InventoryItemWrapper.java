@@ -7,8 +7,11 @@ import javafx.beans.property.StringProperty;
  * Created by Andrew on 4/25/2017.
  */
 public class InventoryItemWrapper {
+    // fields needed to keep track of data
     private String itemId;
     private String itemLocation;
+
+    // property fields to feed into table view
     private final SimpleStringProperty itemName;
     private final SimpleStringProperty itemArtist;
     private final SimpleStringProperty itemType;
@@ -23,6 +26,7 @@ public class InventoryItemWrapper {
         itemStatus = new SimpleStringProperty(status);
     }
 
+    // getters and setters
     public String getItemId(){ return itemId; }
     public String getItemLocation(){ return itemLocation; }
 

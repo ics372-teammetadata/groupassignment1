@@ -25,8 +25,7 @@ public class LoginController {
         String id = userText.getText();
         String password = passwordText.getText();
         Member m = UI.memberList.getMemberByID(id);
-        //Staff s = UI.staffList.getStaffByUsername(id);
-        if (m == null /*&& s == null*/){
+        if (m == null){
             showLoginError();
             return;
         }
@@ -34,10 +33,6 @@ public class LoginController {
             UI.showDetailsPage(m.getName(), m.getID(), m.getPrivelege().equals(MEMBER_PRIVILEGE_CODE)? PrivilegeType.Member : PrivilegeType.Staff);
             return;
         }
-        /*else if (s != null && password.equals(s.getPassword())){
-            UI.showDetailsPage(s.getName(), s.getUserName(), PrivilegeType.Staff);
-            return;
-        }*/
 
         showLoginError();
     }
