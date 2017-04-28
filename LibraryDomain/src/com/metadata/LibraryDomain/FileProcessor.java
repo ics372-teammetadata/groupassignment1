@@ -33,10 +33,8 @@ public class FileProcessor {
 
     private Library library = new Library();
     private MemberList memberList = new MemberList();
-    private StaffList staffList = new StaffList();
     private InventoryItem libItem = null;
     private Member member = null;
-    private Staff staff = null;
     private File file;
     private JSONObject jsonObject = null;
 
@@ -188,16 +186,10 @@ public class FileProcessor {
             JSONObject outputChildObject = new JSONObject();
             if (i.getType().equals(CD)) {
                 outputChildObject.put(ITEM_ARTIST, i.getAuthor());
-                /*
-                CD cd = (CD) i;
-                outputChildObject.put(ITEM_ARTIST, cd.getArtist());
-                */
+
             } else if (i.getType().equals(BOOK)) {
                 outputChildObject.put(ITEM_AUTHOR,i.getAuthor());
-                /*
-                Book b = (Book) i;
-                outputChildObject.put(ITEM_AUTHOR, b.getAuthor());
-                */
+
             }
             outputChildObject.put(ITEM_NAME, i.getName());
             outputChildObject.put(ITEM_TYPE, i.getType());
@@ -363,9 +355,8 @@ public class FileProcessor {
                     itemArtist.appendChild(doc.createTextNode(inventoryItem.getAuthor()));
                     itemElement.appendChild(itemArtist);
                 } else if (inventoryItem.getType().equals(XML_MAGAZINE)) {
-                    Magazine magazine = (Magazine) inventoryItem;
                     Element itemVolume = doc.createElement(VOLUME);
-                    itemVolume.appendChild(doc.createTextNode(magazine.getVolume()));
+                    itemVolume.appendChild(doc.createTextNode(inventoryItem.getVolume()));
                     itemElement.appendChild(itemVolume);
                 }
 
@@ -412,39 +403,6 @@ public class FileProcessor {
 
 
         return memberList;
-    }
-    /**
-     *  Method name: processXMLMemberList()
-     *
-     *  Reads XML data from a file
-     *  Throws ParserConfigurationException, SAXException, IOException that is caught by the UIControlloer save() method
-     */
-
-    public StaffList processXMLStaffList()throws ParserConfigurationException, SAXException, IOException{
-        return processXMLStaffList(new FileInputStream(file));
-    }
-
-    public StaffList processXMLStaffList(InputStream inputStream) throws ParserConfigurationException, SAXException, IOException{
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document doc = builder.parse(inputStream);
-
-        NodeList members = doc.getElementsByTagName("Member");
-        //loop through each parent element
-        for(int i = 0; i < members.getLength(); i++) {
-            Node node = members.item(i);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                Element libItemElement = (Element) node;
-                memberID = libItemElement.getAttribute("userName");
-                memberName = libItemElement.getAttribute("name");
-                memberPassword = libItemElement.getAttribute("password");
-            }
-            staff = new Staff(memberID, memberName, memberPassword);
-            staffList.add(staff);
-        }
-
-
-        return staffList;
     }
 
 

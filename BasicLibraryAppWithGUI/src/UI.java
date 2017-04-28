@@ -23,7 +23,6 @@ public class UI extends Application {
     PasswordField passwordText;
 
     static MemberList memberList;
-    static StaffList staffList;
     static Library localLib;
     static Library offsiteLib;
 
@@ -60,7 +59,6 @@ public class UI extends Application {
             localProcessor = new FileProcessor(new File(localLibPath));
             offsiteProcessor = new FileProcessor(new File(offsitLibPath));
             memberList = localProcessor.processXMLMemberList(new FileInputStream( new File(membersFilePath)));
-            staffList = localProcessor.processXMLStaffList(new FileInputStream(new File(staffFilePath)));
             localLib = localProcessor.processJSONData();
             offsiteLib = offsiteProcessor.processXMLData();
         } catch (Exception e) {
@@ -127,7 +125,4 @@ public class UI extends Application {
 
         c.initialize();
     }
-
-
-
 }
